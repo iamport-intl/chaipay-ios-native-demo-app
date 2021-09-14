@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum DetailsSectionType {
+    case mobile
     case details
     case payment
     case summary
@@ -69,6 +70,24 @@ class ProductPaymentDataModel: DetailsSectionItem {
     var type: DetailsSectionType {
         return .payment
     }
+
+    var dataSource: [PaymentMethodDataSource] = []
+
+    var rowCount: Int {
+        return dataSource.count
+    }
+
+    var rowHeight: CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    var headerHeight: CGFloat {
+        return 40
+    }
+
+    init(dataSource: [PaymentMethodDataSource]) {
+        self.dataSource = dataSource
+    }
 }
 
 class ProductSummaryDataModel: DetailsSectionItem {
@@ -80,6 +99,12 @@ class ProductSummaryDataModel: DetailsSectionItem {
 
     init(summaryObject: SummaryObject) {
         self.summaryObject = summaryObject
+    }
+}
+
+class MobileViewDataModel: DetailsSectionItem {
+    var type: DetailsSectionType {
+        return .mobile
     }
 }
 

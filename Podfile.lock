@@ -1,0 +1,45 @@
+PODS:
+  - CreditCardValidator (0.5.1)
+  - MBProgressHUD (1.2.0)
+  - OTPInputView (0.1.2)
+  - PhoneNumberKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
+    - PhoneNumberKit/UIKit (= 3.3.3)
+  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
+  - PhoneNumberKit/UIKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+  - SwiftMessages (9.0.3):
+    - SwiftMessages/App (= 9.0.3)
+  - SwiftMessages/App (9.0.3)
+
+DEPENDENCIES:
+  - CreditCardValidator
+  - MBProgressHUD (~> 1.2.0)
+  - OTPInputView
+  - PhoneNumberKit (~> 3.3)
+  - SDWebImage (~> 5.0)
+  - SwiftMessages
+
+SPEC REPOS:
+  trunk:
+    - CreditCardValidator
+    - MBProgressHUD
+    - OTPInputView
+    - PhoneNumberKit
+    - SDWebImage
+    - SwiftMessages
+
+SPEC CHECKSUMS:
+  CreditCardValidator: b312e6d6df827d5828eae3905da6812262715b32
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  OTPInputView: 8a7cc613e29d264f799d121169d00a745cae4c00
+  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SwiftMessages: 077f19126c24033fe24042237ecc20261adb46e4
+
+PODFILE CHECKSUM: 2cd959108200590d4b18974a4b96032de7771531
+
+COCOAPODS: 1.10.1

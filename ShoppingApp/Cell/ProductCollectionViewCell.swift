@@ -45,7 +45,7 @@ extension ProductCollectionViewCell {
         coverImage.image = UIImage(named: shoppingData.imageName ?? "")
 
         if isSelected {
-            self.contentView.layer.borderColor = UIColor.blue.cgColor
+            self.contentView.layer.borderColor = UIColor(named: "app_theme_color")?.cgColor
             self.contentView.layer.borderWidth = 1
         } else {
             self.contentView.layer.borderColor = UIColor.white.cgColor

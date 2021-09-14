@@ -15,6 +15,8 @@ enum SortType {
 class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
+    var appThemeColor = ""
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var shadowView: UIView! {
@@ -55,7 +57,7 @@ class ProductListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBarLargeTitleTheme(title: "Featured", color: .cyan)
+        setupNavBarLargeTitleTheme(title: "Featured", color: UIColor(named: "app_theme_color") ?? UIColor.red)
         setupNavBarTitleTheme()
     }
 
@@ -114,11 +116,11 @@ extension ProductListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCollectionViewCell.cellIdentifier, for: indexPath) as? ProductCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let data = data[indexPath.item]
-        if selectedProductsDict[data.id ?? ""] != nil {
-            cell.layout(basedOn: data, isSelected: true)
+        let productData = data[indexPath.item]
+        if selectedProductsDict[productData.id ?? ""] != nil {
+            cell.layout(basedOn: productData, isSelected: true)
         } else {
-            cell.layout(basedOn: data, isSelected: false)
+            cell.layout(basedOn: productData, isSelected: false)
         }
         return cell
     }
@@ -129,13 +131,13 @@ extension ProductListViewController: UICollectionViewDataSource {
 extension ProductListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let data = data[indexPath.item]
+        let productData = data[indexPath.item]
 
-        let id = data.id ?? ""
+        let id = productData.id ?? ""
         if selectedProductsDict[id] != nil {
             selectedProductsDict.removeValue(forKey: id)
         } else {
-            selectedProductsDict[id] = data
+            selectedProductsDict[id] = productData
         }
         shouldEnable = selectedProductsDict.count >= 1 ? true : false
         collectionView.reloadData()
@@ -156,7 +158,7 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
 
 extension ProductListViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let data = data[indexPath.item]
-        return min(data.image?.size.height ?? 300, 300)
+        let productData = data[indexPath.item]
+        return min(productData.image?.size.height ?? 300, 300)
     }
 }
