@@ -307,10 +307,12 @@ extension PaymentMethodTableViewCell: UITableViewDelegate, UITableViewDataSource
             let isSelected = savedCardObjects[indexPath.row].partialCardNumber == selectedSavedCard?.partialCardNumber
             cell.layout(basedOn: savedCardObjects[indexPath.row], isSelected: isSelected)
         } else {
+            guard paymentMethodObjects.count > indexPath.row else {
+                return cell
+            }
             let isSelected = paymentMethodObjects[indexPath.row].paymentChannelKey == paymentMethodObject?.paymentChannelKey
             cell.layout(basedOn: paymentMethodObjects[indexPath.row], isSelected: isSelected)
         }
-        
         return cell
     }
     
