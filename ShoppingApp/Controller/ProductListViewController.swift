@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import SwiftMessages
+import ChaiPayPaymentSDK
+import CryptoKit
 
 enum SortType {
     case ascending
@@ -16,7 +19,7 @@ class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
     var appThemeColor = ""
-    
+    var checkout: Checkout?
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var shadowView: UIView! {
@@ -49,6 +52,8 @@ class ProductListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
         setupInitialData()
         setupCollectionView()
         setupBackButton()
@@ -61,6 +66,19 @@ class ProductListViewController: UIViewController {
         setupNavBarTitleTheme()
     }
 
+    func showSwiftMessagesView(isSuccess: Bool = false) {
+        DispatchQueue.main.async {
+            guard let view = Bundle.main.loadNibNamed("SwiftAlertView", owner: nil, options: nil)?.first as? SwiftAlertView  else { return }
+            view.delegate = self
+            var config = SwiftMessages.defaultConfig
+            config.presentationStyle = .center
+            config.presentationContext = .window(windowLevel: .normal)
+            config.duration = .forever
+            config.dimMode = .gray(interactive: true)
+            SwiftMessages.show(config: config, view: view)
+        }
+    }
+    
     func setupInitialData() {
         data = ShoppingDataManager.prepareShoppingData()
         prepareSortingData()
@@ -99,9 +117,8 @@ class ProductListViewController: UIViewController {
     }
 
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
-        let productDetailsViewController: ProductDetailsViewController = ViewControllersFactory.viewController()
-        productDetailsViewController.selectedProductsDict = selectedProductsDict
-        self.navigationController?.pushViewController(productDetailsViewController, animated: true)
+        
+        showSwiftView()
     }
 }
 
@@ -160,5 +177,117 @@ extension ProductListViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let productData = data[indexPath.item]
         return min(productData.image?.size.height ?? 300, 300)
+    }
+}
+
+extension ProductListViewController: ResponseViewDelegate {
+    func goBack(fromSuccess: Bool) {
+        if(fromSuccess) {
+            hideSwiftView()
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            hideSwiftView()
+        }
+    }
+}
+
+extension ProductListViewController: SwiftAlertViewDelegate {
+    
+    func prepareConfig() -> TransactionRequest {
+        
+        let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
+        
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: billingAddress)
+        
+        
+        let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
+        
+        let shippingDetails = ShippingDetails(shippingName: "xyz", shippingEmail: "xyz@gmail.com", shippingPhone: "1234567890", shippingAddress: shippingAddress)
+        
+        let orderDetails = OrderDetails(id: "knb", name: "kim nguyen bao", price: 1000, quantity: 1)
+        
+        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", key: "lzrYFPfyMLROallZ", merchantDetails: merchantDetails, paymentChannel: "", paymentMethod: "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: 180000, currency: "VND", signatureHash: "123",billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: [orderDetails],  successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: true )
+    }
+    
+    func createJWTToken() -> String {
+        
+        struct Header: Encodable {
+            let alg = "HS256"
+            let typ = "JWT"
+        }
+        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
+            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
+            let token = String(currentTimeStamp)
+            return Int(currentTimeStamp)
+        }
+        struct Payload: Encodable {
+            
+            let iss = "CHAIPAY"
+            let sub = "lzrYFPfyMLROallZ"
+            let iat = generateCurrentTimeStamp()
+            let exp = generateCurrentTimeStamp(extraTime: 10000)
+        }
+
+        let secret = "0e94b3232e1bf9ec0e378a58bc27067a86459fc8f94d19f146ea8249455bf242"
+        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
+
+        let headerJSONData = try! JSONEncoder().encode(Header())
+        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
+
+        let payloadJSONData = try! JSONEncoder().encode(Payload())
+        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
+
+        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
+
+        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
+        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
+
+        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+        return token
+        
+    }
+    
+    func checkOutUIClicked() {
+        
+        let token = createJWTToken()
+        let config = prepareConfig()
+        hideSwiftView()
+        checkout?.checkOutUI(config: config, jwtToken: token, onCompletionHandler: { (result) in
+            switch result{
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+    
+    func hideSwiftView() {
+        SwiftMessages.hide()
+    }
+    
+    func showSwiftView() {
+        showSwiftMessagesView()
+    }
+    
+    func customUIClicked() {
+        let productDetailsViewController: ProductDetailsViewController = ViewControllersFactory.viewController()
+        productDetailsViewController.selectedProductsDict = selectedProductsDict
+        productDetailsViewController.checkout = checkout
+        hideSwiftView()
+        self.navigationController?.pushViewController(productDetailsViewController, animated: true)
+    }
+    
+}
+
+extension ProductListViewController: CheckoutDelegate {
+    var viewController: UIViewController? {
+        return self
+    }
+    
+    func transactionResponse(_ webViewResponse: WebViewResponse?) {
+        NotificationCenter.default.post(name: NSNotification.Name("webViewResponse"), object: webViewResponse)
+        print("webview response", webViewResponse)
     }
 }

@@ -8,6 +8,7 @@
 import ChaiPayPaymentSDK
 import UIKit
 import SwiftMessages
+import CryptoKit
 
 class ProductDetailsViewController: UIViewController {
     // MARK: - Outlets
@@ -44,7 +45,7 @@ class ProductDetailsViewController: UIViewController {
     
     var formattedSummaryText: String = ""
     var totalAmount: Double = 0
-    var isMobileVerificationDone: Bool = true
+    var isMobileVerificationDone: Bool = false
     var selectedProductsDict: [String: ProductDetailsObject] = [:]
     var selectedProducts: [ProductDetailsObject] = []
     var productDetailsDataSource: ProductDetailsDataSource?
@@ -60,7 +61,6 @@ class ProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // setupThemedNavbar()
-        checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
         
         checkout?.getAvailablePaymentGateways(completionHandler: { [weak self] result in
             guard let self = self else { return }
@@ -75,8 +75,7 @@ class ProductDetailsViewController: UIViewController {
                 break
             }
         })
-        setupNavBarLargeTitleTheme(title: "Checkout", color: .black)
-        setupNavBarTitleTheme(color: .black)
+        NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
         setupInitialData()
         registerCells()
         setupTableView()
@@ -84,6 +83,13 @@ class ProductDetailsViewController: UIViewController {
         summaryAmount.text = formattedSummaryText
         
         registerKeyboardNotifications()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavBarLargeTitleTheme(title: "Checkout", color: .black)
+        setupNavBarTitleTheme(color: .black)
     }
     
     func setupInitialData() {
@@ -102,9 +108,11 @@ class ProductDetailsViewController: UIViewController {
             config.presentationStyle = .center
             config.presentationContext = .window(windowLevel: .normal)
             config.duration = .forever
+            config.dimMode = .gray(interactive: true)
             SwiftMessages.show(config: config, view: view)
         }
     }
+    
     func preparePaymentMethodDataSource() {
       
         let filteredWalletsData = paymentMethodResponse?.walletMethods.filter{ paymentMethod in
@@ -201,7 +209,9 @@ class ProductDetailsViewController: UIViewController {
         
         orderDetails.append(OrderDetails(id: "knb", name: "kim nguyen bao", price: 1000, quantity: 1))
         print("totalAmount", totalAmount)
-        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount) ?? 0, currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://")
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        
+        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", key: "lzrYFPfyMLROallZ", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND", expiryHours: nil, source: nil, description: nil, showShippingDetails: nil, showBackButton: nil, defaultGuestCheckout: nil, isCheckoutEmbed: nil)
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
@@ -219,6 +229,75 @@ class ProductDetailsViewController: UIViewController {
     @IBAction func onClickShowSummary(_ sender: UIButton) {
         summaryView.isHidden = !summaryView.isHidden
         summaryViewHeightConstraint.constant = summaryView.isHidden ? 0 : 92
+    }
+    
+    func prepareConfig1() -> TransactionRequest {
+        
+        let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: billingAddress )
+        
+        
+        let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
+        
+        let shippingDetails = ShippingDetails(shippingName: "xyz", shippingEmail: "xyz@gmail.com", shippingPhone: "1234567890", shippingAddress: shippingAddress)
+        
+        let orderDetails = OrderDetails(id: "knb", name: "kim nguyen bao", price: 1000, quantity: 1)
+        
+        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", key: "lzrYFPfyMLROallZ", merchantDetails: merchantDetails, paymentChannel: "", paymentMethod: "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: 180000, currency: "VND", signatureHash: "123",billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: [orderDetails],  successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: true, defaultGuestCheckout: true, isCheckoutEmbed: true )
+    }
+    
+    func createJWTToken() -> String {
+        
+        struct Header: Encodable {
+            let alg = "HS256"
+            let typ = "JWT"
+        }
+        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
+            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
+            let token = String(currentTimeStamp)
+            return Int(currentTimeStamp)
+        }
+        struct Payload: Encodable {
+            
+            let iss = "CHAIPAY"
+            let sub = "lzrYFPfyMLROallZ"
+            let iat = generateCurrentTimeStamp()
+            let exp = generateCurrentTimeStamp(extraTime: 10000)
+        }
+
+        let secret = "0e94b3232e1bf9ec0e378a58bc27067a86459fc8f94d19f146ea8249455bf242"
+        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
+
+        let headerJSONData = try! JSONEncoder().encode(Header())
+        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
+
+        let payloadJSONData = try! JSONEncoder().encode(Payload())
+        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
+
+        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
+
+        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
+        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
+
+        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+        return token
+        
+    }
+    
+    func checkOutUIClicked() {
+        
+        let token = createJWTToken()
+        let config = prepareConfig1()
+        SwiftMessages.hide()
+        checkout?.checkOutUI(config: config, jwtToken: token, onCompletionHandler: { (result) in
+            switch result{
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
     
     @IBAction func onClickPayNowButton(_ sender: UIButton) {
@@ -274,9 +353,11 @@ class ProductDetailsViewController: UIViewController {
         
     }
     
-    func showResponseInfo(_ webViewResponse: WebViewResponse?) {
-        let isSuccess: Bool = (webViewResponse?.status == "Success") || (webViewResponse?.isSuccess == "true")
-        showSwiftMessagesView(isSuccess: isSuccess)
+    @objc func showResponseInfo(_ notification: Notification) {
+        if let webViewResponse = notification.object as? WebViewResponse {
+            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
+            showSwiftMessagesView(isSuccess: isSuccess)
+        }
     }
     
     func reloadData() {
@@ -382,16 +463,6 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return productDetailsDataSource?.items[section].footerHeight ?? 0.01
-    }
-}
-
-extension ProductDetailsViewController: CheckoutDelegate {
-    var viewController: UIViewController? {
-        return self
-    }
-    
-    func transactionResponse(_ webViewResponse: WebViewResponse?) {
-        self.showResponseInfo(webViewResponse)
     }
 }
 

@@ -142,3 +142,12 @@ extension UIView {
         self.layer.shadowColor = shadowColor.cgColor
     }
 }
+
+extension Data {
+    func urlSafeBase64EncodedString() -> String {
+        return base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+}

@@ -49,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url.absoluteString, url.hasPrefix("chaipay:") {
-            AppDelegate.shared.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            (AppDelegate.shared.window?.rootViewController as? UINavigationController)?.popViewController(animated: true)
         }
     }
 }

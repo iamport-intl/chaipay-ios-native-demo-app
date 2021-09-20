@@ -36,8 +36,8 @@
 		ED444AC226B1D70500DC8985 /* CardsDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED444AC126B1D70500DC8985 /* CardsDataManager.swift */; };
 		EDA14C8126B3A4F0007FC59C /* ProductHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA14C7F26B3A4F0007FC59C /* ProductHeaderCollectionReusableView.swift */; };
 		EDA14C8226B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */; };
-		F095166F26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F095166E26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework */; };
-		F095167026E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F095166E26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F01D59C026F4830F008C82BB /* SwiftAlertView.xib */; };
+		F01D59C326F48339008C82BB /* SwiftAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01D59C226F48339008C82BB /* SwiftAlertView.swift */; };
 		F095167426E8D19D00B37A3A /* CreditCardFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */; };
 		F095167A26E8FFE800B37A3A /* MobileNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F095167826E8FFE800B37A3A /* MobileNumberTableViewCell.swift */; };
 		F095167B26E8FFE800B37A3A /* MobileNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F095167926E8FFE800B37A3A /* MobileNumberTableViewCell.xib */; };
@@ -52,6 +52,8 @@
 		F0B9421A26E749540046944C /* NewCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421926E749540046944C /* NewCardView.swift */; };
 		F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */; };
 		F0B9422226E76F860046944C /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */; };
+		F0D8867226F4D37000460F89 /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D8867126F4D37000460F89 /* ChaiPayPaymentSDK.xcframework */; };
+		F0D8867326F4D37000460F89 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0D8867126F4D37000460F89 /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,7 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F095167026E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
+				F0D8867326F4D37000460F89 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,7 +103,8 @@
 		ED444AC126B1D70500DC8985 /* CardsDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsDataManager.swift; sourceTree = "<group>"; };
 		EDA14C7F26B3A4F0007FC59C /* ProductHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
-		F095166E26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = "../../iOS-Frameworks/ChaiPayPaymentSDK.xcframework"; sourceTree = "<group>"; };
+		F01D59C026F4830F008C82BB /* SwiftAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwiftAlertView.xib; sourceTree = "<group>"; };
+		F01D59C226F48339008C82BB /* SwiftAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAlertView.swift; sourceTree = "<group>"; };
 		F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardFormatter.swift; sourceTree = "<group>"; };
 		F095167826E8FFE800B37A3A /* MobileNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberTableViewCell.swift; sourceTree = "<group>"; };
 		F095167926E8FFE800B37A3A /* MobileNumberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileNumberTableViewCell.xib; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 		F0B9421926E749540046944C /* NewCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardView.swift; sourceTree = "<group>"; };
 		F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
 		F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
+		F0D8867126F4D37000460F89 /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = "../../iOS-Frameworks/ChaiPayPaymentSDK.xcframework"; sourceTree = "<group>"; };
 		FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -125,7 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */,
-				F095166F26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework in Frameworks */,
+				F0D8867226F4D37000460F89 /* ChaiPayPaymentSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +212,8 @@
 				EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */,
 				F0B53A3326EA392F004EC220 /* ResponseView.xib */,
 				F0B53A3526EA396D004EC220 /* ResponseView.swift */,
+				F01D59C026F4830F008C82BB /* SwiftAlertView.xib */,
+				F01D59C226F48339008C82BB /* SwiftAlertView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -254,7 +260,7 @@
 		F06BA22726DE38CA00E0302E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F095166E26E8C9EC00B37A3A /* ChaiPayPaymentSDK.xcframework */,
+				F0D8867126F4D37000460F89 /* ChaiPayPaymentSDK.xcframework */,
 				FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
@@ -355,6 +361,7 @@
 				ED2C2D9D26B04CAA00DA86B9 /* LaunchScreen.storyboard in Resources */,
 				F0B30EF026E664D00049374F /* PaymentMethodTableViewCell.xib in Resources */,
 				ED2C2DD126B1094D00DA86B9 /* ProductPaymentTableViewCell.xib in Resources */,
+				F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */,
 				ED2C2DC826B0FCF200DA86B9 /* ProductTableViewCell.xib in Resources */,
 				F095167B26E8FFE800B37A3A /* MobileNumberTableViewCell.xib in Resources */,
 				F0B53A3426EA392F004EC220 /* ResponseView.xib in Resources */,
@@ -415,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED2C2DAD26B04ECF00DA86B9 /* PinterestLayout.swift in Sources */,
+				F01D59C326F48339008C82BB /* SwiftAlertView.swift in Sources */,
 				F095167426E8D19D00B37A3A /* CreditCardFormatter.swift in Sources */,
 				F0B30EE926E60F4B0049374F /* Constants.swift in Sources */,
 				ED2C2DB426B0524F00DA86B9 /* ShoppingDataManager.swift in Sources */,
@@ -593,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100001;
+				CURRENT_PROJECT_VERSION = 100007;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",
@@ -623,7 +631,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100001;
+				CURRENT_PROJECT_VERSION = 100007;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",

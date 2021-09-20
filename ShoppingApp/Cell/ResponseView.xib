@@ -82,7 +82,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="y7F-GN-JcQ" secondAttribute="bottom" constant="15" id="E5P-RL-nam"/>
                 <constraint firstItem="y7F-GN-JcQ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="15" id="XPE-DN-J7y"/>

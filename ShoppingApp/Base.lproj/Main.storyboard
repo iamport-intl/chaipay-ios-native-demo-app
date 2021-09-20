@@ -500,6 +500,7 @@
             <point key="canvasLocation" x="2143.4782608695655" y="799.55357142857144"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="arrowUp" width="16" height="16"/>
         <image name="protect" width="20" height="22"/>
