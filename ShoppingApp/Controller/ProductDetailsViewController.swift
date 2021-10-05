@@ -53,7 +53,7 @@ class ProductDetailsViewController: UIViewController {
     var paymentDataSource: [PaymentMethodDataSource] = []
     var paymentMethodResponse: PaymentMethodResponse?
     var cardDetails: CardDetails?
-    var savedCards: [String: SavedCard] = [:]
+    var savedCards: [SavedCard] = []
     var selectedPaymentMethod: PaymentMethodObject?
     var selectedSavedCard: SavedCard?
     // MARK: - Lifecycle
@@ -99,11 +99,11 @@ class ProductDetailsViewController: UIViewController {
         setupDataSource()
     }
     
-    func showSwiftMessagesView(isSuccess: Bool = false) {
+    func showSwiftMessagesView(isSuccess: Bool = false, _ response : WebViewResponse?) {
         DispatchQueue.main.async {
             guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
             view.delegate = self
-            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText)
+            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText,  response)
             var config = SwiftMessages.defaultConfig
             config.presentationStyle = .center
             config.presentationContext = .window(windowLevel: .normal)
@@ -128,7 +128,7 @@ class ProductDetailsViewController: UIViewController {
         }.first
         
         let walletData = PaymentMethodDataSource(type: .wallet, paymentMethods: filteredWalletsData ?? [], isExpanded: false)
-        let savedCards = PaymentMethodDataSource(type: .savedCards, paymentMethods: [], cardPayments: Array(self.savedCards.values), isExpanded: false)
+        let savedCards = PaymentMethodDataSource(type: .savedCards, paymentMethods: [], cardPayments: self.savedCards, isExpanded: false)
         let newCreditCard = PaymentMethodDataSource(type: .newCreditCard, paymentMethods: [], isExpanded: false)
         let otherPayments = PaymentMethodDataSource(type: .otherPayments, paymentMethods: otherPaymentsData ?? [], isExpanded: false)
         paymentDataSource = [savedCards, newCreditCard, walletData, otherPayments]
@@ -217,7 +217,7 @@ class ProductDetailsViewController: UIViewController {
         print("totalAmount", totalAmount)
         let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
         
-        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", key: "lzrYFPfyMLROallZ", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND")
+        return TransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", key: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND")
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
@@ -254,11 +254,13 @@ class ProductDetailsViewController: UIViewController {
                     if(data.isSuccess == "false") {
                         isSuccess = false
                     }
+                    self.showSwiftMessagesView(isSuccess: isSuccess, data)
                 case .failure(let error):
                     isSuccess = false
+                    self.showSwiftMessagesView(isSuccess: isSuccess, nil)
                 }
                 
-                self.showSwiftMessagesView(isSuccess: isSuccess)
+               
             })
             
         } else if let savedCard = selectedSavedCard {
@@ -277,10 +279,12 @@ class ProductDetailsViewController: UIViewController {
                     if(data.isSuccess == "false") {
                         isSuccess = false
                     }
+                    self.showSwiftMessagesView(isSuccess: isSuccess, data)
                 case .failure(let _):
                     isSuccess = false
+                    self.showSwiftMessagesView(isSuccess: isSuccess, nil)
                 }
-                self.showSwiftMessagesView(isSuccess: isSuccess)
+                
             })
         } else {
             let config = prepareConfig()
@@ -293,7 +297,7 @@ class ProductDetailsViewController: UIViewController {
     @objc func showResponseInfo(_ notification: Notification) {
         if let webViewResponse = notification.object as? WebViewResponse {
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
-            showSwiftMessagesView(isSuccess: isSuccess)
+            showSwiftMessagesView(isSuccess: isSuccess, webViewResponse)
         }
     }
     
@@ -431,7 +435,7 @@ extension ProductDetailsViewController : mobileNumberViewDelegate {
                 DispatchQueue.main.async {
                     self.isMobileVerificationDone = true
                     self.stackView.isHidden = false
-                    self.savedCards = values
+                    self.savedCards = values.savedCards
                     self.setupInitialData()
                     self.tableView.reloadData()
                 }

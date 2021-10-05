@@ -20,6 +20,8 @@ class ProductListViewController: UIViewController {
 
     var appThemeColor = ""
     var checkout: Checkout?
+    var formattedSummaryText: String = ""
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet var shadowView: UIView! {
@@ -55,11 +57,13 @@ class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
       
+        NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
         checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
         setupInitialData()
         setupCollectionView()
         setupBackButton()
         setupThemedNavbar()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +72,27 @@ class ProductListViewController: UIViewController {
         setupNavBarTitleTheme()
     }
 
+    @objc func showResponseInfo(_ notification: Notification) {
+        if let webViewResponse = notification.object as? WebViewResponse {
+            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
+            showSwiftResponseMessagesView(isSuccess: isSuccess, webViewResponse: webViewResponse)
+        }
+    }
+    
+    func showSwiftResponseMessagesView(isSuccess: Bool = false, webViewResponse: WebViewResponse) {
+        DispatchQueue.main.async {
+            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
+            view.delegate = self
+            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText, webViewResponse)
+            var config = SwiftMessages.defaultConfig
+            config.presentationStyle = .center
+            config.presentationContext = .window(windowLevel: .normal)
+            config.duration = .forever
+            config.dimMode = .gray(interactive: true)
+            SwiftMessages.show(config: config, view: view)
+        }
+    }
+    
     func showSwiftMessagesView(isSuccess: Bool = false) {
         DispatchQueue.main.async {
             guard let view = Bundle.main.loadNibNamed("SwiftAlertView", owner: nil, options: nil)?.first as? SwiftAlertView  else { return }
@@ -219,7 +244,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: "SglffyyZgojEdXWL", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: true, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let transactionRequest = WebTransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: true, defaultGuestCheckout: false, isCheckoutEmbed: false )
         
         print(transactionRequest)
         return transactionRequest
@@ -239,12 +264,12 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         struct Payload: Encodable {
             
             let iss = "CHAIPAY"
-            let sub = "SglffyyZgojEdXWL"
+            let sub = "aiHKafKIbsdUJDOb"
             let iat = generateCurrentTimeStamp()
             let exp = generateCurrentTimeStamp(extraTime: 10000)
         }
-
-        let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
+        let secret = "2601efeb4409f7027da9cbe856c9b6b8b25f0de2908bc5322b1b352d0b7eb2f5"
+        //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
 
         let headerJSONData = try! JSONEncoder().encode(Header())
@@ -271,9 +296,9 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         checkout?.checkOutUI(config: config, jwtToken: token, onCompletionHandler: { (result) in
             switch result{
             case .success(let data):
-                print(data)
+                print("Data", data)
             case .failure(let error):
-                print(error)
+                print("error", error)
             }
         })
     }
