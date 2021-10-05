@@ -29,7 +29,7 @@ class SwiftAlertView: UIView {
     }
     @IBOutlet weak var CheckoutUI: UIButton! {
         didSet{
-            CheckoutUI.setTitle("SDK Checkout UI", for: .normal)
+            CheckoutUI.setTitle("Chaipay Checkout UI", for: .normal)
             CheckoutUI.layer.cornerRadius = 5
             CheckoutUI.tintColor = UIColor.white
             CheckoutUI.backgroundColor = UIColor(named: "app_theme_color")

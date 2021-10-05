@@ -38,7 +38,9 @@ class ProductListViewController: UIViewController {
     // MARK: - Properties
 
     fileprivate var data: [ProductDetailsObject] = []
-    fileprivate var selectedProducts: [ProductDetailsObject] = []
+    fileprivate var selectedProducts: [ProductDetailsObject] {
+        return Array(selectedProductsDict.values)
+    }
     fileprivate var selectedProductsDict: [String: ProductDetailsObject] = [:]
     var sortType: SortType = .ascending
 
@@ -193,11 +195,17 @@ extension ProductListViewController: ResponseViewDelegate {
 
 extension ProductListViewController: SwiftAlertViewDelegate {
     
-    func prepareConfig() -> TransactionRequest {
+    func getTotalAmount() -> Int {
+        let delivery: Double = 0
+        let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
+        return Int(sumOfOrders + delivery)
+    }
+    
+    func prepareConfig() -> WebTransactionRequest {
         
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
-        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
         let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: billingAddress)
         
         
@@ -205,9 +213,16 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         
         let shippingDetails = ShippingDetails(shippingName: "xyz", shippingEmail: "xyz@gmail.com", shippingPhone: "1234567890", shippingAddress: shippingAddress)
         
-        let orderDetails = OrderDetails(id: "knb", name: "kim nguyen bao", price: 1000, quantity: 1)
+        var orderDetails:  [OrderDetails] = []
+        for details in self.selectedProducts {
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1)
+            orderDetails.append(product)
+        }
         
-        return TransactionRequest(chaipayKey: "lzrYFPfyMLROallZ", key: "lzrYFPfyMLROallZ", merchantDetails: merchantDetails, paymentChannel: "", paymentMethod: "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: 180000, currency: "VND", signatureHash: "123",billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: [orderDetails],  successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: true )
+        let transactionRequest = WebTransactionRequest(chaipayKey: "SglffyyZgojEdXWL", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: true, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        
+        print(transactionRequest)
+        return transactionRequest
     }
     
     func createJWTToken() -> String {
@@ -224,12 +239,12 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         struct Payload: Encodable {
             
             let iss = "CHAIPAY"
-            let sub = "lzrYFPfyMLROallZ"
+            let sub = "SglffyyZgojEdXWL"
             let iat = generateCurrentTimeStamp()
             let exp = generateCurrentTimeStamp(extraTime: 10000)
         }
 
-        let secret = "0e94b3232e1bf9ec0e378a58bc27067a86459fc8f94d19f146ea8249455bf242"
+        let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
 
         let headerJSONData = try! JSONEncoder().encode(Header())
