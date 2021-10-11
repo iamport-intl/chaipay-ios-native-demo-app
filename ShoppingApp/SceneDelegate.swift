@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ChaiPayPaymentSDK
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -48,8 +49,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url.absoluteString, url.hasPrefix("chaipay:") {
-            (AppDelegate.shared.window?.rootViewController as? UINavigationController)?.popViewController(animated: true)
+        if let url = URLContexts.first?.url, url.absoluteString.hasPrefix("chaipay:") {
+            AppDelegate.shared.checkout?.handleUrl(url)
         }
     }
 }

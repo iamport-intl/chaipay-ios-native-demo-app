@@ -212,8 +212,11 @@ class ProductDetailsViewController: UIViewController {
         
         var orderDetails: [OrderDetails] = []
         
+        for details in self.selectedProducts {
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, image: details.imageName ?? "")
+            orderDetails.append(product)
+        }
         
-        orderDetails.append(OrderDetails(id: "knb", name: "kim nguyen bao", price: 1000, quantity: 1))
         print("totalAmount", totalAmount)
         let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
         

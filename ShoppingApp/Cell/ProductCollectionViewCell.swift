@@ -6,11 +6,24 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProductCollectionViewCell: UICollectionViewCell {
     // MARK: - Outlets
 
-    @IBOutlet var placeholderView: UIView!
+    @IBOutlet var placeholderView: UIView! {
+        didSet {
+            placeholderView.applyShadow()
+            placeholderView.layer.cornerRadius = 5
+        }
+    }
+    
+    @IBOutlet var containerView: UIView! {
+        didSet {
+            containerView.applyShadow()
+            containerView.layer.cornerRadius = 5
+        }
+    }
     @IBOutlet var coverImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
@@ -42,8 +55,9 @@ extension ProductCollectionViewCell {
         let intValue = Int(shoppingData.price ?? 0)
         priceLabel.text = (shoppingData.currency ?? "") + "\(intValue)"
         priceLabel.textColor = UIColor(named: "custom_color_black")
-        coverImage.image = UIImage(named: shoppingData.imageName ?? "")
-
+        let url =  URL(string: shoppingData.imageName ?? "")
+        coverImage.sd_setImage(with: url, completed: nil)
+        coverImage.contentMode = .scaleAspectFit
         if isSelected {
             self.contentView.layer.borderColor = UIColor(named: "app_theme_color")?.cgColor
             self.contentView.layer.borderWidth = 1

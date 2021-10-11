@@ -11,6 +11,7 @@ import ChaiPayPaymentSDK
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var checkout: Checkout?
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -18,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+        checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
         return true
     }
     
@@ -43,3 +44,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: CheckoutDelegate {
+    
+    func transactionErrorResponse(_ error: Error?) {
+        print("Eror",error)
+    }
+    
+    var viewController: UIViewController? {
+        return AppDelegate.shared.window?.rootViewController
+    }
+    
+    func transactionResponse(_ webViewResponse: WebViewResponse?) {
+        NotificationCenter.default.post(name: NSNotification.Name("webViewResponse"), object: webViewResponse)
+        print("webview response", webViewResponse)
+    }
+}

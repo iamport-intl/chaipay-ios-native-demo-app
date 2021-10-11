@@ -38,13 +38,13 @@
 		EDA14C8226B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */; };
 		F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F01D59C026F4830F008C82BB /* SwiftAlertView.xib */; };
 		F01D59C326F48339008C82BB /* SwiftAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01D59C226F48339008C82BB /* SwiftAlertView.swift */; };
-		F0400865270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0400864270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework */; };
-		F0400866270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0400864270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F095167426E8D19D00B37A3A /* CreditCardFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */; };
 		F095167A26E8FFE800B37A3A /* MobileNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F095167826E8FFE800B37A3A /* MobileNumberTableViewCell.swift */; };
 		F095167B26E8FFE800B37A3A /* MobileNumberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F095167926E8FFE800B37A3A /* MobileNumberTableViewCell.xib */; };
 		F09B54DE26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09B54DC26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.swift */; };
 		F09B54DF26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F09B54DD26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.xib */; };
+		F0A520F0270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0A520EF270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework */; };
+		F0A520F1270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0A520EF270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0B30EE926E60F4B0049374F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EE826E60F4B0049374F /* Constants.swift */; };
 		F0B30EEB26E65D440049374F /* PaymentMethodDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EEA26E65D440049374F /* PaymentMethodDataSource.swift */; };
 		F0B30EEF26E664D00049374F /* PaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */; };
@@ -63,7 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F0400866270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
+				F0A520F1270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,12 +105,12 @@
 		EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		F01D59C026F4830F008C82BB /* SwiftAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwiftAlertView.xib; sourceTree = "<group>"; };
 		F01D59C226F48339008C82BB /* SwiftAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAlertView.swift; sourceTree = "<group>"; };
-		F0400864270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = ../ChaiPayPaymentSDK/build/ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
 		F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardFormatter.swift; sourceTree = "<group>"; };
 		F095167826E8FFE800B37A3A /* MobileNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberTableViewCell.swift; sourceTree = "<group>"; };
 		F095167926E8FFE800B37A3A /* MobileNumberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileNumberTableViewCell.xib; sourceTree = "<group>"; };
 		F09B54DC26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfPaymentMethodsTableViewCell.swift; sourceTree = "<group>"; };
 		F09B54DD26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListOfPaymentMethodsTableViewCell.xib; sourceTree = "<group>"; };
+		F0A520EF270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = "../../iOS-Frameworks/ChaiPayPaymentSDK.xcframework"; sourceTree = "<group>"; };
 		F0B30EE826E60F4B0049374F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F0B30EEA26E65D440049374F /* PaymentMethodDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodDataSource.swift; sourceTree = "<group>"; };
 		F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */,
-				F0400865270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework in Frameworks */,
+				F0A520F0270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +260,7 @@
 		F06BA22726DE38CA00E0302E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F0400864270CB58800E8CC85 /* ChaiPayPaymentSDK.xcframework */,
+				F0A520EF270F4FC700FFA826 /* ChaiPayPaymentSDK.xcframework */,
 				FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
@@ -601,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100009;
+				CURRENT_PROJECT_VERSION = 100013;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",
@@ -631,7 +631,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100009;
+				CURRENT_PROJECT_VERSION = 100013;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",

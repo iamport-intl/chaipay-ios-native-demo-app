@@ -39,7 +39,7 @@ class ProductPaymentTableViewCell: UITableViewCell {
 
         centerFlowLayout?.animationMode = CenterFlowLayoutAnimation.scale(sideItemScale: 0.6, sideItemAlpha: 0.6, sideItemShift: 0.0)
 
-        centerFlowLayout?.spacingMode = .fixed(spacing: 20)
+        centerFlowLayout?.spacingMode = .fixed(spacing: 10)
     }
 
     func registerCells() {

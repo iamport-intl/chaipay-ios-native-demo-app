@@ -19,8 +19,9 @@ class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
     var appThemeColor = ""
-    var checkout: Checkout?
+    
     var formattedSummaryText: String = ""
+    var checkout = AppDelegate.shared.checkout
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
@@ -58,7 +59,7 @@ class ProductListViewController: UIViewController {
         super.viewDidLoad()
       
         NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
-        checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
+        
         setupInitialData()
         setupCollectionView()
         setupBackButton()
@@ -209,12 +210,14 @@ extension ProductListViewController: PinterestLayoutDelegate {
 
 extension ProductListViewController: ResponseViewDelegate {
     func goBack(fromSuccess: Bool) {
-        if(fromSuccess) {
-            hideSwiftView()
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            hideSwiftView()
-        }
+//        if(fromSuccess) {
+//            hideSwiftView()
+//            self.navigationController?.popViewController(animated: true)
+//        } else {
+//            hideSwiftView()
+//        }
+        hideSwiftView()
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -240,11 +243,11 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         
         var orderDetails:  [OrderDetails] = []
         for details in self.selectedProducts {
-            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1)
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, image: details.imageName ?? "")
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: true, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let transactionRequest = WebTransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
         
         print(transactionRequest)
         return transactionRequest
@@ -321,13 +324,4 @@ extension ProductListViewController: SwiftAlertViewDelegate {
     
 }
 
-extension ProductListViewController: CheckoutDelegate {
-    var viewController: UIViewController? {
-        return self
-    }
-    
-    func transactionResponse(_ webViewResponse: WebViewResponse?) {
-        NotificationCenter.default.post(name: NSNotification.Name("webViewResponse"), object: webViewResponse)
-        print("webview response", webViewResponse)
-    }
-}
+
