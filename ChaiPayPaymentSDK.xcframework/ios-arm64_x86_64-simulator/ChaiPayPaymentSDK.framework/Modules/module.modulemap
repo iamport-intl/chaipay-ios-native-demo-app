@@ -1,0 +1,11 @@
+framework module ChaiPayPaymentSDK {
+  umbrella header "ChaiPayPaymentSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module ChaiPayPaymentSDK.Swift {
+    header "ChaiPayPaymentSDK-Swift.h"
+    requires objc
+}
