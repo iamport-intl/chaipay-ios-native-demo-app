@@ -18,7 +18,7 @@ class PinterestLayout: UICollectionViewLayout {
     
     // Layout configuration properties
     fileprivate var numberOfColumns = 2
-    fileprivate var cellPadding: CGFloat = 8
+    fileprivate var cellPadding: CGFloat = 4
     
     // An array to cache the calculated attributes. When you call prepare(), you’ll calculate the attributes for all items and add them to the cache. When the collection view later requests the layout attributes, you can be efficient and query the cache instead of recalculating them every time
     fileprivate var cache = [UICollectionViewLayoutAttributes]()

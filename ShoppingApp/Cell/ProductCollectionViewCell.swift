@@ -14,14 +14,14 @@ class ProductCollectionViewCell: UICollectionViewCell {
     @IBOutlet var placeholderView: UIView! {
         didSet {
             placeholderView.applyShadow()
-            placeholderView.layer.cornerRadius = 5
+            placeholderView.layer.cornerRadius = 8
         }
     }
     
     @IBOutlet var containerView: UIView! {
         didSet {
             containerView.applyShadow()
-            containerView.layer.cornerRadius = 5
+            containerView.layer.cornerRadius = 8
         }
     }
     @IBOutlet var coverImage: UIImageView!
@@ -54,7 +54,7 @@ extension ProductCollectionViewCell {
         descriptionLabel.textColor = UIColor(named: "custom_color_gray")
         let intValue = Int(shoppingData.price ?? 0)
         priceLabel.text = (shoppingData.currency ?? "") + "\(intValue)"
-        priceLabel.textColor = UIColor(named: "custom_color_black")
+        priceLabel.textColor = UIColor(named: "app_theme_color")
         let url =  URL(string: shoppingData.imageName ?? "")
         coverImage.sd_setImage(with: url, completed: nil)
         coverImage.contentMode = .scaleAspectFit

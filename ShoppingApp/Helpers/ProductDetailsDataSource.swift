@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 enum DetailsSectionType {
-    case mobile
     case details
+    case savedCards
     case payment
     case summary
 }
@@ -51,22 +51,76 @@ class ProductDetailsDataModel: DetailsSectionItem {
         return .details
     }
 
-    var datasource: [ProductDetailsObject] = []
+    let datasource: [ProductDetailsObject]
+    let isExpanded: Bool
 
     var rowCount: Int {
-        return datasource.count
+        return isExpanded ? datasource.count : 0
     }
 
     var rowHeight: CGFloat {
         return UITableView.automaticDimension
     }
 
-    init(datasource: [ProductDetailsObject]) {
+    init(datasource: [ProductDetailsObject], isExpanded: Bool) {
         self.datasource = datasource
+        self.isExpanded = isExpanded
+    }
+    
+    var sectionTitle: String? {
+        return "My cart"
+    }
+    
+    var headerHeight: CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
+class SavedCardsPaymentDataModel: DetailsSectionItem {
+    
+    var type: DetailsSectionType {
+        return .savedCards
+    }
+
+    let datasource: [PaymentMethodDataSource]
+    let shouldShowOTPInputView: Bool
+    let mobileNumberVerified: Bool
+    let isExpand: Bool
+
+    var rowCount: Int {
+        if isExpand {
+            if mobileNumberVerified {
+                return datasource.count == 0 ? 1 : datasource.count
+            } else {
+                return 1
+            }
+        } else {
+            return 0
+        }
+    }
+
+    var rowHeight: CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    init(datasource: [PaymentMethodDataSource], shouldShowOTPInputView: Bool, mobileNumberVerified: Bool, isExpand: Bool) {
+        self.datasource = datasource
+        self.shouldShowOTPInputView = shouldShowOTPInputView
+        self.mobileNumberVerified = mobileNumberVerified
+        self.isExpand = isExpand
+    }
+    
+    var sectionTitle: String? {
+        return "Saved Cards"
+    }
+    
+    var headerHeight: CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
 class ProductPaymentDataModel: DetailsSectionItem {
+    
     var type: DetailsSectionType {
         return .payment
     }
@@ -79,6 +133,10 @@ class ProductPaymentDataModel: DetailsSectionItem {
 
     var rowHeight: CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    var sectionTitle: String? {
+        return "Other Options"
     }
     
     var headerHeight: CGFloat {
@@ -99,12 +157,6 @@ class ProductSummaryDataModel: DetailsSectionItem {
 
     init(summaryObject: SummaryObject) {
         self.summaryObject = summaryObject
-    }
-}
-
-class MobileViewDataModel: DetailsSectionItem {
-    var type: DetailsSectionType {
-        return .mobile
     }
 }
 

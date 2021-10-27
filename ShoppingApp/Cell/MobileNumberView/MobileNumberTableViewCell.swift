@@ -15,20 +15,21 @@ enum MobileNumberViewType {
     case mobile, otp
 }
 
-protocol mobileNumberViewDelegate: AnyObject {
+protocol MobileNumberViewDelegate: AnyObject {
     func fetchSavedCards(_ mobileNumber: String, _ OTP: String)
 }
 class MobileNumberTableViewCell: UITableViewCell {
 
     static let cellIdentifier = String(describing: MobileNumberTableViewCell.self)
     
-    var delegate: mobileNumberViewDelegate?
+    var delegate: MobileNumberViewDelegate?
     var viewType: MobileNumberViewType = .mobile
     var checkOut: Checkout?
     var otpText:String = ""
     
+    let number = UserDefaults.getMobileNumber ?? ""
     var formattedMobileNumber: String? {
-        return mobileTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        return number.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
     }
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -94,16 +95,21 @@ class MobileNumberTableViewCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         changeToMobileView()
     }
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+extension MobileNumberTableViewCell {
+    func layout(basedOn viewType: MobileNumberViewType) {
+        self.viewType = viewType
+        switch viewType {
+        case .otp:
+            self.changeToOTPView()
+            self.layoutIfNeeded()
+        case .mobile:
+            break
+        }
     }
-    
 }
 
 extension MobileNumberTableViewCell: OTPViewDelegate {

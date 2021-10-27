@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        checkout = Checkout(environmentType: EnvironmentType.dev, redirectURL: "chaipay://", delegate: self)
+        checkout = Checkout(environmentType: .dev, redirectURL: "chaipay://", secretKey: "2601efeb4409f7027da9cbe856c9b6b8b25f0de2908bc5322b1b352d0b7eb2f5", chaiPayKey: "aiHKafKIbsdUJDOb", languageCode: "", delegate: self)
+        UserDefaults.persistMobileNumber(number: "+918341469169")
         return true
     }
     

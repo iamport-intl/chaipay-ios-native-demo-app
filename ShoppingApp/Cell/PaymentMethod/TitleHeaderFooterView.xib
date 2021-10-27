@@ -12,14 +12,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TitleHeaderFooterView" customModule="ShoppingApp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="536" height="176"/>
+            <rect key="frame" x="0.0" y="0.0" width="567" height="139"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jly-7F-zW6">
-                    <rect key="frame" x="0.0" y="44" width="536" height="98"/>
+                    <rect key="frame" x="0.0" y="44" width="567" height="61"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Methods" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urM-Da-Fgl">
-                            <rect key="frame" x="15" y="0.0" width="506" height="98"/>
+                            <rect key="frame" x="15" y="10" width="537" height="41"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -28,25 +28,26 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="urM-Da-Fgl" secondAttribute="trailing" constant="15" id="2eI-0O-CQU"/>
+                        <constraint firstItem="urM-Da-Fgl" firstAttribute="top" secondItem="jly-7F-zW6" secondAttribute="top" constant="10" id="8Gp-YK-JdE"/>
+                        <constraint firstAttribute="bottom" secondItem="urM-Da-Fgl" secondAttribute="bottom" constant="10" id="fH6-Q8-0wJ"/>
                         <constraint firstItem="urM-Da-Fgl" firstAttribute="leading" secondItem="jly-7F-zW6" secondAttribute="leading" constant="15" id="h3d-dV-7JQ"/>
-                        <constraint firstItem="urM-Da-Fgl" firstAttribute="top" secondItem="jly-7F-zW6" secondAttribute="top" id="hnd-sz-CSP"/>
-                        <constraint firstAttribute="bottom" secondItem="urM-Da-Fgl" secondAttribute="bottom" id="vh1-OA-42m"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="jly-7F-zW6" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="IAH-Q5-TAG"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jly-7F-zW6" secondAttribute="trailing" id="NNe-AG-c13"/>
-                <constraint firstItem="jly-7F-zW6" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="TPB-Vk-dep"/>
-                <constraint firstItem="jly-7F-zW6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tuk-DG-6l9"/>
+                <constraint firstItem="jly-7F-zW6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="K6e-tx-PTl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="jly-7F-zW6" secondAttribute="bottom" id="OnE-k3-S3f"/>
+                <constraint firstItem="jly-7F-zW6" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="l0m-5m-Cfw"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jly-7F-zW6" secondAttribute="trailing" id="lFN-Bb-V82"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="titleLabel" destination="urM-Da-Fgl" id="pp1-Qs-9lr"/>
+                <outlet property="titleView" destination="jly-7F-zW6" id="1eo-5a-fGL"/>
             </connections>
-            <point key="canvasLocation" x="62.318840579710148" y="-189.50892857142856"/>
+            <point key="canvasLocation" x="54.347826086956523" y="-549.44196428571422"/>
         </view>
     </objects>
     <resources>

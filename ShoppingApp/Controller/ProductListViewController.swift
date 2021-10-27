@@ -25,6 +25,7 @@ class ProductListViewController: UIViewController {
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var sortImageView: UIImageView!
     @IBOutlet var shadowView: UIView! {
         didSet {
             shadowView.applyShadow()
@@ -69,7 +70,7 @@ class ProductListViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBarLargeTitleTheme(title: "Featured", color: UIColor(named: "app_theme_color") ?? UIColor.red)
+        setupNavBarLargeTitleTheme(title: "Shoe Cart", color: UIColor(named: "app_theme_color") ?? UIColor.red)
         setupNavBarTitleTheme()
     }
 
@@ -82,15 +83,15 @@ class ProductListViewController: UIViewController {
     
     func showSwiftResponseMessagesView(isSuccess: Bool = false, webViewResponse: WebViewResponse) {
         DispatchQueue.main.async {
-            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
-            view.delegate = self
-            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText, webViewResponse)
-            var config = SwiftMessages.defaultConfig
-            config.presentationStyle = .center
-            config.presentationContext = .window(windowLevel: .normal)
-            config.duration = .forever
-            config.dimMode = .gray(interactive: true)
-            SwiftMessages.show(config: config, view: view)
+//            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
+//            view.delegate = self
+//            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText, webViewResponse)
+//            var config = SwiftMessages.defaultConfig
+//            config.presentationStyle = .center
+//            config.presentationContext = .window(windowLevel: .normal)
+//            config.duration = .forever
+//            config.dimMode = .gray(interactive: true)
+//            SwiftMessages.show(config: config, view: view)
         }
     }
     
@@ -116,8 +117,10 @@ class ProductListViewController: UIViewController {
     func prepareSortingData() {
         switch sortType {
         case .ascending:
+            sortImageView.image = UIImage(named: "ascendingSort")
             data.sort(by: { $0.price ?? 0.0 < $1.price ?? 0.0 })
         case .descending:
+            sortImageView.image = UIImage(named: "descendingSort")
             data.sort(by: { $0.price ?? 0.0 > $1.price ?? 0.0 })
         }
     }
@@ -126,7 +129,7 @@ class ProductListViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView?.backgroundColor = .white
-        collectionView?.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        collectionView?.contentInset = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
 
         if let layout = collectionView?.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
@@ -146,7 +149,9 @@ class ProductListViewController: UIViewController {
 
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
-        showSwiftView()
+        //showSwiftView()
+        customUIClicked()
+        //checkOutUIClicked()
     }
 }
 
@@ -194,7 +199,7 @@ extension ProductListViewController: UICollectionViewDelegate {
 extension ProductListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let contentInset = collectionView.contentInset
-        let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right + 10)) / 2
+        let itemSize = (collectionView.frame.width - (contentInset.left + contentInset.right)) / 2
         return CGSize(width: itemSize, height: itemSize)
     }
 }
@@ -204,11 +209,11 @@ extension ProductListViewController: UICollectionViewDelegateFlowLayout {
 extension ProductListViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let productData = data[indexPath.item]
-        return min(productData.image?.size.height ?? 300, 300)
+        return min(productData.image?.size.height ?? 300, 260)
     }
 }
 
-extension ProductListViewController: ResponseViewDelegate {
+extension ProductListViewController: OrderStatusDelegate {
     func goBack(fromSuccess: Bool) {
 //        if(fromSuccess) {
 //            hideSwiftView()
@@ -217,6 +222,8 @@ extension ProductListViewController: ResponseViewDelegate {
 //            hideSwiftView()
 //        }
         hideSwiftView()
+//        let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
+//        self.present(orderStatusViewController, animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
     }
 }
@@ -233,7 +240,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
-        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
         let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: billingAddress)
         
         
@@ -243,7 +250,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         
         var orderDetails:  [OrderDetails] = []
         for details in self.selectedProducts {
-            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, image: details.imageName ?? "")
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, imageUrl: details.imageName ?? "")
             orderDetails.append(product)
         }
         

@@ -18,13 +18,15 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var stackOuterView: UIView! {
         didSet {
-            stackOuterView.applyShadow()
+            //stackOuterView.applyShadow()
         }
     }
     @IBOutlet var summaryView: SummaryView! {
         didSet {
             summaryView.isHidden = true
+            summaryView.layer.cornerRadius = 10
             summaryView.applyShadow()
+            
         }
     }
     @IBOutlet var summaryViewHeightConstraint: NSLayoutConstraint! {
@@ -51,17 +53,21 @@ class ProductDetailsViewController: UIViewController {
     var productDetailsDataSource: ProductDetailsDataSource?
     var delivery: Double = 149
     var paymentDataSource: [PaymentMethodDataSource] = []
+    var savedCardDataSource: [PaymentMethodDataSource] = []
     var paymentMethodResponse: PaymentMethodResponse?
     var cardDetails: CardDetails?
     var savedCards: [SavedCard] = []
     var selectedPaymentMethod: PaymentMethodObject?
     var selectedSavedCard: SavedCard?
+    private var shouldShowOTPInputView: Bool = false
+    private var savedCardViewIsExpanded: Bool = false
+    private var myCartIsExpanded: Bool = true
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // setupThemedNavbar()
-        
         checkout?.getAvailablePaymentGateways(completionHandler: { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -81,7 +87,6 @@ class ProductDetailsViewController: UIViewController {
         setupTableView()
         summaryOrderDetails()
         summaryAmount.text = formattedSummaryText
-        
         registerKeyboardNotifications()
     }
     
@@ -99,22 +104,31 @@ class ProductDetailsViewController: UIViewController {
         setupDataSource()
     }
     
-    func showSwiftMessagesView(isSuccess: Bool = false, _ response : WebViewResponse?) {
+    func showSwiftMessagesView(isSuccess: Bool = false, selectedProducts: [ProductDetailsObject] = [],  _ response : WebViewResponse?) {
         DispatchQueue.main.async {
-            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
-            view.delegate = self
-            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText,  response)
-            var config = SwiftMessages.defaultConfig
-            config.presentationStyle = .center
-            config.presentationContext = .window(windowLevel: .normal)
-            config.duration = .forever
-            config.dimMode = .gray(interactive: true)
-            SwiftMessages.show(config: config, view: view)
+            //            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
+            //            view.delegate = self
+            //            view.frame = CGRect(x: 50, y: 50, width: self.view.frame.height, height: self.view.frame.height)
+            //            view.layer.cornerRadius = 10
+            //            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText,  response, selectedProducts: selectedProducts)
+            //            var config = SwiftMessages.defaultConfig
+            //            config.presentationStyle = .center
+            //            config.presentationContext = .window(windowLevel: .normal)
+            //            config.duration = .forever
+            //            config.dimMode = .gray(interactive: true)
+            //            SwiftMessages.show(config: config, view: view)
+            
+            let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
+            orderStatusViewController.selectedProducts = selectedProducts
+            orderStatusViewController.isSuccess = isSuccess
+            orderStatusViewController.response = response
+            orderStatusViewController.amount = self.formattedSummaryText
+            self.present(orderStatusViewController, animated: true, completion: nil)
         }
     }
     
     func preparePaymentMethodDataSource() {
-      
+        
         let filteredWalletsData = paymentMethodResponse?.walletMethods.filter{ paymentMethod in
             return paymentMethod.paymentChannelKey != "VNPAY" &&  paymentMethod.isEnabled
         }
@@ -128,26 +142,23 @@ class ProductDetailsViewController: UIViewController {
         }.first
         
         let walletData = PaymentMethodDataSource(type: .wallet, paymentMethods: filteredWalletsData ?? [], isExpanded: false)
-        let savedCards = PaymentMethodDataSource(type: .savedCards, paymentMethods: [], cardPayments: self.savedCards, isExpanded: false)
+        //        let savedCards = PaymentMethodDataSource(type: .savedCards, paymentMethods: [], cardPayments: self.savedCards, isExpanded: false)
         let newCreditCard = PaymentMethodDataSource(type: .newCreditCard, paymentMethods: [], isExpanded: false)
         let otherPayments = PaymentMethodDataSource(type: .otherPayments, paymentMethods: otherPaymentsData ?? [], isExpanded: false)
-        paymentDataSource = [savedCards, newCreditCard, walletData, otherPayments]
+        paymentDataSource = [ newCreditCard, walletData, otherPayments]
     }
     
     func setupDataSource() {
         var detailsSectionItems: [DetailsSectionItem] = []
         
-        let productDetailsDataModel = ProductDetailsDataModel(datasource: selectedProducts)
+        let productDetailsDataModel = ProductDetailsDataModel(datasource: selectedProducts, isExpanded: myCartIsExpanded)
+        detailsSectionItems.append(productDetailsDataModel)
+        
+        let savedCardsDataSource = SavedCardsPaymentDataModel(datasource: savedCardDataSource, shouldShowOTPInputView: shouldShowOTPInputView, mobileNumberVerified: isMobileVerificationDone, isExpand: savedCardViewIsExpanded)
+        detailsSectionItems.append(savedCardsDataSource)
         
         let productPaymentDataModel = ProductPaymentDataModel(dataSource: paymentDataSource)
-        
-        let mobileViewDataModel = MobileViewDataModel()
-        
-        if(isMobileVerificationDone) {
-            detailsSectionItems =  [productDetailsDataModel, productPaymentDataModel]
-        } else {
-            detailsSectionItems =  [mobileViewDataModel]
-        }
+        detailsSectionItems.append(productPaymentDataModel)
         productDetailsDataSource?.items = detailsSectionItems
     }
     
@@ -169,17 +180,17 @@ class ProductDetailsViewController: UIViewController {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedSectionHeaderHeight = 40
         tableView.estimatedRowHeight = 80
         tableView.tableFooterView = UIView()
-        stackView.isHidden = !isMobileVerificationDone
         tableView.keyboardDismissMode = .onDrag
     }
     
     func registerCells() {
-        let cellIdentifiers = [ProductTableViewCell.cellIdentifier,  PaymentMethodTableViewCell.cellIdentifier, MobileNumberTableViewCell.cellIdentifier]
+        let cellIdentifiers = [ProductTableViewCell.cellIdentifier,  PaymentMethodTableViewCell.cellIdentifier, MobileNumberTableViewCell.cellIdentifier, NoDataTableViewCell.cellIdentifier]
         tableView.registerCells(cellIdentifiers)
         
-        tableView.registerSectionHeaderFooter(TitleHeaderFooterView.cellIdentifier)
+        tableView.registerSectionHeaderFooters([TitleHeaderFooterView.cellIdentifier, SavedCardHeaderFooterView.cellIdentifier])
     }
     
     @objc override func keyboardWillShow(notification: NSNotification) {
@@ -204,7 +215,7 @@ class ProductDetailsViewController: UIViewController {
     }
     
     func prepareConfig() -> TransactionRequest {
-        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: getBillingadress())
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918309814058", billingAddress: getBillingadress())
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
         
@@ -213,12 +224,12 @@ class ProductDetailsViewController: UIViewController {
         var orderDetails: [OrderDetails] = []
         
         for details in self.selectedProducts {
-            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, image: details.imageName ?? "")
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, imageUrl: details.imageName ?? "")
             orderDetails.append(product)
         }
         
         print("totalAmount", totalAmount)
-        let merchantDetails = MerchantDetails(name: "Downy", logo: "images/v184_135.png", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
         
         return TransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", key: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND")
     }
@@ -237,6 +248,7 @@ class ProductDetailsViewController: UIViewController {
     
     @IBAction func onClickShowSummary(_ sender: UIButton) {
         summaryView.isHidden = !summaryView.isHidden
+        summaryView.layer.cornerRadius = 10
         summaryViewHeightConstraint.constant = summaryView.isHidden ? 0 : 92
     }
     
@@ -257,13 +269,13 @@ class ProductDetailsViewController: UIViewController {
                     if(data.isSuccess == "false") {
                         isSuccess = false
                     }
-                    self.showSwiftMessagesView(isSuccess: isSuccess, data)
+                    self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, data)
                 case .failure(let error):
                     isSuccess = false
-                    self.showSwiftMessagesView(isSuccess: isSuccess, nil)
+                    self.showSwiftMessagesView(isSuccess: isSuccess,  selectedProducts: self.selectedProducts, nil)
                 }
                 
-               
+                
             })
             
         } else if let savedCard = selectedSavedCard {
@@ -282,10 +294,10 @@ class ProductDetailsViewController: UIViewController {
                     if(data.isSuccess == "false") {
                         isSuccess = false
                     }
-                    self.showSwiftMessagesView(isSuccess: isSuccess, data)
+                    self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, data)
                 case .failure(let _):
                     isSuccess = false
-                    self.showSwiftMessagesView(isSuccess: isSuccess, nil)
+                    self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, nil)
                 }
                 
             })
@@ -294,13 +306,12 @@ class ProductDetailsViewController: UIViewController {
             print(config)
             showCheckoutVC(config)
         }
-        
     }
     
     @objc func showResponseInfo(_ notification: Notification) {
         if let webViewResponse = notification.object as? WebViewResponse {
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
-            showSwiftMessagesView(isSuccess: isSuccess, webViewResponse)
+            showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, webViewResponse)
         }
     }
     
@@ -327,23 +338,46 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = productDetailsDataSource?.items[indexPath.section]
         switch item?.type {
-        case .mobile:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: MobileNumberTableViewCell.cellIdentifier) as? MobileNumberTableViewCell else {
-                return UITableViewCell()
-            }
-            cell.checkOut = checkout
-            cell.delegate = self
-            return cell
         case .details:
             guard let datasource = (item as? ProductDetailsDataModel)?.datasource, let cell = tableView.dequeueReusableCell(withIdentifier: ProductTableViewCell.cellIdentifier) as? ProductTableViewCell else {
-                return UITableViewCell()
+                return UITableViewCell(frame: .zero)
             }
             cell.layout(basedOn: datasource[indexPath.row])
             return cell
             
+        case .savedCards:
+            guard let showInputView = (item as? SavedCardsPaymentDataModel)?.shouldShowOTPInputView,
+                  let savedCards = (item as? SavedCardsPaymentDataModel)?.datasource else {
+                return UITableViewCell(frame: .zero)
+            }
+            if showInputView {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MobileNumberTableViewCell.cellIdentifier) as? MobileNumberTableViewCell else {
+                    return UITableViewCell(frame: .zero)
+                }
+                cell.delegate = self
+                cell.checkOut = checkout
+                cell.layout(basedOn: .otp)
+                return cell
+            } else {
+                if savedCards.count > 0 {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: PaymentMethodTableViewCell.cellIdentifier) as? PaymentMethodTableViewCell else {
+                        return UITableViewCell(frame: .zero)
+                    }
+                    cell.selectionStyle = .none
+                    cell.delegate = self
+                    cell.layout(basedOn: savedCards[indexPath.row], paymentMethodObject: selectedPaymentMethod, savedCard: selectedSavedCard)
+                    return cell
+                } else {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: NoDataTableViewCell.cellIdentifier) as? NoDataTableViewCell else {
+                        return UITableViewCell(frame: .zero)
+                    }
+                    return cell
+                }
+            }
+            
         case .payment:
             guard let dataSource = (item as? ProductPaymentDataModel)?.dataSource, let cell = tableView.dequeueReusableCell(withIdentifier: PaymentMethodTableViewCell.cellIdentifier) as? PaymentMethodTableViewCell else {
-                return UITableViewCell()
+                return UITableViewCell(frame: .zero)
             }
             cell.selectionStyle = .none
             cell.delegate = self
@@ -351,7 +385,7 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
             return cell
             
         default:
-            return UITableViewCell()
+            return UITableViewCell(frame: .zero)
         }
     }
     
@@ -386,19 +420,38 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return productDetailsDataSource?.items[indexPath.section].rowHeight ?? 0.01
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderFooterView.cellIdentifier) as? TitleHeaderFooterView
-        headerView?.layout(basedOn: "Payment Options")
-        return headerView
+        let item = productDetailsDataSource?.items[section]
+        switch item?.type {
+        case .savedCards, .details:
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SavedCardHeaderFooterView.cellIdentifier) as? SavedCardHeaderFooterView else {
+                return emptyView()
+            }
+            
+            headerView.delegate = self
+            headerView.layout(basedOn: item?.sectionTitle ?? "", viewType: item?.type == .savedCards ? .savedCards : .myCart, isExpanded: item?.type == .savedCards ? savedCardViewIsExpanded : myCartIsExpanded)
+            return headerView
+            
+        default:
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderFooterView.cellIdentifier) as? TitleHeaderFooterView else {
+                return emptyView()
+            }
+            headerView.layout(basedOn: item?.sectionTitle ?? "", applyShadow: false)
+            return headerView
+        }
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    private func emptyView() -> UIView {
         let view = UIView()
         view.backgroundColor = .white
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return emptyView()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -430,7 +483,7 @@ extension ProductDetailsViewController : PaymentMethodDelegate {
     }
 }
 
-extension ProductDetailsViewController : mobileNumberViewDelegate {
+extension ProductDetailsViewController : MobileNumberViewDelegate {
     func fetchSavedCards(_ mobileNumber: String, _ OTP: String) {
         checkout?.fetchSavedCards(mobileNumber, otp: OTP, onCompletionHandler: { (result) in
             switch result {
@@ -438,7 +491,9 @@ extension ProductDetailsViewController : mobileNumberViewDelegate {
                 DispatchQueue.main.async {
                     self.isMobileVerificationDone = true
                     self.stackView.isHidden = false
-                    self.savedCards = values.savedCards
+                    self.savedCards = values.content
+                    UserDefaults.persist(token: values.token)
+                    self.shouldShowOTPInputView = false
                     self.setupInitialData()
                     self.tableView.reloadData()
                 }
@@ -448,7 +503,7 @@ extension ProductDetailsViewController : mobileNumberViewDelegate {
         })
     }
 }
-extension ProductDetailsViewController: ResponseViewDelegate {
+extension ProductDetailsViewController: OrderStatusDelegate {
     func goBack(fromSuccess: Bool) {
         if(fromSuccess) {
             SwiftMessages.hide()
@@ -457,6 +512,64 @@ extension ProductDetailsViewController: ResponseViewDelegate {
             SwiftMessages.hide()
         }
     }
+}
+
+extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
+    func onClickSavedCard(_ isExpanded: Bool, _ viewType: SectionHeaderViewType) {
+        switch viewType {
+        case .myCart:
+            myCartIsExpanded = isExpanded
+            self.setupDataSource()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        case .savedCards:
+            savedCardViewIsExpanded = isExpanded
+            if savedCardViewIsExpanded {
+                if isMobileVerificationDone {
+                    fetchSavedCards(mobileNumber: UserDefaults.getMobileNumber ?? "", token: UserDefaults.getAuthorisationToken ?? "")
+                } else {
+                    checkout?.getOTP(UserDefaults.getMobileNumber ?? "", onCompletionHandler: { (result) in
+                        switch result {
+                        case .success(let data):
+                            self.shouldShowOTPInputView = isExpanded
+                            self.setupDataSource()
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        case.failure(let error):
+                            print(error)
+                            break
+                        }
+                    })
+                }
+            } else {
+                self.setupDataSource()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     
-    
+    func fetchSavedCards(mobileNumber: String, token: String) {
+        checkout?.fetchSavedCards(mobileNumber, token: token, onCompletionHandler: { result in
+            switch result {
+            case .success(let response):
+                self.savedCards = response.content
+                UserDefaults.persist(token: response.token)
+                self.setupDataSource()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                UserDefaults.removeAuthorisationToken()
+                self.isMobileVerificationDone = false
+                self.setupDataSource()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        })
+    }
 }

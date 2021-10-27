@@ -28,8 +28,6 @@ class PaymentMethodTableViewCell: UITableViewCell {
     
     @IBOutlet var shadowView: UIView! {
         didSet {
-            shadowView.applyShadow()
-            shadowView.layer.cornerRadius = 5
         }
     }
     

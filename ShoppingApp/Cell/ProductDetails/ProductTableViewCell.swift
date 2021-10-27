@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProductTableViewCell: UITableViewCell {
     // MARK: - Outlets
@@ -15,7 +16,13 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
-
+    @IBOutlet var containerView: UIView! {
+        didSet{
+            containerView.layer.borderWidth = 1
+            containerView.layer.cornerRadius = 10
+            containerView.layer.borderColor = UIColor.lightGray.cgColor
+        }
+    }
     static let cellIdentifier = String(describing: ProductTableViewCell.self)
 
     // MARK: - Overrides
@@ -38,7 +45,9 @@ extension ProductTableViewCell {
         descriptionLabel.text = shoppingData.description
         descriptionLabel.textColor = UIColor(named: "custom_color_gray")
         coverImage.image = UIImage(named: shoppingData.imageName ?? "")
-
+        let url = URL(string: shoppingData.imageName ?? "")
+        coverImage.sd_setImage(with: url, completed: nil)
+       
         let intValue = Int(shoppingData.price ?? 0)
         let formattedPrice = (shoppingData.currency ?? "") + "\(intValue)"
         let priceAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "custom_color_black") ?? .red] as [NSAttributedString.Key: Any]

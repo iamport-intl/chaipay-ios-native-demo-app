@@ -16,6 +16,7 @@ class SummaryView: UIView {
 
     @IBOutlet var summaryTitleLabel: UILabel!
     @IBOutlet var summaryValueLabel: UILabel!
+    
 }
 
 extension SummaryView {
@@ -27,6 +28,8 @@ extension SummaryView {
         deliveryValueLabel.text = summaryObject.deliveryValue
 
         summaryTitleLabel.text = summaryObject.summaryTitle
+        summaryTitleLabel.textColor = UIColor.red
         summaryValueLabel.text = summaryObject.summaryValue
+        summaryValueLabel.textColor = UIColor.red
     }
 }

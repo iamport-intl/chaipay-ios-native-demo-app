@@ -99,6 +99,13 @@ extension UITableView {
         let nib = UINib(nibName: cellIdentifier, bundle: nil)
         self.register(nib, forHeaderFooterViewReuseIdentifier: cellIdentifier)
     }
+    
+    func registerSectionHeaderFooters(_ cellIdentifiers: [String]) {
+        for identifier in cellIdentifiers {
+            let nib = UINib(nibName: identifier, bundle: nil)
+            self.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
+        }
+    }
 }
 
 extension UICollectionView {
