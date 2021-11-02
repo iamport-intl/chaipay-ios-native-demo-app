@@ -44,16 +44,14 @@ class ProductDetailsViewController: UIViewController {
     var checkout: Checkout?
     
     // MARK: - Properties
-    var filterCardList: PaymentMethodObject?
-    var formattedSummaryText: String = ""
+    var formattedSummaryText: String? = UserDefaults.getMobileNumber
     var totalAmount: Double = 0
     var isMobileVerificationDone: Bool = false
     var selectedProductsDict: [String: ProductDetailsObject] = [:]
     var selectedProducts: [ProductDetailsObject] = []
     var productDetailsDataSource: ProductDetailsDataSource?
-    var delivery: Double = 149
+    var delivery: Double = 0
     var paymentDataSource: [PaymentMethodDataSource] = []
-    var savedCardDataSource: [PaymentMethodDataSource] = []
     var paymentMethodResponse: PaymentMethodResponse?
     var cardDetails: CardDetails?
     var savedCards: [SavedCard] = []
@@ -82,6 +80,7 @@ class ProductDetailsViewController: UIViewController {
             }
         })
         NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
+        isMobileVerificationDone = UserDefaults.getAuthorisationToken != nil
         setupInitialData()
         registerCells()
         setupTableView()
@@ -104,25 +103,17 @@ class ProductDetailsViewController: UIViewController {
         setupDataSource()
     }
     
-    func showSwiftMessagesView(isSuccess: Bool = false, selectedProducts: [ProductDetailsObject] = [],  _ response : WebViewResponse?) {
+    func showSwiftMessagesView(isSuccess: Bool = false, selectedProducts: [ProductDetailsObject] = [],  _ webResponse : WebViewResponse?) {
+        print("RESPONE 123", webResponse)
         DispatchQueue.main.async {
-            //            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
-            //            view.delegate = self
-            //            view.frame = CGRect(x: 50, y: 50, width: self.view.frame.height, height: self.view.frame.height)
-            //            view.layer.cornerRadius = 10
-            //            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText,  response, selectedProducts: selectedProducts)
-            //            var config = SwiftMessages.defaultConfig
-            //            config.presentationStyle = .center
-            //            config.presentationContext = .window(windowLevel: .normal)
-            //            config.duration = .forever
-            //            config.dimMode = .gray(interactive: true)
-            //            SwiftMessages.show(config: config, view: view)
-            
+            print("RESPONE 110", webResponse)
             let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
+            orderStatusViewController.delegate = self
             orderStatusViewController.selectedProducts = selectedProducts
             orderStatusViewController.isSuccess = isSuccess
-            orderStatusViewController.response = response
-            orderStatusViewController.amount = self.formattedSummaryText
+            orderStatusViewController.response = webResponse
+            orderStatusViewController.amount = Int(self.totalAmount ?? 0)
+            orderStatusViewController.delivery = Int(self.delivery)
             self.present(orderStatusViewController, animated: true, completion: nil)
         }
     }
@@ -132,20 +123,29 @@ class ProductDetailsViewController: UIViewController {
         let filteredWalletsData = paymentMethodResponse?.walletMethods.filter{ paymentMethod in
             return paymentMethod.paymentChannelKey != "VNPAY" &&  paymentMethod.isEnabled
         }
-        let otherPaymentsData = paymentMethodResponse?.walletMethods.filter( {$0.paymentChannelKey == "VNPAY"})
         
-        filterCardList = paymentMethodResponse?.cardMethods.filter{
+        let filterATMCards = paymentMethodResponse?.cardMethods.filter{
+            method in
+            method.isDefault &&
+                method.isEnabled &&
+                method.subType.contains("ATM_CARD")
+        }
+        
+        let filterCreditCards = paymentMethodResponse?.cardMethods.filter{
             method in
             method.isDefault &&
                 method.isEnabled &&
                 method.subType.contains("INT_CREDIT_CARD")
-        }.first
+        }
         
+        let newCreditCard = PaymentMethodDataSource(type: .newCreditCard, paymentMethods: filterCreditCards ?? [], isExpanded: false)
         let walletData = PaymentMethodDataSource(type: .wallet, paymentMethods: filteredWalletsData ?? [], isExpanded: false)
-        //        let savedCards = PaymentMethodDataSource(type: .savedCards, paymentMethods: [], cardPayments: self.savedCards, isExpanded: false)
-        let newCreditCard = PaymentMethodDataSource(type: .newCreditCard, paymentMethods: [], isExpanded: false)
-        let otherPayments = PaymentMethodDataSource(type: .otherPayments, paymentMethods: otherPaymentsData ?? [], isExpanded: false)
-        paymentDataSource = [ newCreditCard, walletData, otherPayments]
+        let otherPayments = PaymentMethodDataSource(type: .atm, paymentMethods: filterATMCards ?? [], isExpanded: false)
+        if !(filterATMCards?.isEmpty ?? true) {
+            paymentDataSource = [ newCreditCard, walletData, otherPayments]
+        } else {
+            paymentDataSource = [ newCreditCard, walletData]
+        }
     }
     
     func setupDataSource() {
@@ -154,7 +154,7 @@ class ProductDetailsViewController: UIViewController {
         let productDetailsDataModel = ProductDetailsDataModel(datasource: selectedProducts, isExpanded: myCartIsExpanded)
         detailsSectionItems.append(productDetailsDataModel)
         
-        let savedCardsDataSource = SavedCardsPaymentDataModel(datasource: savedCardDataSource, shouldShowOTPInputView: shouldShowOTPInputView, mobileNumberVerified: isMobileVerificationDone, isExpand: savedCardViewIsExpanded)
+        let savedCardsDataSource = SavedCardsPaymentDataModel(datasource: savedCards, shouldShowOTPInputView: shouldShowOTPInputView, mobileNumberVerified: isMobileVerificationDone, isExpand: savedCardViewIsExpanded)
         detailsSectionItems.append(savedCardsDataSource)
         
         let productPaymentDataModel = ProductPaymentDataModel(dataSource: paymentDataSource)
@@ -164,12 +164,12 @@ class ProductDetailsViewController: UIViewController {
     
     func summaryOrderDetails() {
         let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
-        let formattedSumOfOrdersText = (selectedProducts.first?.currency ?? "") + "\(sumOfOrders)"
-        let deliveryFormattedText = "\(selectedProducts.first?.currency ?? "")" + "\(delivery)"
+        let formattedSumOfOrdersText = "\(Int(sumOfOrders).formatCurrency())"
+        let deliveryFormattedText = "\(Int(delivery).formatCurrency())"
         
         let summary = sumOfOrders + delivery
         totalAmount = summary
-        let formattedSummaryText = "\(selectedProducts.first?.currency ?? "")" + "\(summary)"
+        let formattedSummaryText = "\(Int(summary).formatCurrency())"
         
         
         let summaryObject = SummaryObject(orderTitle: "Order", orderValue: formattedSumOfOrdersText, deliveryTitle: "Delivery", deliveryValue: deliveryFormattedText, summaryTitle: "Summary", summaryValue: formattedSummaryText)
@@ -215,7 +215,7 @@ class ProductDetailsViewController: UIViewController {
     }
     
     func prepareConfig() -> TransactionRequest {
-        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918309814058", billingAddress: getBillingadress())
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: UserDefaults.getMobileNumber ?? "", billingAddress: getBillingadress())
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
         
@@ -231,7 +231,7 @@ class ProductDetailsViewController: UIViewController {
         print("totalAmount", totalAmount)
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
         
-        return TransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", key: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND")
+        return TransactionRequest(chaipayKey: CHAIPAYKEY, key: CHAIPAYKEY, merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VND")
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
@@ -255,8 +255,8 @@ class ProductDetailsViewController: UIViewController {
     @IBAction func onClickPayNowButton(_ sender: UIButton) {
         if let cardDetails = cardDetails {
             var config = prepareConfig()
-            config.paymentMethod = filterCardList?.paymentMethodKey ?? "MASTERCARD_CARD"
-            config.paymentChannel = filterCardList?.paymentChannelKey ?? "MASTERCARD"
+            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? "MASTERCARD_CARD"
+            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? "MASTERCARD"
             self.showHUD()
             print("Config", config)
             print("CardDetails", cardDetails)
@@ -269,21 +269,21 @@ class ProductDetailsViewController: UIViewController {
                     if(data.isSuccess == "false") {
                         isSuccess = false
                     }
+                    print("data", data)
                     self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, data)
                 case .failure(let error):
                     isSuccess = false
                     self.showSwiftMessagesView(isSuccess: isSuccess,  selectedProducts: self.selectedProducts, nil)
                 }
-                
-                
             })
             
         } else if let savedCard = selectedSavedCard {
             var config = prepareConfig()
-            config.paymentMethod = "MASTERCARD_CARD"
-            config.paymentChannel = "MASTERCARD"
+            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? "MASTERCARD_CARD"
+
+            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? "MASTERCARD"
             self.showHUD()
-            let cardDetails = CardDetails(token: savedCard.token, cardNumber: savedCard.partialCardNumber, expiryMonth: savedCard.expiryMonth, expiryYear: savedCard.expiryYear, cardHolderName: "NGUYUN VANA A", type: savedCard.type, cvv: "100")
+            let cardDetails = CardDetails(token: savedCard.token, cardNumber: savedCard.partialCardNumber, expiryMonth: savedCard.expiryMonth, expiryYear: savedCard.expiryYear, cardHolderName: "NGUYUN VANA A", type: savedCard.type, cvv: "100", savedCard: true)
             checkout?.initiateSavedCardPayment(config, cardDetails: cardDetails, onCompletionHandler: { (result) in
                 var isSuccess: Bool = false
                 self.hideHUD()
@@ -295,14 +295,16 @@ class ProductDetailsViewController: UIViewController {
                         isSuccess = false
                     }
                     self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, data)
-                case .failure(let _):
+                case .failure:
                     isSuccess = false
                     self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, nil)
                 }
                 
             })
         } else {
-            let config = prepareConfig()
+            var config = prepareConfig()
+            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? ""
+            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? ""
             print(config)
             showCheckoutVC(config)
         }
@@ -347,7 +349,7 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
             
         case .savedCards:
             guard let showInputView = (item as? SavedCardsPaymentDataModel)?.shouldShowOTPInputView,
-                  let savedCards = (item as? SavedCardsPaymentDataModel)?.datasource else {
+                  let cards = (item as? SavedCardsPaymentDataModel)?.datasource else {
                 return UITableViewCell(frame: .zero)
             }
             if showInputView {
@@ -359,13 +361,15 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
                 cell.layout(basedOn: .otp)
                 return cell
             } else {
-                if savedCards.count > 0 {
+                print("self.savedCards.count", cards.count)
+                print("self.savedCards", savedCards)
+                if cards.count > 0 {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: PaymentMethodTableViewCell.cellIdentifier) as? PaymentMethodTableViewCell else {
                         return UITableViewCell(frame: .zero)
                     }
                     cell.selectionStyle = .none
                     cell.delegate = self
-                    cell.layout(basedOn: savedCards[indexPath.row], paymentMethodObject: selectedPaymentMethod, savedCard: selectedSavedCard)
+                    cell.layout(basedOn: cards, savedCard: selectedSavedCard)
                     return cell
                 } else {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: NoDataTableViewCell.cellIdentifier) as? NoDataTableViewCell else {
@@ -394,21 +398,99 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
         let item = productDetailsDataSource?.items[indexPath.section]
         switch item?.type {
         case .details:
-            guard let datasource = (item as? ProductDetailsDataModel)?.datasource else {
-                return
-            }
+            break
             
         case .payment:
             guard let dataSource = (item as? ProductPaymentDataModel)?.dataSource else {
                 return
             }
             
-            var selectedData = dataSource[indexPath.row]
-            selectedData.isExpanded = !selectedData.isExpanded
-            
-            if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
-                paymentDataSource[selectedIndexPath] = selectedData
+            func siri() {
+                selectedPaymentMethod = nil
+                for (index, value) in dataSource.enumerated() {
+                    if index == indexPath.row {
+                        var selectedData = value
+                        selectedData.isSelected = false
+                        selectedData.isExpanded = !selectedData.isExpanded
+                        
+                        if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                            paymentDataSource[selectedIndexPath] = selectedData
+                        }
+                    } else {
+                        var selectedData = value
+                        selectedData.isExpanded = false
+                        selectedData.isSelected = false
+                        
+                        if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                            paymentDataSource[selectedIndexPath] = selectedData
+                        }
+                    }
+                }
             }
+            
+            switch dataSource[indexPath.row].type {
+            case .newCreditCard:
+                if let creditCard = dataSource[indexPath.row].paymentMethods.first, creditCard.tokenizationPossible {
+                    siri()
+                    selectedPaymentMethod = creditCard
+                } else {
+                    for (index, value) in dataSource.enumerated() {
+                        if index == indexPath.row {
+                            var selectedData = value
+                            selectedData.isExpanded = false
+                            selectedData.isSelected = !selectedData.isSelected
+                            
+                            if selectedData.isSelected {
+                                selectedPaymentMethod = value.paymentMethods.first
+                            } else {
+                                selectedPaymentMethod = nil
+                            }
+                            
+                            if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                                paymentDataSource[selectedIndexPath] = selectedData
+                            }
+                        } else {
+                            var selectedData = value
+                            selectedData.isSelected = false
+                            selectedData.isExpanded = false
+                            
+                            if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                                paymentDataSource[selectedIndexPath] = selectedData
+                            }
+                        }
+                    }
+                }
+            case .atm:
+                for (index, value) in dataSource.enumerated() {
+                    if index == indexPath.row {
+                        var selectedData = value
+                        selectedData.isExpanded = false
+                        selectedData.isSelected = !selectedData.isSelected
+                        
+                        if selectedData.isSelected {
+                            selectedPaymentMethod = value.paymentMethods.first
+                        } else {
+                            selectedPaymentMethod = nil
+                        }
+                        
+                        if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                            paymentDataSource[selectedIndexPath] = selectedData
+                        }
+                    } else {
+                        selectedPaymentMethod = nil
+                        var selectedData = value
+                        selectedData.isSelected = false
+                        selectedData.isExpanded = false
+                        
+                        if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                            paymentDataSource[selectedIndexPath] = selectedData
+                        }
+                    }
+                }
+            default:
+                siri()
+            }
+            
             setupDataSource()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -491,8 +573,12 @@ extension ProductDetailsViewController : MobileNumberViewDelegate {
                 DispatchQueue.main.async {
                     self.isMobileVerificationDone = true
                     self.stackView.isHidden = false
+                    print("values.content", values.content)
                     self.savedCards = values.content
-                    UserDefaults.persist(token: values.token)
+                    print("YOO", self.savedCards)
+                    if let token = values.token {
+                        UserDefaults.persist(token: token)
+                    }
                     self.shouldShowOTPInputView = false
                     self.setupInitialData()
                     self.tableView.reloadData()
@@ -505,12 +591,11 @@ extension ProductDetailsViewController : MobileNumberViewDelegate {
 }
 extension ProductDetailsViewController: OrderStatusDelegate {
     func goBack(fromSuccess: Bool) {
-        if(fromSuccess) {
-            SwiftMessages.hide()
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            SwiftMessages.hide()
-        }
+        self.navigationController?.popViewController(animated: true)
+        
+        self.navigationController?.children.first?.dismiss(animated: true, completion: nil) 
+        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -529,19 +614,7 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
                 if isMobileVerificationDone {
                     fetchSavedCards(mobileNumber: UserDefaults.getMobileNumber ?? "", token: UserDefaults.getAuthorisationToken ?? "")
                 } else {
-                    checkout?.getOTP(UserDefaults.getMobileNumber ?? "", onCompletionHandler: { (result) in
-                        switch result {
-                        case .success(let data):
-                            self.shouldShowOTPInputView = isExpanded
-                            self.setupDataSource()
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        case.failure(let error):
-                            print(error)
-                            break
-                        }
-                    })
+                    sendOTP(isExpanded)
                 }
             } else {
                 self.setupDataSource()
@@ -552,22 +625,46 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
         }
     }
     
+    func sendOTP(_ isExpanded: Bool) {
+        checkout?.getOTP(UserDefaults.getMobileNumber ?? "", onCompletionHandler: { (result) in
+            switch result {
+            case .success:
+                self.shouldShowOTPInputView = isExpanded
+                self.setupDataSource()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case.failure(let error):
+                print(error)
+                self.savedCardViewIsExpanded = false
+                self.setupDataSource()
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        })
+    }
+    
     func fetchSavedCards(mobileNumber: String, token: String) {
         checkout?.fetchSavedCards(mobileNumber, token: token, onCompletionHandler: { result in
             switch result {
             case .success(let response):
                 self.savedCards = response.content
-                UserDefaults.persist(token: response.token)
+                if let token = response.token {
+                    UserDefaults.persist(token: token)
+                }
                 self.setupDataSource()
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                UserDefaults.removeAuthorisationToken()
-                self.isMobileVerificationDone = false
-                self.setupDataSource()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                if error.httpStatusCode == 401 {
+                    UserDefaults.removeAuthorisationToken()
+                    self.isMobileVerificationDone = false
+                    self.sendOTP(true)
+                } else {
+                    // TODO: In case of 500, or remaining
+                    // Show banner here
                 }
             }
         })

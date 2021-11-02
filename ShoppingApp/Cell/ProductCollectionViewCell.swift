@@ -53,7 +53,7 @@ extension ProductCollectionViewCell {
         descriptionLabel.text = shoppingData.description
         descriptionLabel.textColor = UIColor(named: "custom_color_gray")
         let intValue = Int(shoppingData.price ?? 0)
-        priceLabel.text = (shoppingData.currency ?? "") + "\(intValue)"
+        priceLabel.text = "\(intValue.formatCurrency())"
         priceLabel.textColor = UIColor(named: "app_theme_color")
         let url =  URL(string: shoppingData.imageName ?? "")
         coverImage.sd_setImage(with: url, completed: nil)

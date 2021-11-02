@@ -49,7 +49,7 @@ extension ProductTableViewCell {
         coverImage.sd_setImage(with: url, completed: nil)
        
         let intValue = Int(shoppingData.price ?? 0)
-        let formattedPrice = (shoppingData.currency ?? "") + "\(intValue)"
+        let formattedPrice = "\(intValue.formatCurrency())"
         let priceAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "custom_color_black") ?? .red] as [NSAttributedString.Key: Any]
         let mutableAttributedString = NSMutableAttributedString(string: formattedPrice, attributes: priceAttributes)
 

@@ -23,7 +23,7 @@
                         <rect key="frame" x="12" y="12" width="480" height="267"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Enter Phone No." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zf-HQ-GGY">
-                                <rect key="frame" x="15" y="0.0" width="450" height="60"/>
+                                <rect key="frame" x="15" y="5" width="450" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -72,13 +72,13 @@
                         <constraints>
                             <constraint firstItem="KqW-fr-TGN" firstAttribute="leading" secondItem="sUg-52-8tw" secondAttribute="leading" constant="15" id="5V4-sp-pnc"/>
                             <constraint firstItem="KZR-n3-cPw" firstAttribute="leading" secondItem="sUg-52-8tw" secondAttribute="leading" constant="15" id="65x-4O-F8h"/>
-                            <constraint firstItem="KqW-fr-TGN" firstAttribute="top" secondItem="1zf-HQ-GGY" secondAttribute="bottom" id="HsN-5r-nH4"/>
+                            <constraint firstItem="KqW-fr-TGN" firstAttribute="top" secondItem="1zf-HQ-GGY" secondAttribute="bottom" constant="5" id="HsN-5r-nH4"/>
                             <constraint firstItem="KZR-n3-cPw" firstAttribute="top" secondItem="KqW-fr-TGN" secondAttribute="bottom" constant="20" id="R3W-kk-fPS"/>
                             <constraint firstItem="1zf-HQ-GGY" firstAttribute="leading" secondItem="sUg-52-8tw" secondAttribute="leading" constant="15" id="WA9-GZ-aEv"/>
                             <constraint firstAttribute="bottom" secondItem="KZR-n3-cPw" secondAttribute="bottom" constant="25" id="Wgv-IS-goe"/>
                             <constraint firstAttribute="trailing" secondItem="1zf-HQ-GGY" secondAttribute="trailing" constant="15" id="Yet-1k-Clt"/>
                             <constraint firstAttribute="trailing" secondItem="KZR-n3-cPw" secondAttribute="trailing" constant="15" id="f8h-pe-58Z"/>
-                            <constraint firstItem="1zf-HQ-GGY" firstAttribute="top" secondItem="sUg-52-8tw" secondAttribute="top" id="vcu-2u-Cq9"/>
+                            <constraint firstItem="1zf-HQ-GGY" firstAttribute="top" secondItem="sUg-52-8tw" secondAttribute="top" constant="5" id="vcu-2u-Cq9"/>
                             <constraint firstAttribute="trailing" secondItem="KqW-fr-TGN" secondAttribute="trailing" constant="15" id="xFU-fc-cSj"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

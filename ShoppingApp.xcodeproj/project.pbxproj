@@ -38,10 +38,11 @@
 		EDA14C8226B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */; };
 		F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F01D59C026F4830F008C82BB /* SwiftAlertView.xib */; };
 		F01D59C326F48339008C82BB /* SwiftAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01D59C226F48339008C82BB /* SwiftAlertView.swift */; };
+		F0355FD6273057F500C3E294 /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0355FD5273057F500C3E294 /* ChaiPayPaymentSDK.xcframework */; };
+		F0355FD7273057F500C3E294 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0355FD5273057F500C3E294 /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F048B03C2727AAA500430C65 /* NoDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048B03A2727AAA500430C65 /* NoDataTableViewCell.swift */; };
 		F048B03D2727AAA500430C65 /* NoDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F048B03B2727AAA500430C65 /* NoDataTableViewCell.xib */; };
 		F048B05B2728762500430C65 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048B05A2728762500430C65 /* UserDefaults.swift */; };
-		F048B0692728780C00430C65 /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F048B0682728780C00430C65 /* ChaiPayPaymentSDK.xcframework */; };
 		F0535A7427207D490079E850 /* SNTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0535A7327207D490079E850 /* SNTabBarViewController.swift */; };
 		F07D3C2A27223DCA000743A3 /* SavedCardHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F07D3C2927223DCA000743A3 /* SavedCardHeaderFooterView.xib */; };
 		F07D3C2C27223E13000743A3 /* SavedCardHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07D3C2B27223E13000743A3 /* SavedCardHeaderFooterView.swift */; };
@@ -53,10 +54,12 @@
 		F09C8E1D27271EEE005912E4 /* OrderStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09C8E1C27271EEE005912E4 /* OrderStatusViewController.swift */; };
 		F09C8E20272722BE005912E4 /* ResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09C8E1E272722BE005912E4 /* ResponseView.swift */; };
 		F09C8E21272722BE005912E4 /* ResponseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F09C8E1F272722BE005912E4 /* ResponseView.xib */; };
+		F09E0DEF2729BF910025B8D3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09E0DEE2729BF910025B8D3 /* ProfileViewController.swift */; };
 		F0B30EE926E60F4B0049374F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EE826E60F4B0049374F /* Constants.swift */; };
 		F0B30EEB26E65D440049374F /* PaymentMethodDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EEA26E65D440049374F /* PaymentMethodDataSource.swift */; };
 		F0B30EEF26E664D00049374F /* PaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */; };
 		F0B30EF026E664D00049374F /* PaymentMethodTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B30EEE26E664D00049374F /* PaymentMethodTableViewCell.xib */; };
+		F0B3808E272A41A000ED3A68 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3808D272A41A000ED3A68 /* MoreViewController.swift */; };
 		F0B9421A26E749540046944C /* NewCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421926E749540046944C /* NewCardView.swift */; };
 		F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */; };
 		F0B9422226E76F860046944C /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */; };
@@ -67,12 +70,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F0D710F227226647003FE58B /* Embed Frameworks */ = {
+		F0355FCA272FF7AC00C3E294 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F0355FD7273057F500C3E294 /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,10 +118,10 @@
 		EDA14C8026B3A4F0007FC59C /* ProductHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		F01D59C026F4830F008C82BB /* SwiftAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwiftAlertView.xib; sourceTree = "<group>"; };
 		F01D59C226F48339008C82BB /* SwiftAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftAlertView.swift; sourceTree = "<group>"; };
+		F0355FD5273057F500C3E294 /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = ../ChaiPayPaymentSDK/build/ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
 		F048B03A2727AAA500430C65 /* NoDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDataTableViewCell.swift; sourceTree = "<group>"; };
 		F048B03B2727AAA500430C65 /* NoDataTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoDataTableViewCell.xib; sourceTree = "<group>"; };
 		F048B05A2728762500430C65 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		F048B0682728780C00430C65 /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
 		F0535A7327207D490079E850 /* SNTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNTabBarViewController.swift; sourceTree = "<group>"; };
 		F07D3C2927223DCA000743A3 /* SavedCardHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedCardHeaderFooterView.xib; sourceTree = "<group>"; };
 		F07D3C2B27223E13000743A3 /* SavedCardHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCardHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -129,10 +133,12 @@
 		F09C8E1C27271EEE005912E4 /* OrderStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStatusViewController.swift; sourceTree = "<group>"; };
 		F09C8E1E272722BE005912E4 /* ResponseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseView.swift; sourceTree = "<group>"; };
 		F09C8E1F272722BE005912E4 /* ResponseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResponseView.xib; sourceTree = "<group>"; };
+		F09E0DEE2729BF910025B8D3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F0B30EE826E60F4B0049374F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F0B30EEA26E65D440049374F /* PaymentMethodDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodDataSource.swift; sourceTree = "<group>"; };
 		F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
 		F0B30EEE26E664D00049374F /* PaymentMethodTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentMethodTableViewCell.xib; sourceTree = "<group>"; };
+		F0B3808D272A41A000ED3A68 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		F0B9421926E749540046944C /* NewCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardView.swift; sourceTree = "<group>"; };
 		F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
 		F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
@@ -149,7 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */,
-				F048B0692728780C00430C65 /* ChaiPayPaymentSDK.xcframework in Frameworks */,
+				F0355FD6273057F500C3E294 /* ChaiPayPaymentSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +224,8 @@
 				F09C8E1C27271EEE005912E4 /* OrderStatusViewController.swift */,
 				ED2C2DAA26B04ECF00DA86B9 /* ProductListViewController.swift */,
 				ED2C2DC326B0F82800DA86B9 /* ProductDetailsViewController.swift */,
+				F09E0DEE2729BF910025B8D3 /* ProfileViewController.swift */,
+				F0B3808D272A41A000ED3A68 /* MoreViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -284,7 +292,7 @@
 		F06BA22726DE38CA00E0302E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F048B0682728780C00430C65 /* ChaiPayPaymentSDK.xcframework */,
+				F0355FD5273057F500C3E294 /* ChaiPayPaymentSDK.xcframework */,
 				FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
@@ -347,7 +355,7 @@
 				ED2C2D8A26B04CA800DA86B9 /* Frameworks */,
 				ED2C2D8B26B04CA800DA86B9 /* Resources */,
 				CCF7C4EE8A7CBCD112A8A9A8 /* [CP] Embed Pods Frameworks */,
-				F0D710F227226647003FE58B /* Embed Frameworks */,
+				F0355FCA272FF7AC00C3E294 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -469,6 +477,7 @@
 				F095167426E8D19D00B37A3A /* CreditCardFormatter.swift in Sources */,
 				F0535A7427207D490079E850 /* SNTabBarViewController.swift in Sources */,
 				F0B30EE926E60F4B0049374F /* Constants.swift in Sources */,
+				F0B3808E272A41A000ED3A68 /* MoreViewController.swift in Sources */,
 				ED2C2DB426B0524F00DA86B9 /* ShoppingDataManager.swift in Sources */,
 				F09B54DE26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.swift in Sources */,
 				ED2C2DC426B0F82800DA86B9 /* ProductDetailsViewController.swift in Sources */,
@@ -500,6 +509,7 @@
 				ED2C2DD326B10F6200DA86B9 /* CardData.swift in Sources */,
 				ED2C2D9326B04CA800DA86B9 /* SceneDelegate.swift in Sources */,
 				ED2C2DB226B0515900DA86B9 /* ProductDetailsObject.swift in Sources */,
+				F09E0DEF2729BF910025B8D3 /* ProfileViewController.swift in Sources */,
 				EDA14C8126B3A4F0007FC59C /* ProductHeaderCollectionReusableView.swift in Sources */,
 				F0CDFDE927270DB7000D8ECF /* PaymentShippingAddressTableViewCell.swift in Sources */,
 			);

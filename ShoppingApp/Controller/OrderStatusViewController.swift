@@ -33,7 +33,8 @@ class OrderStatusViewController: UIViewController {
     weak var delegate: OrderStatusDelegate?
     var response: WebViewResponse?
     var selectedProducts: [ProductDetailsObject] = []
-    var amount: String?
+    var amount: Int = 0
+    var delivery: Int = 0
     var isSuccess: Bool = false
     private var dataSource: [ResponseDataSource] = []
     
@@ -43,6 +44,7 @@ class OrderStatusViewController: UIViewController {
         setupDataSource()
         setupTableView()
         registerCells()
+        setLayout()
     }
     
     func setupTableView() {
@@ -56,12 +58,11 @@ class OrderStatusViewController: UIViewController {
         tableView.registerCells([PaymentShippingAddressTableViewCell.cellIdentifier, OrderDetailsTableViewCell.cellIdentifier, ProductTableViewCell.cellIdentifier])
     }
     
-    func setLayout(isSuccess: Bool, amount: String) {
-        
+    func setLayout() {
+       
         responseTypeImage.image = UIImage(named: isSuccess ? "icon_success" : "icon_failed")
         headerTitle.text = isSuccess ? "Payment Successful" : "Payment failed"
         descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : "Please try again"
-        self.isSuccess = isSuccess
         buttonTitle.setTitle(isSuccess ? "Continue" : "Go Back", for: .normal)
         buttonTitle.backgroundColor =  UIColor(named: isSuccess ? "success_green_color" : "app_theme_color")
     }
@@ -99,6 +100,8 @@ extension OrderStatusViewController: UITableViewDataSource, UITableViewDelegate 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OrderDetailsTableViewCell.cellIdentifier) as? OrderDetailsTableViewCell else {
                 return UITableViewCell(frame: .zero)
             }
+            print("RESPONE !)$", response)
+            cell.layout(basedOn: response, amount: amount, delivery: self.delivery)
             cell.selectionStyle = .none
             return cell
             

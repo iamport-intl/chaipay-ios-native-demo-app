@@ -27,9 +27,18 @@ class OrderDetailsTableViewCell: UITableViewCell {
     
 }
 extension OrderDetailsTableViewCell {
-    func layout(basedOn response: WebViewResponse) {
+    func layout(basedOn response: WebViewResponse?, amount: Int, delivery: Int) {
+        print("WebviewResponse", response)
+        orderAmountValueLabel.text = amount.formatCurrency()
+        deliveryAmountValueLabel.text = delivery.formatCurrency()
+        amountPaidValueLabel.text = (amount + delivery).formatCurrency()
+        
+        if let y = response  {
+            let issuccess = y.isSuccess == "true"
+            orderDetailsTitleLabel.text =  issuccess ? "Payment Successful" : "Payment failed"
+        }
+        
 //        responseTypeImage.image = UIImage(named: isSuccess ? "icon_success" : "icon_failed")
-//        headerTitle.text = isSuccess ? "Payment Successful" : "Payment failed"
 //        descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : "Please try again"
 //        self.isSuccess = isSuccess
 //        self.merchantOrderRef.text = response?.merchantOrderRef ?? "MERCHANT12345678"

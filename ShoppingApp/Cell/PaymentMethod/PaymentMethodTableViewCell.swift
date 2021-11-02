@@ -25,11 +25,8 @@ class PaymentMethodTableViewCell: UITableViewCell {
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var expandableImageView: UIImageView!
     @IBOutlet var tableviewHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var shadowView: UIView! {
-        didSet {
-        }
-    }
+    @IBOutlet var shadowView: UIView!
+    @IBOutlet var cardTitleView: UIView!
     
     @IBOutlet var cardTypeOneImageView: UIImageView! {
         didSet {
@@ -98,17 +95,18 @@ class PaymentMethodTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         paymentMethodObjects = []
         savedCardObjects = []
-        
-        DispatchQueue.main.async {
-            
-        }
     }
 }
 
 extension PaymentMethodTableViewCell {
     func layout(basedOn datasource: PaymentMethodDataSource, paymentMethodObject: PaymentMethodObject?, savedCard: SavedCard?){
+        
+        cardTitleView.layer.borderColor = UIColor.clear.cgColor
+        cardTitleView.layer.borderWidth = 0
+        cardTitleView.isHidden = false
         paymentTypeImageView.image = datasource.type.image
         titleLabel.text = datasource.type.title
+        expandableImageView.isHidden = false
         expandableImageView.image = UIImage(named: datasource.isExpanded ? "icon_expand" : "icon_collapse")
         self.paymentMethodObject = paymentMethodObject
         self.selectedSavedCard = savedCard
@@ -124,14 +122,45 @@ extension PaymentMethodTableViewCell {
         
         switch datasource.type {
         case .newCreditCard :
-            newCardView.isHidden = !datasource.isExpanded
-            
+            if !(datasource.paymentMethods.first?.tokenizationPossible ?? true) {
+                newCardView.isHidden = true
+                expandableImageView.image = UIImage(named: "")
+                expandableImageView.isHidden = true
+                if(datasource.isSelected) {
+                    cardTitleView.layer.borderColor = UIColor(named: "app_theme_color")?.cgColor
+                    cardTitleView.layer.borderWidth = 1
+                    cardTitleView.layer.cornerRadius = 5
+                } else {
+                    expandableImageView.image = UIImage(named: "")
+                    cardTitleView.layer.borderWidth = 0
+                }
+            } else  {
+                expandableImageView.isHidden = false
+                newCardView.isHidden = !datasource.isExpanded
+            }
         case .savedCards:
+            cardTitleView.layer.borderWidth = 0
             savedCardObjects = datasource.cardPayments
             createStackViewImages(values: datasource.cardPayments)
             tableView.isHidden = !datasource.isExpanded
             fromSavedCard = true
             tableviewHeightConstraint.constant = datasource.isExpanded ? cellHeight * CGFloat(datasource.cardPayments.count) : 0
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        case .atm:
+            expandableImageView.image = UIImage(named: "")
+            expandableImageView.isHidden = true
+            if(datasource.isSelected) {
+                cardTitleView.layer.borderColor = UIColor(named: "app_theme_color")?.cgColor
+                cardTitleView.layer.borderWidth = 1
+                cardTitleView.layer.cornerRadius = 5
+            } else {
+                cardTitleView.layer.borderWidth = 0
+            }
+            paymentMethodObjects = datasource.paymentMethods
+            tableView.isHidden = !datasource.isExpanded
+            tableviewHeightConstraint.constant = datasource.isExpanded ? cellHeight * CGFloat(datasource.paymentMethods.count) : 0
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -145,6 +174,30 @@ extension PaymentMethodTableViewCell {
             }
         }
     }
+    
+    func layout(basedOn savedCards: [SavedCard], savedCard: SavedCard?){
+        cardTitleView.isHidden = true
+        self.selectedSavedCard = savedCard
+        paymentMethodObjects = []
+        savedCardObjects = []
+        tableView.isHidden = true
+        newCardView.isHidden = true
+        
+        cardTypeOneImageView.isHidden = true
+        cardTypeTwoImageView.isHidden = true
+        cardTypeThreeImageView.isHidden = true
+        countLabel.isHidden = true
+        
+        savedCardObjects = savedCards
+        createStackViewImages(values: savedCards)
+        tableView.isHidden = false
+        fromSavedCard = true
+        tableviewHeightConstraint.constant = cellHeight * CGFloat(savedCards.count)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     
     func createStackViewImages(values: [PaymentMethodObject]) {
         switch values.count {

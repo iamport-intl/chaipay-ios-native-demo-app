@@ -11,11 +11,10 @@ class NoDataTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel! {
         didSet {
-            titleLabel.text = "No Data"
+            titleLabel.text = "No Saved Cards"
         }
     }
     
     static let cellIdentifier = String(describing: NoDataTableViewCell.self)
-    
 }
 

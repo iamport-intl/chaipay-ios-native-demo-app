@@ -158,3 +158,15 @@ extension Data {
             .replacingOccurrences(of: "=", with: "")
     }
 }
+
+extension Int {
+    func formatCurrency() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "vi_VN")
+
+        let formattedString = formatter.string(for: self)
+    
+        return formattedString ?? "\(self)"
+    }
+}

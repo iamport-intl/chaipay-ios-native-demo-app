@@ -71,15 +71,55 @@ class NewCardView: UIView {
         cardNumberTextField.rightView = view
     }
     
+    public enum CreditCardType1: String {
+        case amex = "^3[47][0-9]{5,}$"
+        case visa = "^4[0-9]{6,}$"
+        case masterCard = "^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$"
+        case maestro = "^(?:5[0678]\\d\\d|6304|6390|67\\d\\d)\\d{8,15}$"
+        case dinersClub = "^3(?:0[0-5]|[68][0-9])[0-9]{4,}$"
+        case jcb = "^(?:2131|1800|35[0-9]{3})[0-9]{3,}$"
+        case discover = "^6(?:011|5[0-9]{2})[0-9]{3,}$"
+        case unionPay = "^62[0-5]\\d{13,16}$"
+        case mir = "^2[0-9]{6,}$"
+        
+        var title : String {
+            switch self {
+            case .amex:
+                return "amex"
+            case .visa:
+                return "visa"
+            case .masterCard:
+                return "masterCard"
+            case .maestro:
+                return "maestro"
+            case .dinersClub:
+                return "dinersClub"
+            case .jcb:
+                return "jcb"
+            case .discover:
+                return "discover"
+            case .unionPay:
+                return "unionPay"
+            case .mir:
+                return "mir"
+            }
+        }
+    }
+    var cardType = ""   
+    
     @objc
     func textFieldEditingChanged(_ textField: UITextField) {
+        
         if cardHolderNameTextField == textField  {
-            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: "", cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
         } else if cardNumberTextField == textField {
             if cardNumber.count > 15 {
                 let validator = CreditCardValidator(cardNumber)
+                print(validator)
+                
                 if(validator.isValid) {
                     hideNumberInlineError()
+                    cardType = CreditCardType1(rawValue: validator.type?.rawValue ?? "")?.title ?? ""
                 } else {
                     showNumberInlineError()
                 }
@@ -105,16 +145,16 @@ class NewCardView: UIView {
             if let targetPosition = textField.position(from: textField.beginningOfDocument, offset: targetCursorPosition) {
                 textField.selectedTextRange = textField.textRange(from: targetPosition, to: targetPosition)
             }
-            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: "", cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
             
         } else if expiryDateTextField == textField {
             if((textField.text ?? "").count > 8) {
                 expiryMonth = String(textField.text!.dropLast(7))
                 expiryYear = String(textField.text!.dropFirst(5))
             }
-            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: "", cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
         } else {
-            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: "", cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
         }
     }
     

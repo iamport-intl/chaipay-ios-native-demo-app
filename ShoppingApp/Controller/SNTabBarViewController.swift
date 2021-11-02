@@ -28,13 +28,13 @@ class SNTabBarViewController: UITabBarController {
         productListVC.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         productListVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
-        let productListVC2: ProductListViewController = ViewControllersFactory.viewController()
-        productListVC2.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "icon_selected_profile"), selectedImage: UIImage(named: "icon_selected_profile"))
-        productListVC2.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
-        productListVC2.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
-        productListVC2.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        let profileVC: ProfileViewController = ViewControllersFactory.viewController()
+        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "icon_selected_profile"), selectedImage: UIImage(named: "icon_selected_profile"))
+        profileVC.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
+        profileVC.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
+        profileVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
-        let productListVC3: ProductListViewController = ViewControllersFactory.viewController()
+        let productListVC3: MoreViewController = ViewControllersFactory.viewController()
         productListVC3.tabBarItem = UITabBarItem(title: "More", image: UIImage(named: "icon_selected_more"), selectedImage: UIImage(named: "icon_selected_more"))
         productListVC3.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
         productListVC3.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
@@ -42,7 +42,7 @@ class SNTabBarViewController: UITabBarController {
         productListVC3.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
         var viewControllers: [UIViewController] = []
-        viewControllers = [productListVC, productListVC2, productListVC3]
+        viewControllers = [productListVC, profileVC, productListVC3]
         self.viewControllers = viewControllers.map { applyTheme(for: $0) }.map { UINavigationController(rootViewController: $0) }
         self.selectedIndex = 0
     }

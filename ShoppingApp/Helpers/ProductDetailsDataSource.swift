@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import ChaiPayPaymentSDK
 
 enum DetailsSectionType {
     case details
@@ -82,7 +83,7 @@ class SavedCardsPaymentDataModel: DetailsSectionItem {
         return .savedCards
     }
 
-    let datasource: [PaymentMethodDataSource]
+    let datasource: [SavedCard]
     let shouldShowOTPInputView: Bool
     let mobileNumberVerified: Bool
     let isExpand: Bool
@@ -103,7 +104,7 @@ class SavedCardsPaymentDataModel: DetailsSectionItem {
         return UITableView.automaticDimension
     }
 
-    init(datasource: [PaymentMethodDataSource], shouldShowOTPInputView: Bool, mobileNumberVerified: Bool, isExpand: Bool) {
+    init(datasource: [SavedCard], shouldShowOTPInputView: Bool, mobileNumberVerified: Bool, isExpand: Bool) {
         self.datasource = datasource
         self.shouldShowOTPInputView = shouldShowOTPInputView
         self.mobileNumberVerified = mobileNumberVerified

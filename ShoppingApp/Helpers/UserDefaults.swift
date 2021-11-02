@@ -27,7 +27,7 @@ class UserDefaults {
         shared.removeObject(forKey: AUTHORISATION_TOKEN)
     }
     
-    static func persistMobileNumber(number: String? = "+918341469169") {
+    static func persistMobileNumber(number: String?) {
         shared.set(number, forKey: MOBILE_NUMBER)
         shared.synchronize()
     }

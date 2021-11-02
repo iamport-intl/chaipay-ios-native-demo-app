@@ -19,7 +19,6 @@ class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
     var appThemeColor = ""
-    
     var formattedSummaryText: String = ""
     var checkout = AppDelegate.shared.checkout
     
@@ -75,14 +74,31 @@ class ProductListViewController: UIViewController {
     }
 
     @objc func showResponseInfo(_ notification: Notification) {
+        print("Entered")
         if let webViewResponse = notification.object as? WebViewResponse {
+            print("Entered 2")
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
+            print("Entered 3,")
             showSwiftResponseMessagesView(isSuccess: isSuccess, webViewResponse: webViewResponse)
         }
     }
     
     func showSwiftResponseMessagesView(isSuccess: Bool = false, webViewResponse: WebViewResponse) {
+        print("RESPONE 123", webViewResponse)
+        let sumOfOrders = self.selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
+        let delivery = 0.0
         DispatchQueue.main.async {
+            let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
+            orderStatusViewController.delegate = self
+            orderStatusViewController.selectedProducts = self.selectedProducts
+            orderStatusViewController.isSuccess = isSuccess
+            orderStatusViewController.response = webViewResponse
+            orderStatusViewController.amount = Int(sumOfOrders ?? 0)
+            orderStatusViewController.delivery = Int(delivery)
+            self.present(orderStatusViewController, animated: true, completion: nil)
+        }
+        
+//        DispatchQueue.main.async {
 //            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
 //            view.delegate = self
 //            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText, webViewResponse)
@@ -92,7 +108,7 @@ class ProductListViewController: UIViewController {
 //            config.duration = .forever
 //            config.dimMode = .gray(interactive: true)
 //            SwiftMessages.show(config: config, view: view)
-        }
+//        }
     }
     
     func showSwiftMessagesView(isSuccess: Bool = false) {
@@ -149,8 +165,8 @@ class ProductListViewController: UIViewController {
 
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
-        //showSwiftView()
-        customUIClicked()
+        showSwiftView()
+        //customUIClicked()
         //checkOutUIClicked()
     }
 }
@@ -215,16 +231,10 @@ extension ProductListViewController: PinterestLayoutDelegate {
 
 extension ProductListViewController: OrderStatusDelegate {
     func goBack(fromSuccess: Bool) {
-//        if(fromSuccess) {
-//            hideSwiftView()
-//            self.navigationController?.popViewController(animated: true)
-//        } else {
-//            hideSwiftView()
-//        }
-        hideSwiftView()
-//        let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
-//        self.present(orderStatusViewController, animated: true, completion: nil)
+        self.navigationController?.children.first?.dismiss(animated: true, completion: nil)
         self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
+       
     }
 }
 
@@ -241,8 +251,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
-        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: "+918341469169", billingAddress: billingAddress)
-        
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: UserDefaults.getMobileNumber ?? "", billingAddress: billingAddress)
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
         
@@ -254,7 +263,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: "aiHKafKIbsdUJDOb", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let transactionRequest = WebTransactionRequest(chaipayKey: CHAIPAYKEY, merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
         
         print(transactionRequest)
         return transactionRequest
@@ -274,11 +283,11 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         struct Payload: Encodable {
             
             let iss = "CHAIPAY"
-            let sub = "aiHKafKIbsdUJDOb"
+            let sub = CHAIPAYKEY
             let iat = generateCurrentTimeStamp()
             let exp = generateCurrentTimeStamp(extraTime: 10000)
         }
-        let secret = "2601efeb4409f7027da9cbe856c9b6b8b25f0de2908bc5322b1b352d0b7eb2f5"
+        let secret = SECRETKEY
         //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
 

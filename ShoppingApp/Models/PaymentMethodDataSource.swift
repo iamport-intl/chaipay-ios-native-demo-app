@@ -13,12 +13,12 @@ enum PaymentMethodType {
     case wallet
     case newCreditCard
     case savedCards
-    case otherPayments
+    case atm
 
     var title: String {
         switch self {
-        case .otherPayments:
-            return "Other Payments"
+        case .atm:
+            return "ATM Card"
         case .savedCards:
             return "Saved Cards"
         case .wallet:
@@ -30,7 +30,7 @@ enum PaymentMethodType {
 
     var image: UIImage? {
         switch self {
-        case .otherPayments:
+        case .atm:
             return UIImage(named: "wallet")
         case .savedCards:
             return UIImage(named: "wallet")
@@ -43,8 +43,9 @@ enum PaymentMethodType {
 }
 
 struct PaymentMethodDataSource {
-    var type: PaymentMethodType = .otherPayments
+    var type: PaymentMethodType = .atm
     var paymentMethods: [PaymentMethodObject] = []
     var cardPayments: [SavedCard] = []
     var isExpanded: Bool = false
+    var isSelected: Bool = false
 }
