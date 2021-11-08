@@ -15,15 +15,24 @@ enum SortType {
     case descending
 }
 
+struct Payload: Encodable {
+    let iss: String
+    let sub: String
+    let iat: Int
+    let exp: Int
+}
+
 class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
-    var appThemeColor = ""
-    var formattedSummaryText: String = ""
-    var checkout = AppDelegate.shared.checkout
-    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet weak var sortButton: UIButton! {
+        didSet {
+            sortButton.setTitle("sort".localized, for: .normal)
+        }
+    }
+    
     @IBOutlet var sortImageView: UIImageView!
     @IBOutlet var shadowView: UIView! {
         didSet {
@@ -35,6 +44,7 @@ class ProductListViewController: UIViewController {
         didSet {
             buyNowButton.layer.cornerRadius = 10
             buyNowButton.isEnabled = false
+            buyNowButton.setTitle("buy_now".localized, for: .normal)
         }
     }
 
@@ -52,6 +62,20 @@ class ProductListViewController: UIViewController {
             buyNowButton.isEnabled = shouldEnable
         }
     }
+    
+    var selectedEnvironment: EnvironmentObject? {
+        return UserDefaults.getSelectedEnvironment
+    }
+    
+    var appThemeColor = ""
+    var formattedSummaryText: String = ""
+    var checkout: Checkout? {
+        return AppDelegate.shared.checkout
+    }
+    
+    var mobileNumber: String? {
+        return UserDefaults.getMobileNumber
+    }
 
     // MARK: - Lifecycle
 
@@ -60,17 +84,18 @@ class ProductListViewController: UIViewController {
       
         NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
         
+        self.navigationItem.title = "app_name".localized
+        setupNavBarLargeTitleTheme()
+        setupNavBarTitleTheme()
         setupInitialData()
         setupCollectionView()
         setupBackButton()
         setupThemedNavbar()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBarLargeTitleTheme(title: "Shoe Cart", color: UIColor(named: "app_theme_color") ?? UIColor.red)
-        setupNavBarTitleTheme()
+        setupNavBarLargeTitleTheme()
     }
 
     @objc func showResponseInfo(_ notification: Notification) {
@@ -127,7 +152,7 @@ class ProductListViewController: UIViewController {
     func setupInitialData() {
         data = ShoppingDataManager.prepareShoppingData()
         prepareSortingData()
-        infoLabel.text = "\(data.count) items listed"
+        infoLabel.text = "\(data.count) " + "items_listed".localized
     }
 
     func prepareSortingData() {
@@ -162,7 +187,6 @@ class ProductListViewController: UIViewController {
         prepareSortingData()
         collectionView.reloadData()
     }
-
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
         showSwiftView()
@@ -248,6 +272,9 @@ extension ProductListViewController: SwiftAlertViewDelegate {
     
     func prepareConfig() -> WebTransactionRequest {
         
+        // THB
+//        let billingAddress = BillingAddress(city: "THB", countryCode: "TH", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
+        
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
@@ -263,7 +290,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: CHAIPAYKEY, merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let transactionRequest = WebTransactionRequest(chaipayKey: selectedEnvironment?.key ?? "", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
         
         print(transactionRequest)
         return transactionRequest
@@ -280,21 +307,16 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             let token = String(currentTimeStamp)
             return Int(currentTimeStamp)
         }
-        struct Payload: Encodable {
-            
-            let iss = "CHAIPAY"
-            let sub = CHAIPAYKEY
-            let iat = generateCurrentTimeStamp()
-            let exp = generateCurrentTimeStamp(extraTime: 10000)
-        }
-        let secret = SECRETKEY
+        let payload = Payload(iss: "CHAIPAY", sub: selectedEnvironment?.key ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 10000))
+        
+        let secret = selectedEnvironment?.secretKey ?? ""
         //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
 
         let headerJSONData = try! JSONEncoder().encode(Header())
         let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
 
-        let payloadJSONData = try! JSONEncoder().encode(Payload())
+        let payloadJSONData = try! JSONEncoder().encode(payload)
         let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
 
         let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!

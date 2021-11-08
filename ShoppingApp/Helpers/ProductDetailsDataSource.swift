@@ -69,7 +69,7 @@ class ProductDetailsDataModel: DetailsSectionItem {
     }
     
     var sectionTitle: String? {
-        return "My cart"
+        return "my_cart".localized
     }
     
     var headerHeight: CGFloat {
@@ -112,7 +112,7 @@ class SavedCardsPaymentDataModel: DetailsSectionItem {
     }
     
     var sectionTitle: String? {
-        return "Saved Cards"
+        return "saved_cards".localized
     }
     
     var headerHeight: CGFloat {
@@ -137,7 +137,7 @@ class ProductPaymentDataModel: DetailsSectionItem {
     }
     
     var sectionTitle: String? {
-        return "Other Options"
+        return "other_options".localized
     }
     
     var headerHeight: CGFloat {

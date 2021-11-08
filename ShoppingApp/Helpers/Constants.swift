@@ -14,6 +14,7 @@ var APPTHEMECOLOR = "FF2A2A"
 //var SECRETKEY =
 //  "17fd4b860101361129e5bc3d26b7c8ff80d47f7d514e8eba66e9c95f5321b123";
 
+
 // Dev Aagam
 // var CHAIPAYKEY = "aiHKafKIbsdUJDOb";
 // var SECRETKEY =
@@ -29,9 +30,9 @@ var APPTHEMECOLOR = "FF2A2A"
 
 // Dev testMerchant2;
 
- var CHAIPAYKEY = "lzrYFPfyMLROallZ";
- var SECRETKEY =
-   "0e94b3232e1bf9ec0e378a58bc27067a86459fc8f94d19f146ea8249455bf242";
+// var CHAIPAYKEY = "lzrYFPfyMLROallZ";
+// var SECRETKEY =
+//   "0e94b3232e1bf9ec0e378a58bc27067a86459fc8f94d19f146ea8249455bf242";
 
 
 // STAGING //

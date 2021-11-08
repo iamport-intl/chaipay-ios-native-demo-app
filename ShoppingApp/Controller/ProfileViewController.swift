@@ -65,14 +65,24 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //        UserDefaults.persistAppLanguage(langCode: "th-TH")
+        //        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+        //            UIControl().sendAction(#selector(NSXPCConnection.suspend),
+        //                                   to: UIApplication.shared, for: nil)
+        //            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+        //                exit(EXIT_SUCCESS)
+        //            })
+        //        }
         initialSetup()
         setupToolBar()
+        self.navigationItem.title = "Profile"
+        setupNavBarLargeTitleTheme(color: UIColor(named: "app_theme_color") ?? UIColor.red)
+        setupNavBarTitleTheme()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBarLargeTitleTheme(title: "Profile", color: UIColor(named: "app_theme_color") ?? UIColor.red)
-        setupNavBarTitleTheme()
+        
     }
     
     func initialSetup() {

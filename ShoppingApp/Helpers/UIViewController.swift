@@ -32,8 +32,7 @@ extension UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
-    func setupNavBarLargeTitleTheme(title: String? = nil, color: UIColor = .black) {
-        self.navigationItem.title = title
+    func setupNavBarLargeTitleTheme(color: UIColor = UIColor(named: "app_theme_color") ?? .black) {
         self.navigationController?.navigationBar.largeTitleTextAttributes =
             [NSAttributedString.Key.foregroundColor: color]
         self.navigationController?.navigationBar.backgroundColor = .white
@@ -169,4 +168,14 @@ extension Int {
     
         return formattedString ?? "\(self)"
     }
+}
+
+extension String {
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+}
+
+extension Notification.Name {
+    static let MerchantUpdated = NSNotification.Name("MerchantUpdated")
 }

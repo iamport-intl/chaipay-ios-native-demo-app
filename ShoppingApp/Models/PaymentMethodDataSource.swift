@@ -14,17 +14,20 @@ enum PaymentMethodType {
     case newCreditCard
     case savedCards
     case atm
+    case bankTransfer
 
     var title: String {
         switch self {
         case .atm:
-            return "ATM Card"
+            return "ATM_card".localized
         case .savedCards:
-            return "Saved Cards"
+            return "saved_cards".localized
         case .wallet:
-            return "Wallets"
+            return "wallets".localized
         case .newCreditCard:
-            return "New Credit Card"
+            return "credit_card".localized
+        case .bankTransfer:
+            return "Bank Transfer"
         }
     }
 
@@ -37,6 +40,8 @@ enum PaymentMethodType {
         case .wallet:
             return UIImage(named: "wallet")
         case .newCreditCard:
+            return UIImage(named: "wallet")
+        case .bankTransfer:
             return UIImage(named: "wallet")
         }
     }

@@ -34,16 +34,48 @@ class MoreViewController: UIViewController {
             privacyPolicyPlaceholderView.applyShadow()
         }
     }
-   
-   
+    
+    @IBOutlet var languagePlaceholderView: UIView! {
+        didSet {
+            languagePlaceholderView.layer.cornerRadius = 8
+            languagePlaceholderView.applyShadow()
+        }
+    }
+    
+    @IBOutlet var merchantPlaceholderView: UIView! {
+        didSet {
+            merchantPlaceholderView.layer.cornerRadius = 8
+            merchantPlaceholderView.applyShadow()
+        }
+    }
+    
+    @objc func onClickLanguage() {
+        let productListVC: ChangeLanguageViewController = ViewControllersFactory.viewController()
+        self.present(productListVC, animated: true, completion: nil)
+    }
+    
+    @objc func onClickMerchant() {
+        let productListVC: ChangeMerchantViewController = ViewControllersFactory.viewController()
+        self.present(productListVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "More"
+        setupNavBarLargeTitleTheme(color: UIColor(named: "app_theme_color") ?? UIColor.red)
+        setupNavBarTitleTheme()
+        
+        let languageViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(onClickLanguage))
+        languageViewTapGesture.numberOfTouchesRequired = 1
+        languagePlaceholderView.addGestureRecognizer(languageViewTapGesture)
+        
+        let merchantViewTapGesture = UITapGestureRecognizer(target: self, action: #selector(onClickMerchant))
+        languageViewTapGesture.numberOfTouchesRequired = 1
+        merchantPlaceholderView.addGestureRecognizer(merchantViewTapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavBarLargeTitleTheme(title: "More", color: UIColor(named: "app_theme_color") ?? UIColor.red)
-        setupNavBarTitleTheme()
+        
     }
 }

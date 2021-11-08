@@ -15,27 +15,29 @@ class SNTabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         setupTabControllers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     fileprivate func setupTabControllers() {
         let productListVC: ProductListViewController = ViewControllersFactory.viewController()
-        productListVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "icon_selected_home"), selectedImage: UIImage(named: "icon_selected_home"))
+        productListVC.tabBarItem = UITabBarItem(title: "home".localized, image: UIImage(named: "icon_selected_home"), selectedImage: UIImage(named: "icon_selected_home"))
         productListVC.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
         productListVC.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         productListVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
         let profileVC: ProfileViewController = ViewControllersFactory.viewController()
-        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "icon_selected_profile"), selectedImage: UIImage(named: "icon_selected_profile"))
+        profileVC.tabBarItem = UITabBarItem(title: "profile".localized, image: UIImage(named: "icon_selected_profile"), selectedImage: UIImage(named: "icon_selected_profile"))
         profileVC.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
         profileVC.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         profileVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
         
         let productListVC3: MoreViewController = ViewControllersFactory.viewController()
-        productListVC3.tabBarItem = UITabBarItem(title: "More", image: UIImage(named: "icon_selected_more"), selectedImage: UIImage(named: "icon_selected_more"))
+        productListVC3.tabBarItem = UITabBarItem(title: "action_settings".localized, image: UIImage(named: "icon_selected_more"), selectedImage: UIImage(named: "icon_selected_more"))
         productListVC3.tabBarItem.setTitleTextAttributes(normalTitleAttributes, for: .normal)
         productListVC3.tabBarItem.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         
