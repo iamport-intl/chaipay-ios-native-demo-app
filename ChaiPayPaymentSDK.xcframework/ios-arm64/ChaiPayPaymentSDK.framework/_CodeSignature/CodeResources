@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/ChaiPayPaymentSDK-Swift.h</key>
 		<data>
-		7JB0AtFdyXGiQx++BnvCBYmLLyA=
+		EI7uj3pJS78q6lzPIRnoPPq9pEQ=
 		</data>
 		<key>Headers/ChaiPayPaymentSDK.h</key>
 		<data>
@@ -14,44 +14,72 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		M24WfmGS0i36d/jRS5glrZ9178k=
+		3gmh6TdLflXr/t8JONna2C9ROXw=
 		</data>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		d3HymSqquakuCE6g7dUsCiJUuEo=
+		Bc8tfJr+szD9oxOpznwJLm0cUMY=
 		</data>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		d3HymSqquakuCE6g7dUsCiJUuEo=
+		IcwDbvsDRvbWnCqpZ6feUNj4Yr4=
 		</data>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		LH4AJnMQtL5n4APVSeGzwjbBeAg=
-		</data>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
-		<data>
-		1kVmXFWL7WizLWV/h1xKAxfBXzs=
-		</data>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
-		<data>
-		8cXwlWN7A33KH2IYmI6F/67BO4g=
+		6f01buu0il0UPXeFwu0AO5d4VVw=
 		</data>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		LH4AJnMQtL5n4APVSeGzwjbBeAg=
+		Bc8tfJr+szD9oxOpznwJLm0cUMY=
 		</data>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftinterface</key>
 		<data>
-		1kVmXFWL7WizLWV/h1xKAxfBXzs=
+		IcwDbvsDRvbWnCqpZ6feUNj4Yr4=
 		</data>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		8cXwlWN7A33KH2IYmI6F/67BO4g=
+		6f01buu0il0UPXeFwu0AO5d4VVw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		uEJ5eR7Rh+A4CbypllClHV9SZms=
 		</data>
+		<key>en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zzI20uT3VEWG+7dFJ5T3y3Q3Gzc=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>th.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			PEHodWqAJryWvi9MZitc7QVRXc4=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>vi.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			YzZXNHMpE4r9nAwPDpmZyhjSX5E=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>zh-Hans.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zmV6UqBSo6r1NOz798vd5O4zTBA=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -59,7 +87,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gyWjqxv7mGCRgqZm9i6G+CpYVARnlvPsGzm1fBTl5nE=
+			uqQInFbxI4L5w0Oqps5eP6/5Y0f8WbcuZqBYX/dynqk=
 			</data>
 		</dict>
 		<key>Headers/ChaiPayPaymentSDK.h</key>
@@ -69,60 +97,46 @@
 			rPICAXs4O0pANBdYl463vmtpqUsFUHdAgSemofCR/+A=
 			</data>
 		</dict>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UAKDExPcjNZo3A40YKXx7tKdgDKVRz7ZcuI61Qiajbw=
+			9kIK0ZfQdTXZpJ85INhcMUu7XWc5vUGfinBjl4CXSmE=
 			</data>
 		</dict>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UAKDExPcjNZo3A40YKXx7tKdgDKVRz7ZcuI61Qiajbw=
+			gz4uB81REWSVxcqYZfr1COTwFey1RcI6nXs9ahCuJig=
 			</data>
 		</dict>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
+		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5fAjahUTGYzDIqdRAvbdPvYrktCP88Ja2wx6Njph3jM=
-			</data>
-		</dict>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			yXWYIqdNK+BG5coluYvTl6GxoXPYJv0bpXQjkwYoRFg=
-			</data>
-		</dict>
-		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			4IJG/oa23c45TYM38BM1jxRytd9S4CvoEbGhhYlPdWQ=
+			HXS7iM0pGPoXW/pEoWRDyffagCRQbyWOcYuIWb1jVrY=
 			</data>
 		</dict>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5fAjahUTGYzDIqdRAvbdPvYrktCP88Ja2wx6Njph3jM=
+			9kIK0ZfQdTXZpJ85INhcMUu7XWc5vUGfinBjl4CXSmE=
 			</data>
 		</dict>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			yXWYIqdNK+BG5coluYvTl6GxoXPYJv0bpXQjkwYoRFg=
+			gz4uB81REWSVxcqYZfr1COTwFey1RcI6nXs9ahCuJig=
 			</data>
 		</dict>
 		<key>Modules/ChaiPayPaymentSDK.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4IJG/oa23c45TYM38BM1jxRytd9S4CvoEbGhhYlPdWQ=
+			HXS7iM0pGPoXW/pEoWRDyffagCRQbyWOcYuIWb1jVrY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -131,6 +145,42 @@
 			<data>
 			4/t6zohq2M1W0GjdyjX9peJpmv/IV5mUQdmIr53HGxc=
 			</data>
+		</dict>
+		<key>en.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kJZF1sAGc010x0r+8gdR1O3NC+vuttLOp/VtA6zldAQ=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>th.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VqjaU9yueOoXROJlhPFZjcqbnV0P/E/4pkL98i06WrI=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>vi.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5lkb+zvbszUxNiaQh5SG4w1tQhj1W14v13jZfkCmObQ=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>zh-Hans.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kmHsztpgjvF0JW5f3HdMHm49z1M0CcG8OT1JDQHHE/E=
+			</data>
+			<key>optional</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>rules</key>

@@ -42,7 +42,7 @@ extension ListOfPaymentMethodsTableViewCell {
         let url = URL(string: methodObject.logo)
         
         paymentMethodImageView.sd_setImage(with: url, placeholderImage: nil)
-        titleLabel.text = methodObject.paymentChannelKey
+        titleLabel.text = methodObject.displayName
         selectionImageView.image =  UIImage(named: isSelected ? "icon_selected" : "icon_deSelected") 
     }
     func layout(basedOn methodObject: SavedCard, isSelected: Bool = false) {

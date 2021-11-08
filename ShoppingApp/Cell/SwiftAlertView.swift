@@ -24,12 +24,12 @@ class SwiftAlertView: UIView {
     
     @IBOutlet weak var headerTitle: UILabel! {
         didSet {
-            headerTitle.text = "Please choose one of the below UI method to proceed further"
+            headerTitle.text = "alert_option".localized
         }
     }
     @IBOutlet weak var CheckoutUI: UIButton! {
         didSet{
-            CheckoutUI.setTitle("Chaipay Checkout UI", for: .normal)
+            CheckoutUI.setTitle("web_checkout".localized, for: .normal)
             CheckoutUI.layer.cornerRadius = 5
             CheckoutUI.tintColor = UIColor.white
             CheckoutUI.backgroundColor = UIColor(named: "app_theme_color")
@@ -37,7 +37,7 @@ class SwiftAlertView: UIView {
     }
     @IBOutlet weak var CustomUI: UIButton! {
         didSet {
-            CustomUI.setTitle("Custom UI", for: .normal)
+            CustomUI.setTitle("custom_checkout".localized, for: .normal)
             CustomUI.layer.cornerRadius = 5
             CustomUI.tintColor = UIColor.white
             CustomUI.backgroundColor = UIColor(named: "app_theme_color")

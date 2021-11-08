@@ -22,6 +22,26 @@ class PaymentMethodTableViewCell: UITableViewCell {
     weak var delegate: PaymentMethodDelegate?
     @IBOutlet var paymentTypeImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var cardHolderName: UILabel! {
+        didSet {
+            cardHolderName.text = "card_holder_name".localized
+        }
+    }
+    @IBOutlet var cardNumber: UILabel!{
+        didSet {
+            cardNumber.text = "card_number".localized
+        }
+    }
+    @IBOutlet var expiry: UILabel!{
+        didSet {
+            expiry.text = "exp_date".localized
+        }
+    }
+    @IBOutlet var cvv: UILabel!{
+        didSet {
+            cvv.text = "cvv".localized
+        }
+    }
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var expandableImageView: UIImageView!
     @IBOutlet var tableviewHeightConstraint: NSLayoutConstraint!
@@ -148,7 +168,7 @@ extension PaymentMethodTableViewCell {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        case .atm:
+        case .atm, .bankTransfer:
             expandableImageView.image = UIImage(named: "")
             expandableImageView.isHidden = true
             if(datasource.isSelected) {
@@ -355,13 +375,15 @@ extension PaymentMethodTableViewCell: UITableViewDelegate, UITableViewDataSource
         }
         cell.selectionStyle = .none
         if fromSavedCard {
+            print("savedCardObjects", savedCardObjects)
+            print("savedCardObjects", savedCardObjects[indexPath.row])
             let isSelected = savedCardObjects[indexPath.row].partialCardNumber == selectedSavedCard?.partialCardNumber
             cell.layout(basedOn: savedCardObjects[indexPath.row], isSelected: isSelected)
         } else {
             guard paymentMethodObjects.count > indexPath.row else {
                 return cell
             }
-            let isSelected = paymentMethodObjects[indexPath.row].paymentChannelKey == paymentMethodObject?.paymentChannelKey
+            let isSelected = paymentMethodObjects[indexPath.row].displayName == paymentMethodObject?.displayName
             cell.layout(basedOn: paymentMethodObjects[indexPath.row], isSelected: isSelected)
         }
         return cell

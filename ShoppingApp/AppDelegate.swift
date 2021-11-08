@@ -18,8 +18,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        checkout = Checkout(environmentType: .dev, redirectURL: "chaipay://", secretKey: SECRETKEY, chaiPayKey: CHAIPAYKEY, languageCode: "", delegate: self)
+        initializeChaiPay()
         return true
+    }
+    
+    func initializeChaiPay() {
+        guard let selectedEnvironment = UserDefaults.getSelectedEnvironment else {
+            return
+        }
+        
+        checkout = Checkout(environmentType: .dev, redirectURL: "chaipay://", secretKey: selectedEnvironment.secretKey, chaiPayKey: selectedEnvironment.key, languageCode: "", delegate: self)
+        
+        if let mobileNumber = UserDefaults.getMobileNumber {
+            
+        } else {
+            UserDefaults.persistMobileNumber(number: "+918341469169")
+        }
+        
+        if let langCode = UserDefaults.getLanguageCode {}
+        else {
+            UserDefaults.persistAppLanguageCode(number: "en")
+            UserDefaults.persistAppLanguage(langCode: "en")
+        }
     }
     
     

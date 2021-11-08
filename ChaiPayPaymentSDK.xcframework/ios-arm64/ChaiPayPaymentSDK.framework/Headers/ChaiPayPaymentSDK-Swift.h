@@ -226,6 +226,7 @@ SWIFT_CLASS("_TtC17ChaiPayPaymentSDK22CheckoutViewController")
 - (void)webView:(WKWebView * _Nonnull)webView didFailNavigation:(WKNavigation * _Null_unspecified)navigation withError:(NSError * _Nonnull)error;
 @end
 
+
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
 #endif

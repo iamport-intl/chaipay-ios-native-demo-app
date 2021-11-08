@@ -1,0 +1,775 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ChaiPayPaymentSDK
+@_exported import ChaiPayPaymentSDK
+import CryptoKit
+import Foundation
+import Swift
+import UIKit
+import WebKit
+public struct InitiatePaymentResponse : Swift.Codable {
+  public var isSuccess: Swift.String
+  public var redirectUrl: Swift.String
+  public var channelOrderRef: Swift.String
+  public var merchantOrderRef: Swift.String
+  public var orderRef: Swift.String
+  public var message: Swift.String
+  public var deepLink: Swift.String
+  public var additionalData: ChaiPayPaymentSDK.AdditionalDatatResponse?
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct AdditionalDatatResponse : Swift.Codable {
+  public var amount: Swift.String
+  public var bankCode: Swift.String
+  public var buyerEmail: Swift.String
+  public var callBackUrl: Swift.String
+  public var domain: Swift.String
+  public var invoiceNo: Swift.String
+  public var merId: Swift.String
+  public var merTrxId: Swift.String
+  public var merchantToken: Swift.String
+  public var notiUrl: Swift.String
+  public var payType: Swift.String
+  public var receiverPhone: Swift.String
+  public var timeStamp: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct WebViewResponse : Swift.Codable {
+  public var statusCode: Swift.String?
+  public var channelOrderRef: Swift.String?
+  public var status: Swift.String?
+  public var merchantOrderRef: Swift.String?
+  public var statusReason: Swift.String?
+  public var chaipayOrderRef: Swift.String?
+  public var isSuccess: Swift.String?
+  public var orderRef: Swift.String?
+  public var deepLink: Swift.String?
+  public var amount: Swift.String?
+  public var linkOrderRef: Swift.String?
+  public var tokenizationPossible: Swift.String?
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct MerchantDetails : Swift.Codable {
+  public var name: Swift.String
+  public var logo: Swift.String
+  public var backUrl: Swift.String
+  public var promoCode: Swift.String
+  public var promoDiscount: Swift.Int
+  public var shippingCharges: Swift.Double
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case name
+    case logo
+    case backUrl
+    case promoCode
+    case promoDiscount
+    case shippingCharges
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(name: Swift.String, logo: Swift.String, backUrl: Swift.String, promoCode: Swift.String, promoDiscount: Swift.Int, shippingCharges: Swift.Double)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct PaymentLinkResponse : Swift.Codable {
+  public var paymentLinkRef: Swift.String
+  public var paymentLink: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case paymentLinkRef
+    case paymentLink
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(paymentLinkRef: Swift.String, paymentLink: Swift.String)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct WebTransactionRequest : Swift.Codable {
+  public var chaipayKey: Swift.String
+  public var merchantDetails: ChaiPayPaymentSDK.MerchantDetails?
+  public var merchantOrderId: Swift.String
+  public var amount: Swift.Int
+  public var currency: Swift.String?
+  public var signatureHash: Swift.String
+  public var billingAddress: ChaiPayPaymentSDK.BillingDetails?
+  public var shippingAddress: ChaiPayPaymentSDK.ShippingDetails?
+  public var orderDetails: [ChaiPayPaymentSDK.OrderDetails]?
+  public var successURL: Swift.String?
+  public var failureURL: Swift.String?
+  public var redirectURL: Swift.String?
+  public var tokenParams: ChaiPayPaymentSDK.CardDetails?
+  public var countryCode: Swift.String?
+  public var expiryHours: Swift.Int?
+  public var source: Swift.String?
+  public var description: Swift.String?
+  public var showShippingDetails: Swift.Bool?
+  public var showBackButton: Swift.Bool?
+  public var defaultGuestCheckout: Swift.Bool?
+  public var isCheckoutEmbed: Swift.Bool?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case chaipayKey
+    case merchantDetails
+    case merchantOrderId
+    case amount
+    case currency
+    case successURL
+    case failureURL
+    case redirectURL
+    case signatureHash
+    case billingAddress
+    case shippingAddress
+    case orderDetails
+    case tokenParams
+    case countryCode
+    case expiryHours
+    case source
+    case description
+    case showShippingDetails
+    case showBackButton
+    case defaultGuestCheckout
+    case isCheckoutEmbed
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(chaipayKey: Swift.String, merchantDetails: ChaiPayPaymentSDK.MerchantDetails, merchantOrderId: Swift.String, amount: Swift.Int, currency: Swift.String, signatureHash: Swift.String, billingAddress: ChaiPayPaymentSDK.BillingDetails, shippingAddress: ChaiPayPaymentSDK.ShippingDetails, orderDetails: [ChaiPayPaymentSDK.OrderDetails], successURL: Swift.String, failureURL: Swift.String, redirectURL: Swift.String, countryCode: Swift.String, expiryHours: Swift.Int?, source: Swift.String?, description: Swift.String?, showShippingDetails: Swift.Bool?, showBackButton: Swift.Bool?, defaultGuestCheckout: Swift.Bool?, isCheckoutEmbed: Swift.Bool?)
+}
+extension WebTransactionRequest {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct TransactionRequest : Swift.Codable {
+  public var chaipayKey: Swift.String
+  public var merchantDetails: ChaiPayPaymentSDK.MerchantDetails?
+  public var key: Swift.String
+  public var paymentChannel: Swift.String
+  public var paymentMethod: Swift.String
+  public var merchantOrderId: Swift.String
+  public var amount: Swift.Int
+  public var currency: Swift.String?
+  public var signatureHash: Swift.String
+  public var billingAddress: ChaiPayPaymentSDK.BillingDetails?
+  public var shippingAddress: ChaiPayPaymentSDK.ShippingDetails?
+  public var orderDetails: [ChaiPayPaymentSDK.OrderDetails]?
+  public var successURL: Swift.String?
+  public var failureURL: Swift.String?
+  public var redirectURL: Swift.String?
+  public var tokenParams: ChaiPayPaymentSDK.CardDetails?
+  public var countryCode: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case chaipayKey
+    case merchantDetails
+    case key
+    case paymentChannel
+    case paymentMethod
+    case merchantOrderId
+    case amount
+    case currency
+    case successURL
+    case failureURL
+    case redirectURL
+    case signatureHash
+    case billingAddress
+    case shippingAddress
+    case orderDetails
+    case tokenParams
+    case countryCode
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(chaipayKey: Swift.String, key: Swift.String, merchantDetails: ChaiPayPaymentSDK.MerchantDetails, paymentChannel: Swift.String, paymentMethod: Swift.String, merchantOrderId: Swift.String, amount: Swift.Int, currency: Swift.String, signatureHash: Swift.String, billingAddress: ChaiPayPaymentSDK.BillingDetails, shippingAddress: ChaiPayPaymentSDK.ShippingDetails, orderDetails: [ChaiPayPaymentSDK.OrderDetails], successURL: Swift.String, failureURL: Swift.String, redirectURL: Swift.String, countryCode: Swift.String)
+}
+extension TransactionRequest {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct BillingDetails : Swift.Codable {
+  public var billingName: Swift.String?
+  public var billingEmail: Swift.String?
+  public var billingPhone: Swift.String?
+  public var billingAddress: ChaiPayPaymentSDK.BillingAddress?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case billingName
+    case billingEmail
+    case billingPhone
+    case billingAddress
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(billingName: Swift.String, billingEmail: Swift.String, billingPhone: Swift.String, billingAddress: ChaiPayPaymentSDK.BillingAddress)
+}
+extension BillingDetails {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct BillingAddress : Swift.Codable {
+  public var city: Swift.String?
+  public var countryCode: Swift.String?
+  public var locale: Swift.String?
+  public var line1: Swift.String?
+  public var line2: Swift.String?
+  public var postalCode: Swift.String?
+  public var state: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case city
+    case countryCode
+    case locale
+    case line1
+    case line2
+    case postalCode
+    case state
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(city: Swift.String, countryCode: Swift.String, locale: Swift.String, line1: Swift.String, line2: Swift.String, postalCode: Swift.String, state: Swift.String)
+}
+extension BillingAddress {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct ShippingDetails : Swift.Codable {
+  public var shippingName: Swift.String?
+  public var shippingEmail: Swift.String?
+  public var shippingPhone: Swift.String?
+  public var shippingAddress: ChaiPayPaymentSDK.ShippingAddress?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case shippingName
+    case shippingEmail
+    case shippingPhone
+    case shippingAddress
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(shippingName: Swift.String, shippingEmail: Swift.String, shippingPhone: Swift.String, shippingAddress: ChaiPayPaymentSDK.ShippingAddress)
+}
+extension ShippingDetails {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct ShippingAddress : Swift.Codable {
+  public var city: Swift.String?
+  public var countryCode: Swift.String?
+  public var locale: Swift.String?
+  public var line1: Swift.String?
+  public var line2: Swift.String?
+  public var postalCode: Swift.String?
+  public var state: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case city
+    case countryCode
+    case locale
+    case line1
+    case line2
+    case postalCode
+    case state
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(city: Swift.String, countryCode: Swift.String, locale: Swift.String, line1: Swift.String, line2: Swift.String, postalCode: Swift.String, state: Swift.String)
+}
+extension ShippingAddress {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderDetails : Swift.Codable {
+  public var id: Swift.String?
+  public var name: Swift.String?
+  public var price: Swift.Double?
+  public var quantity: Swift.Int?
+  public var imageUrl: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case id
+    case name
+    case price
+    case quantity
+    case imageUrl
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(id: Swift.String, name: Swift.String, price: Swift.Double, quantity: Swift.Int, imageUrl: Swift.String)
+}
+extension OrderDetails {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public enum PaymentMethod {
+  case ZaloPay
+  case MomoPay
+  case VNPay
+  case NewCreditCard
+  case SavedCard
+  case None
+  public var paymentChannel: Swift.String {
+    get
+  }
+  public var paymentMethod: Swift.String {
+    get
+  }
+  public static func == (a: ChaiPayPaymentSDK.PaymentMethod, b: ChaiPayPaymentSDK.PaymentMethod) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol CheckoutDelegate : AnyObject {
+  var viewController: UIKit.UIViewController? { get }
+  func transactionResponse(_ webViewResponse: ChaiPayPaymentSDK.WebViewResponse?)
+  func transactionErrorResponse(_ error: Swift.Error?)
+}
+public enum EnvironmentType {
+  case prod
+  case dev
+  case staging
+  public static func == (a: ChaiPayPaymentSDK.EnvironmentType, b: ChaiPayPaymentSDK.EnvironmentType) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public class Checkout {
+  public init(environmentType: ChaiPayPaymentSDK.EnvironmentType, redirectURL: Swift.String?, secretKey: Swift.String, chaiPayKey: Swift.String, languageCode: Swift.String, delegate: ChaiPayPaymentSDK.CheckoutDelegate?)
+  public func getAvailablePaymentGateways(completionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.PaymentMethodResponse, Swift.Error>) -> Swift.Void)
+  public func checkOutUI(config: ChaiPayPaymentSDK.WebTransactionRequest, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<Any, Swift.Error>) -> Swift.Void)
+  public func getOTP(_ mobileNumber: Swift.String, onCompletionHandler: @escaping (Swift.Result<Any, Swift.Error>) -> Swift.Void)
+  public func fetchSavedCards(_ mobileNumber: Swift.String, otp: Swift.String, onCompletionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.FetchSavedCardResponse, Swift.Error>) -> Swift.Void)
+  public func fetchSavedCards(_ mobileNumber: Swift.String, token: Swift.String, onCompletionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.FetchSavedCardResponse, ChaiPayPaymentSDK.NetworkError>) -> Swift.Void)
+  public func initiateWalletPayments(_ config: ChaiPayPaymentSDK.TransactionRequest, onCompletionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.InitiatePaymentResponse, Swift.Error>) -> Swift.Void)
+  public func initiateNewCardPayment(_ config: ChaiPayPaymentSDK.TransactionRequest, cardDetails: ChaiPayPaymentSDK.CardDetails, onCompletionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.WebViewResponse, ChaiPayPaymentSDK.NetworkError>) -> Swift.Void)
+  public func initiateSavedCardPayment(_ config: ChaiPayPaymentSDK.TransactionRequest, cardDetails: ChaiPayPaymentSDK.CardDetails, onCompletionHandler: @escaping (Swift.Result<ChaiPayPaymentSDK.WebViewResponse, ChaiPayPaymentSDK.NetworkError>) -> Swift.Void)
+  public func handleTheUrl(_ url: Foundation.URL)
+  @objc deinit
+}
+extension Checkout : ChaiPayPaymentSDK.CheckoutViewControllerDelegate {
+  public func transactionResponse(_ response: [Swift.String : Any])
+  public func chaiPayRedirect(_ dataToBeSaved: Swift.String, _ url: Swift.String)
+  public var viewController: UIKit.UIViewController? {
+    get
+  }
+  public func handleUrl(_ url: Foundation.URL)
+}
+public protocol CheckoutViewControllerDelegate : AnyObject {
+  func chaiPayRedirect(_ dataToBeSaved: Swift.String, _ url: Swift.String)
+  var viewController: UIKit.UIViewController? { get }
+  func transactionResponse(_ response: [Swift.String : Any])
+  func handleUrl(_ url: Foundation.URL)
+}
+@objc public class CheckoutViewController : UIKit.UIViewController {
+  public init(redirectUrl: Swift.String, delegate: ChaiPayPaymentSDK.CheckoutViewControllerDelegate)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc deinit
+}
+extension CheckoutViewController : WebKit.WKNavigationDelegate, WebKit.WKUIDelegate {
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy) -> Swift.Void)
+  @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: Swift.Error)
+}
+public struct PaymentMethodResponse : Swift.Codable {
+  public var allMethods: [ChaiPayPaymentSDK.PaymentMethodObject]
+  public var walletMethods: [ChaiPayPaymentSDK.PaymentMethodObject]
+  public var cardMethods: [ChaiPayPaymentSDK.PaymentMethodObject]
+  public var bankTransfer: [ChaiPayPaymentSDK.PaymentMethodObject]
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case allMethods
+    case cardMethods
+    case walletMethods
+    case bankTransfer
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension PaymentMethodResponse {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct PaymentMethodObject : Swift.Codable {
+  public var paymentChannelKey: Swift.String
+  public var paymentMethodKey: Swift.String
+  public var subType: Swift.String
+  public var logo: Swift.String
+  public var displayName: Swift.String
+  public var isDefault: Swift.Bool
+  public var isEnabled: Swift.Bool
+  public var tokenizationPossible: Swift.Bool
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case paymentChannelKey
+    case paymentMethodKey
+    case subType
+    case logo
+    case displayName
+    case isDefault
+    case isEnabled
+    case tokenizationPossible
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension PaymentMethodObject {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct SavedCard : Swift.Codable {
+  public var token: Swift.String
+  public var partialCardNumber: Swift.String
+  public var expiryMonth: Swift.String
+  public var expiryYear: Swift.String
+  public var type: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case token
+    case partialCardNumber
+    case expiryMonth
+    case expiryYear
+    case type
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(token: Swift.String, partialCardNumber: Swift.String, expiryMonth: Swift.String, expiryYear: Swift.String, type: Swift.String)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct CardDetails : Swift.Codable {
+  public var token: Swift.String?
+  public var cardNumber: Swift.String
+  public var expiryMonth: Swift.String
+  public var expiryYear: Swift.String
+  public var type: Swift.String
+  public var cardHolderName: Swift.String
+  public var cvv: Swift.String
+  public var savedCard: Swift.Bool
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case token
+    case cardNumber
+    case expiryMonth
+    case expiryYear
+    case type
+    case cardHolderName
+    case cvv
+    case savedCard
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(token: Swift.String?, cardNumber: Swift.String, expiryMonth: Swift.String, expiryYear: Swift.String, cardHolderName: Swift.String, type: Swift.String, cvv: Swift.String, savedCard: Swift.Bool = false)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct CardRequestObject : Swift.Codable {
+  public var cardToken: Swift.String?
+  public var cardNumber: Swift.String
+  public var cardType: Swift.String
+  public var cardholderName: Swift.String
+  public var serviceCode: Swift.String
+  public var expirationMonth: Swift.String
+  public var expirationYear: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case cardToken
+    case cardNumber
+    case cardType
+    case cardholderName
+    case serviceCode
+    case expirationMonth
+    case expirationYear
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(cardNumber: Swift.String, cardType: Swift.String, cardholderName: Swift.String, serviceCode: Swift.String, expirationMonth: Swift.String, expirationYear: Swift.String)
+}
+extension CardRequestObject {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct TokeRequestObject : Swift.Codable {
+  public var card: ChaiPayPaymentSDK.CardRequestObject
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case card
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(card: ChaiPayPaymentSDK.CardRequestObject)
+}
+extension TokeRequestObject {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct TokeResponseObject : Swift.Codable {
+  public var type: Swift.String
+  public var id: Swift.String
+  public var attributes: ChaiPayPaymentSDK.CardRequestObject
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension TokeResponseObject {
+  public init(from decoder: Swift.Decoder) throws
+}
+extension URLRequest {
+  public func cURL(pretty: Swift.Bool = false) -> Swift.String
+}
+public enum NetworkServiceError : Swift.Error {
+  case noInternet
+  case unauthenticated
+  case notFound
+  case serviceUnavailable
+  case serverUnderMaintenance
+  case responseError(_: ChaiPayPaymentSDK.NetworkError)
+  case parseError(_: Swift.Error)
+  case mapError(_: Swift.String)
+}
+extension NetworkServiceError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct NetworkError : Swift.Error {
+  public let httpStatusCode: Swift.Int
+  public let code: Swift.String?
+  public let message: Swift.String?
+  public let statusReason: Swift.String?
+  public let isSuccess: Swift.String?
+  public init(from dataDict: [Swift.String : Any], httpStatusCode: Swift.Int)
+  public init(from error: Swift.Error)
+  public init(statusCode: Swift.Int?, code: Swift.String?, message: Swift.String?)
+}
+public struct FetchSavedCardResponse : Swift.Codable {
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public var content: [ChaiPayPaymentSDK.SavedCard]
+  public var token: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case statusCode
+    case statusReason
+    case content
+    case token
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(statusCode: Swift.String, statusReason: Swift.String, content: [ChaiPayPaymentSDK.SavedCard], token: Swift.String)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ChaiPayPaymentSDK.MerchantDetails.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.MerchantDetails.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.MerchantDetails.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.PaymentLinkResponse.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.PaymentLinkResponse.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.PaymentLinkResponse.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.WebTransactionRequest.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.WebTransactionRequest.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.WebTransactionRequest.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.TransactionRequest.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.TransactionRequest.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.TransactionRequest.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.BillingDetails.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.BillingDetails.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.BillingDetails.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.BillingAddress.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.BillingAddress.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.BillingAddress.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.ShippingDetails.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.ShippingDetails.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.ShippingDetails.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.ShippingAddress.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.ShippingAddress.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.ShippingAddress.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.OrderDetails.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.OrderDetails.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.OrderDetails.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.PaymentMethod : Swift.Equatable {}
+extension ChaiPayPaymentSDK.PaymentMethod : Swift.Hashable {}
+extension ChaiPayPaymentSDK.EnvironmentType : Swift.Equatable {}
+extension ChaiPayPaymentSDK.EnvironmentType : Swift.Hashable {}
+extension ChaiPayPaymentSDK.PaymentMethodResponse.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.PaymentMethodResponse.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.PaymentMethodResponse.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.PaymentMethodObject.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.PaymentMethodObject.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.PaymentMethodObject.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.SavedCard.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.SavedCard.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.SavedCard.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.CardDetails.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.CardDetails.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.CardDetails.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.CardRequestObject.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.CardRequestObject.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.CardRequestObject.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.TokeRequestObject.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.TokeRequestObject.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.TokeRequestObject.CodingKeys : Swift.RawRepresentable {}
+extension ChaiPayPaymentSDK.FetchSavedCardResponse.CodingKeys : Swift.Equatable {}
+extension ChaiPayPaymentSDK.FetchSavedCardResponse.CodingKeys : Swift.Hashable {}
+extension ChaiPayPaymentSDK.FetchSavedCardResponse.CodingKeys : Swift.RawRepresentable {}

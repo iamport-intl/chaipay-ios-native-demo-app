@@ -97,7 +97,7 @@
                                             <constraint firstItem="ksE-vZ-XJB" firstAttribute="top" secondItem="aWG-fl-J1i" secondAttribute="top" constant="16" id="zPm-rD-oP7"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bqG-zI-g1b">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bqG-zI-g1b">
                                         <rect key="frame" x="0.0" y="62.5" width="334" height="96"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -257,12 +257,16 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="cardHolderName" destination="2ws-Rs-khW" id="LbQ-4J-TSU"/>
+                <outlet property="cardNumber" destination="5ZC-Kw-bmU" id="7gh-Ee-NKs"/>
                 <outlet property="cardTitleView" destination="aWG-fl-J1i" id="6PG-g5-man"/>
                 <outlet property="cardTypeOneImageView" destination="OdX-Xu-NIU" id="6ex-cc-bqr"/>
                 <outlet property="cardTypeThreeImageView" destination="005-Fn-8ds" id="h3d-wO-Sm1"/>
                 <outlet property="cardTypeTwoImageView" destination="f5e-Xw-kxd" id="9Zz-K6-tDd"/>
                 <outlet property="countLabel" destination="Pcp-5j-P8Z" id="ejf-s5-5oL"/>
+                <outlet property="cvv" destination="3Lu-Gz-c9W" id="53E-Le-BbE"/>
                 <outlet property="expandableImageView" destination="th9-3q-5Jf" id="Yqz-6X-9XC"/>
+                <outlet property="expiry" destination="2mw-ZO-U1l" id="1Ml-Yq-MHK"/>
                 <outlet property="newCardView" destination="zFZ-YE-Hbh" id="yi2-kW-cxQ"/>
                 <outlet property="paymentTypeImageView" destination="bVM-hb-phc" id="BgV-gn-OKM"/>
                 <outlet property="shadowView" destination="2Qy-pN-WTI" id="IgJ-an-LAJ"/>

@@ -11,7 +11,7 @@ class NoDataTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel! {
         didSet {
-            titleLabel.text = "No Saved Cards"
+            titleLabel.text = "no_saved_cards".localized
         }
     }
     

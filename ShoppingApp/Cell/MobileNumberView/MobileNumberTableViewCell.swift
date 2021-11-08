@@ -27,16 +27,18 @@ class MobileNumberTableViewCell: UITableViewCell {
     var checkOut: Checkout?
     var otpText:String = ""
     
-    let number = UserDefaults.getMobileNumber ?? ""
+    var mobileNumber = UserDefaults.getMobileNumber ?? ""
     var formattedMobileNumber: String? {
-        return number.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        return mobileNumber.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
     }
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mobileTextField: PhoneNumberTextField! {
         didSet {
+            mobileTextField.isHidden = true
             mobileTextField.withExamplePlaceholder = true
             mobileTextField.withFlag = true
+            mobileTextField.textContentType = .oneTimeCode
         }
     }
     
@@ -78,7 +80,7 @@ class MobileNumberTableViewCell: UITableViewCell {
             self.verifyButton.setTitle("Next", for: .normal)
             self.OTPView.isHidden = true
             self.mobileTextField.isHidden = false
-            self.titleLabel.text = "Enter Phone No."
+            self.titleLabel.text = "enter_mobile_no".localized
             self.titleLabel.textAlignment = .left
         }
     }
@@ -86,11 +88,10 @@ class MobileNumberTableViewCell: UITableViewCell {
     func changeToOTPView() {
         DispatchQueue.main.async {
             self.OTPView.isHidden = false
-            self.verifyButton.setTitle("Verify", for: .normal)
             self.mobileTextField.isHidden = true
-            self.titleLabel.text = "Enter the authentication code sent on your \(self.formattedMobileNumber ?? "")"
+            self.verifyButton.setTitle("Verify", for: .normal)
+            self.titleLabel.text = "otp_has_been_sent".localized + " \(self.formattedMobileNumber ?? "")"
             self.titleLabel.textAlignment = .center
-            
         }
     }
     override func awakeFromNib() {
@@ -105,7 +106,7 @@ extension MobileNumberTableViewCell {
         switch viewType {
         case .otp:
             self.changeToOTPView()
-            self.layoutIfNeeded()
+            mobileNumber = UserDefaults.getMobileNumber ?? ""
         case .mobile:
             break
         }
