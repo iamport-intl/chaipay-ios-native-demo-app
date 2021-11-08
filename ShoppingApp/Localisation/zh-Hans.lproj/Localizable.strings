@@ -1,0 +1,57 @@
+/* 
+  Localizable.strings
+  ShoppingApp
+
+  Created by Sireesha Neelapu on 02/11/21.
+  
+*/
+
+//English
+"action_settings" = "Settings"
+"arrival" = "Arrival"
+"filter" = "Filter"
+"location" = "Location"
+"sort_by" = "Sort By"
+"cancel" = "Cancel"
+"apply" = "Apply"
+"price" = "Price"
+"items_listed" = "items listed"
+"sort" = "Sort"
+"buy_now" = "Buy Now"
+"checkout" = "Checkout"
+"saved_payment_method" = "Saved Payment Method"
+"pay_now" = "Pay Now"
+"other_payment_options" = "Other Payment options"
+
+//Thai
+"action_settings" = "การตั้งค่า"
+"arrival" = "การมาถึง"
+"filter" = "ตัวกรอง"
+"location" = "ที่ตั้ง"
+"sort_by" = "เรียงตาม"
+"cancel" = "ยกเลิก"
+"apply" = "นำมาใช้"
+"price" = "ราคา"
+"items_listed" = "รายการที่ระบุไว้"
+"sort" = "เรียงลำดับ"
+"buy_now" = "ซื้อเลย"
+"checkout" = "เช็คเอาท์"
+"saved_payment_method" = "วิธีการชำระเงินที่บันทึกไว้"
+"pay_now" = "จ่ายตอนนี้"
+"other_payment_options" = "ตัวเลือกการชำระเงินอื่น ๆ"
+
+// Vietnamese
+"action_settings" = "Cài đặt"
+"arrival" = "Đến"
+"filter" = "Lọc"
+"location" = "Vị trí"
+"sort_by" = "Sắp xếp theo"
+"cancel" = "Hủy bỏ"
+"apply" = "Áp dụng"
+"price" = "Giá bán"
+"items_listed" = "mặt hàng được liệt kê"
+"sort" = "Sắp xếp"
+"buy_now" = "Tiến hành thanh toán"
+"saved_payment_method" = "Phương thức thanh toán đã lưu"
+"pay_now" = "Thanh toán ngay"
+"other_payment_options" = "Các tùy chọn thanh toán khác"

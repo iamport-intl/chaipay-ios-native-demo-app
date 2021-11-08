@@ -1,0 +1,105 @@
+
+/* Class = "UILabel"; text = "Terms And Condition"; ObjectID = "00e-ZN-dCc"; */
+"00e-ZN-dCc.text" = "Terms And Condition";
+
+/* Class = "UILabel"; text = "Comment"; ObjectID = "00q-hS-fr6"; */
+"00q-hS-fr6.text" = "Comment";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "251-7g-vdm"; */
+"251-7g-vdm.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "35T-Fi-8y6"; */
+"35T-Fi-8y6.normalTitle" = "Save";
+
+/* Class = "UIButton"; normalTitle = "Buy Now"; ObjectID = "3Lh-nK-uf6"; */
+"3Lh-nK-uf6.normalTitle" = "Buy Now";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "6fV-eb-Ho8"; */
+"6fV-eb-Ho8.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Go back"; ObjectID = "A7a-CU-cFA"; */
+"A7a-CU-cFA.normalTitle" = "Go back";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "Jwf-wu-QhY"; */
+"Jwf-wu-QhY.text" = "Address";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "NBE-2a-tif"; */
+"NBE-2a-tif.text" = "Label";
+
+/* Class = "UILabel"; text = "Safe and Secure Payments"; ObjectID = "Nif-5p-fsW"; */
+"Nif-5p-fsW.text" = "Safe and Secure Payments";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "O6H-1V-6HX"; */
+"O6H-1V-6HX.text" = "Label";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "Qxx-gV-H84"; */
+"Qxx-gV-H84.text" = "Total";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "STL-pP-kWL"; */
+"STL-pP-kWL.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Edit"; ObjectID = "UTo-ib-3JH"; */
+"UTo-ib-3JH.normalTitle" = "Edit";
+
+/* Class = "UILabel"; text = "Privacy Policy"; ObjectID = "Vbd-zC-Xuk"; */
+"Vbd-zC-Xuk.text" = "Privacy Policy";
+
+/* Class = "UILabel"; text = "Caption"; ObjectID = "WYi-1o-SfO"; */
+"WYi-1o-SfO.text" = "Caption";
+
+/* Class = "UILabel"; text = "Update Mobile Number"; ObjectID = "XXD-Tk-gDr"; */
+"XXD-Tk-gDr.text" = "Update Mobile Number";
+
+/* Class = "UINavigationItem"; title = "Featured"; ObjectID = "Yxc-yh-ieE"; */
+"Yxc-yh-ieE.title" = "Featured";
+
+/* Class = "UILabel"; text = "Payment Failed"; ObjectID = "aCY-9B-quP"; */
+"aCY-9B-quP.text" = "Payment Failed";
+
+/* Class = "UILabel"; text = "FAQ's"; ObjectID = "aL2-7z-Axa"; */
+"aL2-7z-Axa.text" = "FAQ's";
+
+/* Class = "UIButton"; normalTitle = "Pay Now"; ObjectID = "aOE-r8-B2e"; */
+"aOE-r8-B2e.normalTitle" = "Pay Now";
+
+/* Class = "UIButton"; normalTitle = "Sort"; ObjectID = "cKV-pw-vgP"; */
+"cKV-pw-vgP.normalTitle" = "Sort";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "diM-dX-y2N"; */
+"diM-dX-y2N.text" = "Label";
+
+/* Class = "UILabel"; text = "Orders"; ObjectID = "dyJ-Rr-VpT"; */
+"dyJ-Rr-VpT.text" = "Orders";
+
+/* Class = "UILabel"; text = "MIG I A 7,\nSujathaNagar, Pendurthy,\nVisakhaptnam,\nAndhra Pradesh, 530051,\nIndia"; ObjectID = "ifi-HR-HgV"; */
+"ifi-HR-HgV.text" = "MIG I A 7,\nSujathaNagar, Pendurthy,\nVisakhaptnam,\nAndhra Pradesh, 530051,\nIndia";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "l62-2M-h1t"; */
+"l62-2M-h1t.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "oSP-3M-5KO"; */
+"oSP-3M-5KO.text" = "Label";
+
+/* Class = "UILabel"; text = "Comment"; ObjectID = "oU8-HV-NN6"; */
+"oU8-HV-NN6.text" = "Comment";
+
+/* Class = "UINavigationItem"; title = "Featured"; ObjectID = "pXw-cj-jKf"; */
+"pXw-cj-jKf.title" = "Featured";
+
+/* Class = "UILabel"; text = "Wishlist"; ObjectID = "t84-pb-RsR"; */
+"t84-pb-RsR.text" = "Wishlist";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "tE6-6k-HJj"; */
+"tE6-6k-HJj.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "wzA-OL-whw"; */
+"wzA-OL-whw.text" = "Label";
+
+/* Class = "UILabel"; text = "Mobile number"; ObjectID = "xiy-8K-D8h"; */
+"xiy-8K-D8h.text" = "Mobile number";
+
+/* Class = "UILabel"; text = "About Us"; ObjectID = "zYv-7U-auL"; */
+"zYv-7U-auL.text" = "About Us";
+
+/* Class = "UILabel"; text = "Please try again"; ObjectID = "zeY-Nw-Zw2"; */
+"zeY-Nw-Zw2.text" = "Please try again";
