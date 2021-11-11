@@ -34,12 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             UserDefaults.persistMobileNumber(number: "+918341469169")
         }
-        
-        if let langCode = UserDefaults.getLanguageCode {}
-        else {
-            UserDefaults.persistAppLanguageCode(number: "en")
-            UserDefaults.persistAppLanguage(langCode: "en")
-        }
     }
     
     

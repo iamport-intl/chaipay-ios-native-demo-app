@@ -42,13 +42,16 @@ class UserDefaults {
         shared.removeObject(forKey: MOBILE_NUMBER)
     }
     
-    static func persistAppLanguageCode(number: String) {
-        shared.set(number, forKey: APP_LANGUAGE)
+    static func persistAppLanguageCode(language: Language) {
+        shared.set(language.rawValue, forKey: APP_LANGUAGE)
         shared.synchronize()
     }
     
-    static var getLanguageCode: String? {
-        return shared.string(forKey: APP_LANGUAGE)
+    static var getLanguage: Language {
+        guard let language = shared.string(forKey: APP_LANGUAGE) else {
+            return .english
+        }
+        return Language(rawValue: language) ?? .english
     }
     
     static func persistAppLanguage(langCode: String) {

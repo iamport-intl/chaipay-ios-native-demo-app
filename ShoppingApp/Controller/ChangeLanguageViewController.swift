@@ -7,17 +7,36 @@
 
 import UIKit
 
-enum LanguageMode {
-    case health, language
-}
 enum Language: String {
-    case german = "de"
-    case english = "uk"
+    case english
+    case thailand
+    case vietnam
+    
+    var code: String {
+        switch self {
+        case .english:
+            return "en"
+        case .thailand:
+            return "th"
+        case .vietnam:
+            return "vi"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .english:
+            return "English"
+        case .thailand:
+            return "Thailand"
+        case .vietnam:
+            return "Vietnam"
+        }
+    }
 }
 
 class ChangeLanguageViewController: UIViewController {
 
-    var mode: LanguageMode = .health
     @IBOutlet weak var subTitleLabel: UILabel! {
         didSet {
             subTitleLabel.text = NSLocalizedString("Change_Language_Sub_Title", comment: "")
@@ -76,6 +95,9 @@ class ChangeLanguageViewController: UIViewController {
     }()
     
     var successCallback: ((String) -> Void)?
+    var selectedLanguage: Language {
+        return UserDefaults.getLanguage
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,9 +112,16 @@ class ChangeLanguageViewController: UIViewController {
         self.subTitleLabel.text = "Change_Language_Msg".localized
         germanLabel.text = "Thai"
         englishLabel.text = "English"
-
-      
         self.navigationItem.rightBarButtonItem = cancelBarButton
+        
+        switch selectedLanguage {
+        case .english:
+            setupThemeEnglish()
+        case .thailand:
+            setupThemeThai()
+        case .vietnam:
+            setupThemeVietnam()
+        }
     }
     
     @objc
@@ -114,34 +143,40 @@ class ChangeLanguageViewController: UIViewController {
         vietnamesePlaceholderView.addGestureRecognizer(vietanmeseTapGesture)
     }
     
-    func setUpTickMarkImage(selectedGerman: Bool = false) {
-//        thaiCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
-//        englishCheckboxView.backgroundColor = UIColor.clear
-//        vietnameseCheckboxView.backgroundColor = UIColor.clear
+    func setupThemeThai() {
+        thaiCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
+        englishCheckboxView.backgroundColor = UIColor.clear
+        vietnameseCheckboxView.backgroundColor = UIColor.clear
     }
     
     @objc
     func onSelectThai() {
-        thaiCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
-        englishCheckboxView.backgroundColor = UIColor.clear
+        setupThemeThai()
+        self.changeLanguage(.thailand)
+    }
+    
+    func setupThemeEnglish() {
+        thaiCheckboxView.backgroundColor = UIColor.clear
+        englishCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
         vietnameseCheckboxView.backgroundColor = UIColor.clear
-        self.changeLanguage(language: "th")
     }
     
     @objc
     func onSelectEnglish() {
+        setupThemeEnglish()
+        self.changeLanguage(.english)
+    }
+    
+    func setupThemeVietnam() {
         thaiCheckboxView.backgroundColor = UIColor.clear
-        englishCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
-        vietnameseCheckboxView.backgroundColor = UIColor.clear
-        self.changeLanguage(language: "en-US")
+        englishCheckboxView.backgroundColor = UIColor.clear
+        vietnameseCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
     }
     
     @objc
     func onSelectVietnamese() {
-        thaiCheckboxView.backgroundColor = UIColor.clear
-        englishCheckboxView.backgroundColor = UIColor.clear
-        vietnameseCheckboxView.backgroundColor = UIColor(named: "app_theme_color")
-        self.changeLanguage(language: "vi")
+        setupThemeVietnam()
+        self.changeLanguage(.vietnam)
     }
     
     
@@ -157,12 +192,10 @@ class ChangeLanguageViewController: UIViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
 
-    func changeLanguage(language: String) {
+    func changeLanguage(_ language: Language) {
         //Set default language as app language
-        UserDefaults.persistAppLanguage(langCode: language)
-        DispatchQueue.main.async {
-            self.setUpTickMarkImage(selectedGerman: false)
-        }
+        UserDefaults.persistAppLanguageCode(language: language)
+        UserDefaults.persistAppLanguage(langCode: language.code)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             UIControl().sendAction(#selector(NSXPCConnection.suspend),
                                    to: UIApplication.shared, for: nil)

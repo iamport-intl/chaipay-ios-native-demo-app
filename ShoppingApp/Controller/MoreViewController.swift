@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PhoneNumberKit
 
 class MoreViewController: UIViewController {
     
