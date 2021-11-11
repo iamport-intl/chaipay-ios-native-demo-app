@@ -1,7 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/CreditCardValidator/CreditCardValidator.framework
 ${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework
-${BUILT_PRODUCTS_DIR}/OTPInputView/OTPInputView.framework
 ${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework

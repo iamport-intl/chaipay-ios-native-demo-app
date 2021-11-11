@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>OTPInputView.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<true/>
-		</dict>
 		<key>PhoneNumberKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>

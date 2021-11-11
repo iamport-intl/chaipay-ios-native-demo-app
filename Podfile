@@ -6,11 +6,9 @@ target 'ShoppingApp' do
   inhibit_all_warnings!
 
   pod 'SDWebImage', '~> 5.0'
-  pod 'PhoneNumberKit', '~> 3.3'
-  pod 'OTPInputView'
   pod "CreditCardValidator"
   pod 'SwiftMessages'
   pod 'MBProgressHUD', '~> 1.2.0'
-  
+  pod 'PhoneNumberKit', '~> 3.3'
   # Pods for ShoppingApp
 end
