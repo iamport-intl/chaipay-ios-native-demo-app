@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,11 +21,11 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUg-52-8tw">
                         <rect key="frame" x="12" y="20" width="480" height="232"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="KqW-fr-TGN">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KqW-fr-TGN">
                                 <rect key="frame" x="15" y="20" width="450" height="117"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T5e-AB-zGs">
-                                        <rect key="frame" x="0.0" y="0.0" width="450" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="450" height="57"/>
                                         <string key="text">OTP has been sent to your 
 83414691123</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -44,21 +43,80 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="1Wg-Y2-RQR" customClass="OTPInputView" customModule="OTPInputView">
+                                            <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xck-X7-8Iy" customClass="OTPFieldView" customModule="ShoppingApp" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="450" height="50"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" tag="114" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="3bH-L9-Kfm">
+                                                        <rect key="frame" x="45" y="0.0" width="360" height="50"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pWO-6L-0ZO" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="bpP-NE-xlg"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="isY-U5-Hd4" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="62" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="20J-h7-NDB"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="djf-3a-JKP" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="124" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="YrK-3z-PRn"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vE0-Qi-gtt" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="186" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="I5L-Vs-Sxe"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CG6-Oa-ADY" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="248" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="pMt-oS-0zf"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fZR-Lb-G2l" customClass="OTPTextField" customModule="ShoppingApp" customModuleProvider="target">
+                                                                <rect key="frame" x="310" y="0.0" width="50" height="50"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="9lD-Xi-4j3"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                            </textField>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <color key="tintColor" name="app_theme_color"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="FT5-Js-0it"/>
+                                                    <constraint firstAttribute="bottom" secondItem="3bH-L9-Kfm" secondAttribute="bottom" id="Eau-ub-iY0"/>
+                                                    <constraint firstItem="3bH-L9-Kfm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xck-X7-8Iy" secondAttribute="leading" id="Jpg-9C-jpO"/>
+                                                    <constraint firstItem="3bH-L9-Kfm" firstAttribute="centerX" secondItem="Xck-X7-8Iy" secondAttribute="centerX" id="McP-5P-lxS"/>
+                                                    <constraint firstItem="3bH-L9-Kfm" firstAttribute="top" secondItem="Xck-X7-8Iy" secondAttribute="top" id="MoO-qj-vFH"/>
+                                                    <constraint firstAttribute="height" constant="50" id="yzz-VB-Wwl"/>
                                                 </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumDigits">
-                                                        <integer key="value" value="6"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                                        <color key="value" name="app_theme_color"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outlet property="fifthTextField" destination="CG6-Oa-ADY" id="cCT-to-gvI"/>
+                                                    <outlet property="firstTextField" destination="pWO-6L-0ZO" id="kXb-xR-XPx"/>
+                                                    <outlet property="fourthTextField" destination="vE0-Qi-gtt" id="kY6-1e-MWw"/>
+                                                    <outlet property="secondTextField" destination="isY-U5-Hd4" id="SrH-di-xmD"/>
+                                                    <outlet property="sixthTextField" destination="fZR-Lb-G2l" id="ypE-Vq-WDr"/>
+                                                    <outlet property="stackView" destination="3bH-L9-Kfm" id="gRr-gE-rfh"/>
+                                                    <outlet property="thirdTextField" destination="djf-3a-JKP" id="Eih-dp-43F"/>
+                                                </connections>
                                             </view>
                                         </subviews>
                                     </stackView>
@@ -74,7 +132,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="KqW-fr-TGN" firstAttribute="leading" secondItem="sUg-52-8tw" secondAttribute="leading" constant="15" id="5V4-sp-pnc"/>
                             <constraint firstItem="KZR-n3-cPw" firstAttribute="leading" secondItem="sUg-52-8tw" secondAttribute="leading" constant="15" id="65x-4O-F8h"/>
@@ -101,8 +159,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="OTPView" destination="1Wg-Y2-RQR" id="uun-2C-t9p"/>
                 <outlet property="mobileTextField" destination="y60-Uf-rCU" id="ABI-eP-Mzc"/>
+                <outlet property="otpFieldView" destination="Xck-X7-8Iy" id="AbL-oH-kuy"/>
+                <outlet property="shadowView" destination="sUg-52-8tw" id="eZ0-dG-7Bt"/>
                 <outlet property="titleLabel" destination="T5e-AB-zGs" id="pQj-xs-KQG"/>
                 <outlet property="verifyButton" destination="KZR-n3-cPw" id="i3d-8h-KTH"/>
             </connections>
@@ -110,14 +169,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="app_theme_color">
-            <color red="1" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -9,7 +9,6 @@ import UIKit
 import Foundation
 import ChaiPayPaymentSDK
 import PhoneNumberKit
-import OTPInputView
 
 enum MobileNumberViewType {
     case mobile, otp
@@ -32,6 +31,12 @@ class MobileNumberTableViewCell: UITableViewCell {
         return mobileNumber.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
     }
     
+    @IBOutlet weak var shadowView: UIView! {
+        didSet {
+            shadowView.applyShadow()
+        }
+    }
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mobileTextField: PhoneNumberTextField! {
         didSet {
@@ -42,12 +47,8 @@ class MobileNumberTableViewCell: UITableViewCell {
         }
     }
     
-    @IBOutlet weak var OTPView: OTPInputView! {
-        didSet {
-            OTPView.delegateOTP = self
-        }
-    }
-    
+    @IBOutlet weak var otpFieldView: OTPFieldView!
+     
     @IBOutlet weak var verifyButton: UIButton! {
         didSet {
             verifyButton.backgroundColor = UIColor(named: "app_theme_color")
@@ -75,10 +76,27 @@ class MobileNumberTableViewCell: UITableViewCell {
         }
     }
     
+    
+    func setupOtpView(){
+        otpFieldView.fieldsCount = 6
+        otpFieldView.fieldBorderWidth = 2
+        otpFieldView.defaultBorderColor = UIColor.black
+        otpFieldView.filledBorderColor = UIColor(named: "app_theme_color") ?? UIColor.red
+        otpFieldView.cursorColor = UIColor(named: "app_theme_color") ?? UIColor.red
+        otpFieldView.displayType = .roundedCorner
+        otpFieldView.fieldSize = 40
+        otpFieldView.filledBorderColor = UIColor(named: "app_theme_color") ?? UIColor.red
+        otpFieldView.defaultBorderColor = UIColor.lightGray
+//        otpTextFieldView.separatorSpace = 30
+        otpFieldView.shouldAllowIntermediateEditing = false
+        otpFieldView.delegate = self
+        otpFieldView.initializeUI()
+    }
+    
     func changeToMobileView() {
         DispatchQueue.main.async {
             self.verifyButton.setTitle("Next", for: .normal)
-            self.OTPView.isHidden = true
+            self.otpFieldView.isHidden = true
             self.mobileTextField.isHidden = false
             self.titleLabel.text = "enter_mobile_no".localized
             self.titleLabel.textAlignment = .left
@@ -87,7 +105,7 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     func changeToOTPView() {
         DispatchQueue.main.async {
-            self.OTPView.isHidden = false
+            self.otpFieldView.isHidden = false
             self.mobileTextField.isHidden = true
             self.verifyButton.setTitle("Verify", for: .normal)
             self.titleLabel.text = "otp_has_been_sent".localized + " \(self.formattedMobileNumber ?? "")"
@@ -97,6 +115,7 @@ class MobileNumberTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         changeToMobileView()
+        setupOtpView()
     }
 }
 
@@ -113,13 +132,18 @@ extension MobileNumberTableViewCell {
     }
 }
 
-extension MobileNumberTableViewCell: OTPViewDelegate {
-    
-    func didFinishedEnterOTP(otpNumber: String) {
-        otpText = otpNumber
+extension MobileNumberTableViewCell: OTPFieldViewDelegate {
+    func hasEnteredAllOTP(hasEnteredAll hasEntered: Bool) -> Bool {
+        print("Has entered all OTP? \(hasEntered)")
+        return false
     }
     
-    func otpNotValid() {
-        
+    func shouldBecomeFirstResponderForOTP(otpTextFieldIndex index: Int) -> Bool {
+        return true
+    }
+    
+    func enteredOTP(otp otpString: String) {
+        otpText = otpString
+        print("OTPString: \(otpString)")
     }
 }

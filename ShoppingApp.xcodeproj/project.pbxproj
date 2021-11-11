@@ -76,6 +76,9 @@
 		F0CDFDEA27270DB7000D8ECF /* PaymentShippingAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0CDFDE827270DB7000D8ECF /* PaymentShippingAddressTableViewCell.xib */; };
 		F0CDFDED27270FFC000D8ECF /* OrderDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CDFDEB27270FFC000D8ECF /* OrderDetailsTableViewCell.swift */; };
 		F0CDFDEE27270FFC000D8ECF /* OrderDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0CDFDEC27270FFC000D8ECF /* OrderDetailsTableViewCell.xib */; };
+		F0D480BA273A6E82005D0791 /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D48097273A6E11005D0791 /* OTPFieldView.swift */; };
+		F0D480BB273A6E82005D0791 /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D48098273A6E11005D0791 /* OTPTextField.swift */; };
+		F0D480D5273A8B95005D0791 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D480D4273A8B95005D0791 /* LocaleManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -166,6 +169,9 @@
 		F0CDFDE827270DB7000D8ECF /* PaymentShippingAddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentShippingAddressTableViewCell.xib; sourceTree = "<group>"; };
 		F0CDFDEB27270FFC000D8ECF /* OrderDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		F0CDFDEC27270FFC000D8ECF /* OrderDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OrderDetailsTableViewCell.xib; sourceTree = "<group>"; };
+		F0D48097273A6E11005D0791 /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
+		F0D48098273A6E11005D0791 /* OTPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
+		F0D480D4273A8B95005D0791 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
 		FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -289,6 +295,9 @@
 		ED2C2DBD26B0891D00DA86B9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				F0D48097273A6E11005D0791 /* OTPFieldView.swift */,
+				F0D48098273A6E11005D0791 /* OTPTextField.swift */,
+				F0D480D4273A8B95005D0791 /* LocaleManager.swift */,
 				F0B30EE826E60F4B0049374F /* Constants.swift */,
 				F05B0F382734E18F001D8081 /* EnvironmentDataManager.swift */,
 				F048B05A2728762500430C65 /* UserDefaults.swift */,
@@ -523,9 +532,12 @@
 				F0B3808E272A41A000ED3A68 /* MoreViewController.swift in Sources */,
 				ED2C2DB426B0524F00DA86B9 /* ShoppingDataManager.swift in Sources */,
 				F09B54DE26E7D558004A6209 /* ListOfPaymentMethodsTableViewCell.swift in Sources */,
+				F0D480BB273A6E82005D0791 /* OTPTextField.swift in Sources */,
+				F0D480D5273A8B95005D0791 /* LocaleManager.swift in Sources */,
 				ED2C2DC426B0F82800DA86B9 /* ProductDetailsViewController.swift in Sources */,
 				F0B9421A26E749540046944C /* NewCardView.swift in Sources */,
 				ED444AC026B1ABDC00DC8985 /* ViewControllersFactory.swift in Sources */,
+				F0D480BA273A6E82005D0791 /* OTPFieldView.swift in Sources */,
 				F048B03C2727AAA500430C65 /* NoDataTableViewCell.swift in Sources */,
 				F05B0F332734D618001D8081 /* ChangeMerchantViewController.swift in Sources */,
 				ED2C2DCC26B1061400DA86B9 /* SummaryObject.swift in Sources */,
