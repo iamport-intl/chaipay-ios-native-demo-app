@@ -376,6 +376,8 @@ extension PaymentMethodTableViewCell: UITableViewDelegate, UITableViewDataSource
         cell.selectionStyle = .none
         if fromSavedCard {
             print("savedCardObjects", savedCardObjects)
+            print("savedCardObjects", savedCardObjects.count)
+            print("savedCardObjects", indexPath.row)
             print("savedCardObjects", savedCardObjects[indexPath.row])
             let isSelected = savedCardObjects[indexPath.row].partialCardNumber == selectedSavedCard?.partialCardNumber
             cell.layout(basedOn: savedCardObjects[indexPath.row], isSelected: isSelected)

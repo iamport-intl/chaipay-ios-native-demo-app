@@ -276,7 +276,7 @@ class ProductDetailsViewController: UIViewController {
         print("totalAmount", totalAmount)
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
         
-        return TransactionRequest(chaipayKey: selectedEnvironment?.key ?? "", key: selectedEnvironment?.key ?? "", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "chaipay://", failureURL: "chaipay://", redirectURL: "chaipay://", countryCode: "VN")
+        return TransactionRequest(chaipayKey: selectedEnvironment?.key ?? "", key: selectedEnvironment?.key ?? "", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN")
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
@@ -311,7 +311,7 @@ class ProductDetailsViewController: UIViewController {
                 switch result {
                 case .success(let data):
                     isSuccess = true
-                    if(data.isSuccess == "false") {
+                    if(!(data.isSuccess ?? true)) {
                         isSuccess = false
                     }
                     print("data", data)
@@ -336,7 +336,7 @@ class ProductDetailsViewController: UIViewController {
                 case .success(let data):
                     print(data)
                     isSuccess = true
-                    if(data.isSuccess == "false") {
+                    if(!(data.isSuccess ?? true)) {
                         isSuccess = false
                     }
                     self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, data)
@@ -357,7 +357,7 @@ class ProductDetailsViewController: UIViewController {
     
     @objc func showResponseInfo(_ notification: Notification) {
         if let webViewResponse = notification.object as? WebViewResponse {
-            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
+            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess ?? false)
             showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, webViewResponse)
         }
     }

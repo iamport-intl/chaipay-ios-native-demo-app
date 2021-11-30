@@ -101,9 +101,9 @@ class ProductListViewController: UIViewController {
     @objc func showResponseInfo(_ notification: Notification) {
         print("Entered")
         if let webViewResponse = notification.object as? WebViewResponse {
-            print("Entered 2")
-            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess == "true")
-            print("Entered 3,")
+            
+            let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess ?? false)
+            
             showSwiftResponseMessagesView(isSuccess: isSuccess, webViewResponse: webViewResponse)
         }
     }

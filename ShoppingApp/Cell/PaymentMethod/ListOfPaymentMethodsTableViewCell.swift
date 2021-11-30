@@ -55,7 +55,7 @@ extension ListOfPaymentMethodsTableViewCell {
         case "jcb":
             imageString = "jcb"
         default:
-            return 
+            imageString = ["masterCard", "visa", "jcb"].randomElement() ?? ""
         }
         
         paymentMethodImageView.image = UIImage(named: imageString)

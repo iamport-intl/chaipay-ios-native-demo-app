@@ -36,7 +36,7 @@ import UIKit
             layer.cornerRadius = bounds.size.width / 2
             break
         case .roundedCorner:
-            layer.cornerRadius = 4
+            layer.cornerRadius = 8
             break
         case .square:
             layer.cornerRadius = 0

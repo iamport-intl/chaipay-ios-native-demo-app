@@ -34,7 +34,7 @@ extension OrderDetailsTableViewCell {
         amountPaidValueLabel.text = (amount + delivery).formatCurrency()
         
         if let y = response  {
-            let issuccess = y.isSuccess == "true"
+            let issuccess = y.isSuccess ?? false
             orderDetailsTitleLabel.text =  issuccess ? "Payment Successful" : "Payment failed"
         }
         
