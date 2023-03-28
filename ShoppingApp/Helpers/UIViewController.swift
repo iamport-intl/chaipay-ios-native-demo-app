@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import CryptoKit
 
 extension UIViewController {
     func showHUD() {
@@ -21,6 +22,37 @@ extension UIViewController {
         DispatchQueue.main.async {
             MBProgressHUD.hide(for: self.view, animated: true)
         }
+    }
+    
+    func createJWTToken() -> String {
+        
+        struct Header: Encodable {
+            let alg = "HS256"
+            let typ = "JWT"
+        }
+        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
+            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
+            let token = String(currentTimeStamp)
+            return Int(currentTimeStamp)
+        }
+        let payload = Payload(iss: "CHAIPAY", sub: UserDefaults.getChaipayKey! ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 1000000))
+        
+        let secret = UserDefaults.getSecretKey!
+        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
+
+        let headerJSONData = try! JSONEncoder().encode(Header())
+        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
+
+        let payloadJSONData = try! JSONEncoder().encode(payload)
+        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
+
+        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
+
+        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
+        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
+
+        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+        return token
     }
     
     
@@ -162,20 +194,40 @@ extension Int {
     func formatCurrency() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "vi_VN")
-
+        let currencyVal = CurrencyManager.Currencies.filter{$0.toJSONDict["currency"] == UserDefaults.getCurrency.code}.first
+        formatter.locale = Locale(identifier: currencyVal?.code ?? "en-us")
+        
         let formattedString = formatter.string(for: self)
     
         return formattedString ?? "\(self)"
     }
 }
 
-extension String {
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-}
 
 extension Notification.Name {
     static let MerchantUpdated = NSNotification.Name("MerchantUpdated")
 }
+public extension Data {
+    
+    func to<T>(_ type: T.Type) -> T {
+        return self.withUnsafeBytes { $0.pointee }
+    }
+}
+
+extension String {
+    func replace(string:String, replacement:String) -> String {
+        return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)
+    }
+
+    func removeWhitespace() -> String {
+        return self.replace(string: " ", replacement: "")
+    }
+    
+    var localized: String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
+    var bytes: [UInt8] { .init(utf8) }
+    
+  }
+

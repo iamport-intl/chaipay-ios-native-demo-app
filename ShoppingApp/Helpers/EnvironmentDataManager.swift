@@ -13,6 +13,18 @@ struct EnvironmentObject: Codable {
     var secretKey: String
 }
 
+struct EnvObject: Codable {
+    var index: Int
+    var environmentTitle: String
+    var envType: String
+}
+
+struct DevEnvObject: Codable {
+    var index: Int
+    var environmentTitle: String
+    var envType: String
+}
+
 class EnvironmentDataManager {
     static func prepareEnvironmentData() -> [EnvironmentObject] {
         let devSiriEnvironment = EnvironmentObject(environmentTitle: "Dev Siri", key: "bCktzybHOqyfTjrp", secretKey: "17fd4b860101361129e5bc3d26b7c8ff80d47f7d514e8eba66e9c95f5321b123")

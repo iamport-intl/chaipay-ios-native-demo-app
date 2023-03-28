@@ -28,7 +28,7 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     var mobileNumber = UserDefaults.getMobileNumber ?? ""
     var formattedMobileNumber: String? {
-        return mobileNumber.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
+        return (UserDefaults.getMobileNumber ?? "").trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: "")
     }
     
     @IBOutlet weak var shadowView: UIView! {
@@ -59,10 +59,14 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     @IBAction func onClickVerifyButton(_ sender: UIButton) {
         if(viewType == .mobile) {
-            checkOut?.getOTP(formattedMobileNumber ?? "", onCompletionHandler: { (result) in
+            print("mobileTextField.text", mobileTextField.text)
+            guard let num = mobileTextField.text else {
+                 return
+            }
+            UserDefaults.persistMobileNumber(number: num )
+            checkOut?.getOTP(num.removeWhitespace() ?? "", onCompletionHandler: { (result) in
                 switch result {
                 case .success(let data):
-                    self.viewType = .otp
                     self.changeToOTPView()
                 case.failure(let error):
                     print(error)
@@ -73,6 +77,8 @@ class MobileNumberTableViewCell: UITableViewCell {
         } else if(viewType == .otp) {
             //API
             delegate?.fetchSavedCards(formattedMobileNumber ?? "", otpText)
+            otpFieldView.initializeUI()
+            
         }
     }
     
@@ -95,6 +101,7 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     func changeToMobileView() {
         DispatchQueue.main.async {
+            self.viewType = .mobile
             self.verifyButton.setTitle("Next", for: .normal)
             self.otpFieldView.isHidden = true
             self.mobileTextField.isHidden = false
@@ -105,6 +112,7 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     func changeToOTPView() {
         DispatchQueue.main.async {
+            self.viewType = .otp
             self.otpFieldView.isHidden = false
             self.mobileTextField.isHidden = true
             self.verifyButton.setTitle("Verify", for: .normal)
@@ -121,12 +129,14 @@ class MobileNumberTableViewCell: UITableViewCell {
 
 extension MobileNumberTableViewCell {
     func layout(basedOn viewType: MobileNumberViewType) {
-        self.viewType = viewType
+        
         switch viewType {
         case .otp:
+            
             self.changeToOTPView()
             mobileNumber = UserDefaults.getMobileNumber ?? ""
         case .mobile:
+            
             break
         }
     }

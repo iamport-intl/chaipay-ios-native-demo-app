@@ -93,6 +93,8 @@ public class OTPFieldView: UIView {
     
     override public func awakeFromNib() {
         super.awakeFromNib()
+        initializeUI()
+        
     }
     
     public func initializeUI() {
@@ -109,6 +111,13 @@ public class OTPFieldView: UIView {
         secureEntryData.append("")
         secureEntryData.append("")
         secureEntryData.append("")
+        firstTextField.text = ""
+        secondTextField.text = ""
+        thirdTextField.text = ""
+        fourthTextField.text = ""
+        fifthTextField.text = ""
+        sixthTextField.text = ""
+        
     }
     
     func setupTextField(_ otpField: OTPTextField) {

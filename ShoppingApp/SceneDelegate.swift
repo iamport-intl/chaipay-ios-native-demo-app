@@ -7,6 +7,7 @@
 
 import UIKit
 import ChaiPayPaymentSDK
+import React
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -49,8 +50,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        if let url = URLContexts.first?.url, url.absoluteString.hasPrefix("chaipay:") {
+        if let url = URLContexts.first?.url, url.absoluteString.hasPrefix("chaiport:") {
             AppDelegate.shared.checkout?.handleUrl(url)
+        }
+        if let url = URLContexts.first?.url {
+        RCTLinkingManager.application(UIApplication.shared, open: url)
         }
     }
 }

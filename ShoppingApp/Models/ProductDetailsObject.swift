@@ -18,4 +18,7 @@ struct ProductDetailsObject {
     var image: UIImage? {
         return UIImage(named: imageName ?? "")
     }
+    var img: UIImage? {
+        return UIImage(named: imageName ?? "")
+    }
 }

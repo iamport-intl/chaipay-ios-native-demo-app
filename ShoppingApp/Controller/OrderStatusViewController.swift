@@ -36,6 +36,7 @@ class OrderStatusViewController: UIViewController {
     var amount: Int = 0
     var delivery: Int = 0
     var isSuccess: Bool = false
+    var message1: String = ""
     private var dataSource: [ResponseDataSource] = []
     
     
@@ -76,7 +77,9 @@ class OrderStatusViewController: UIViewController {
     }
     
     @IBAction func onClickButton(_ sender: UIButton) {
+        AppDelegate.shared.window?.rootViewController?.dismiss(animated: true, completion: nil)
         delegate?.goBack(fromSuccess: isSuccess)
+        (AppDelegate.shared.window?.rootViewController as? UINavigationController)?.popViewController(animated: true)
     }
 }
 
@@ -101,7 +104,13 @@ extension OrderStatusViewController: UITableViewDataSource, UITableViewDelegate 
                 return UITableViewCell(frame: .zero)
             }
             print("RESPONE !)$", response)
-            cell.layout(basedOn: response, amount: amount, delivery: self.delivery)
+            var x = response
+            
+            if(message1 != "") {
+                descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : "\(message1)"
+            }
+            cell.layout(basedOn: x, amount: amount, delivery: self.delivery, message: message1)
+            
             cell.selectionStyle = .none
             return cell
             

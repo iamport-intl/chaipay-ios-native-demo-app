@@ -25,7 +25,7 @@
 			<string>checkout</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>chaipay</string>
+				<string>chaiport</string>
 			</array>
 		</dict>
 		<dict>
@@ -40,10 +40,10 @@
 		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>zp-redirect-3</string>
+			<string>checkout</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>zp-redirect-3</string>
+				<string>chaipay</string>
 			</array>
 		</dict>
 		<dict>
@@ -71,12 +71,13 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>chaipay</string>
 		<string>itms-appss</string>
 		<string>momo</string>
 		<string>zalopay</string>
 		<string>zalopay.api.v2</string>
 		<string>momopay</string>
-		<string>chaipay</string>
+		<string>chaiport</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -84,6 +85,18 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -112,7 +125,7 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

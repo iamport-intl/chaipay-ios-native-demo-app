@@ -82,7 +82,9 @@ extension ResponseView {
         let productsData = ResponseDataSource.productsList(selectedProducts)
         let shippingData = ResponseDataSource.shippingAddress
         dataSource = [orderDetailsData, productsData, shippingData]
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 

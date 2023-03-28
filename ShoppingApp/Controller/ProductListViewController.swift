@@ -9,6 +9,7 @@ import UIKit
 import SwiftMessages
 import ChaiPayPaymentSDK
 import CryptoKit
+import React
 
 enum SortType {
     case ascending
@@ -21,10 +22,15 @@ struct Payload: Encodable {
     let iat: Int
     let exp: Int
 }
-
+    
 class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
+    var paymentMethodsView: RCTRootView? = nil
+    var setCartSummaryView: RCTRootView? = nil
+    var payButton: RCTRootView? = nil
+    var checkoutElement: RCTRootView? = nil
+    
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet weak var sortButton: UIButton! {
@@ -43,7 +49,7 @@ class ProductListViewController: UIViewController {
     @IBOutlet var buyNowButton: UIButton! {
         didSet {
             buyNowButton.layer.cornerRadius = 10
-            buyNowButton.isEnabled = false
+            buyNowButton.isEnabled = true
             buyNowButton.setTitle("buy_now".localized, for: .normal)
         }
     }
@@ -63,8 +69,19 @@ class ProductListViewController: UIViewController {
         }
     }
     
-    var selectedEnvironment: EnvironmentObject? {
-        return UserDefaults.getSelectedEnvironment
+//    var selectedEnvironment: EnvironmentObject? {
+//        return UserDefaults.getSelectedEnvironment
+//    }
+    var chaipayKey: String {
+        return UserDefaults.getChaipayKey!
+    }
+    
+    var secretKey: String {
+        return UserDefaults.getSecretKey!
+    }
+    
+    var env:String {
+        return UserDefaults.getDevEnv!.envType
     }
     
     var appThemeColor = ""
@@ -81,9 +98,10 @@ class ProductListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         NotificationCenter.default.addObserver(self, selector: #selector(showResponseInfo), name: NSNotification.Name("webViewResponse"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name("ReloadData"), object: nil)
         self.navigationItem.title = "app_name".localized
         setupNavBarLargeTitleTheme()
         setupNavBarTitleTheme()
@@ -92,10 +110,16 @@ class ProductListViewController: UIViewController {
         setupBackButton()
         setupThemedNavbar()
     }
+    
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBarLargeTitleTheme()
+    }
+
+    @objc func loginSuccess(_ notification: Notification) {
+        print(notification.userInfo?["userInfo"] as? [String: Any] ?? [:])
     }
 
     @objc func showResponseInfo(_ notification: Notification) {
@@ -105,6 +129,13 @@ class ProductListViewController: UIViewController {
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess ?? false)
             
             showSwiftResponseMessagesView(isSuccess: isSuccess, webViewResponse: webViewResponse)
+        }
+    }
+    
+    @objc func reloadData(_ notification: Notification) {
+        print("Entered")
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
         }
     }
     
@@ -142,7 +173,7 @@ class ProductListViewController: UIViewController {
             view.delegate = self
             var config = SwiftMessages.defaultConfig
             config.presentationStyle = .center
-            config.presentationContext = .window(windowLevel: .normal)
+            config.presentationContext = .automatic
             config.duration = .forever
             config.dimMode = .gray(interactive: true)
             SwiftMessages.show(config: config, view: view)
@@ -185,15 +216,49 @@ class ProductListViewController: UIViewController {
             sortType = .ascending
         }
         prepareSortingData()
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
-        showSwiftView()
-        //customUIClicked()
-        //checkOutUIClicked()
+        AppDelegate.shared.selectedProducts = self.selectedProducts
+        customUIClicked()
+  //      checkoutV4UIClicked()
+      //  checkOutUIClicked()
+      //  showSwiftView()
     }
+    
+    
+    func setPaymentMethods() {
+        
+        
+        self.paymentMethodsView = CheckoutReactModule.sharedInstance.viewForModule("PaymentMethodsElement", initialProperties: nil)
+
+                   DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
+                       CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
+
+                   }
+        
+        
+        CheckoutManager.shared?.sendPaymentMethodsUIEvent()
+        //CheckoutManager.shared?.presentTheRNVC(parentView: self)
+        if let view = self.paymentMethodsView {
+            view.sizeFlexibility = .widthAndHeight
+            view.frame = CGRect(x: 0, y: 250, width: 150, height: 150)
+            
+            self.view.addSubview(view)
+        }
+        
+//        let someView:UIView = UIView(frame: CGRect(x: 15, y:  150 , width: Int(self.view.frame.width) - 30, height: 1))
+//
+//
+//
+//        someView.addSubview(self.paymentMethodsView!)
+//        self.view.addSubview(someView)
+        }
 }
+
 
 // MARK: UICollectionViewDataSource
 
@@ -230,7 +295,9 @@ extension ProductListViewController: UICollectionViewDelegate {
             selectedProductsDict[id] = productData
         }
         shouldEnable = selectedProductsDict.count >= 1 ? true : false
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 }
 
@@ -290,44 +357,44 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: selectedEnvironment?.key ?? "", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let transactionRequest = WebTransactionRequest(chaipayKey: chaipayKey ?? "", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: UserDefaults.getCurrency.code, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
         
-        print(transactionRequest)
+        print("WebTransactionRequest", transactionRequest)
         return transactionRequest
     }
     
-    func createJWTToken() -> String {
-        
-        struct Header: Encodable {
-            let alg = "HS256"
-            let typ = "JWT"
-        }
-        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
-            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
-            let token = String(currentTimeStamp)
-            return Int(currentTimeStamp)
-        }
-        let payload = Payload(iss: "CHAIPAY", sub: selectedEnvironment?.key ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 10000))
-        
-        let secret = selectedEnvironment?.secretKey ?? ""
-        //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
-        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
-
-        let headerJSONData = try! JSONEncoder().encode(Header())
-        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
-
-        let payloadJSONData = try! JSONEncoder().encode(payload)
-        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
-
-        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
-
-        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
-        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
-
-        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
-        return token
-        
-    }
+//    func createJWTToken() -> String {
+//        
+//        struct Header: Encodable {
+//            let alg = "HS256"
+//            let typ = "JWT"
+//        }
+//        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
+//            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
+//            let token = String(currentTimeStamp)
+//            return Int(currentTimeStamp)
+//        }
+//        let payload = Payload(iss: "CHAIPAY", sub: chaipayKey ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 10000))
+//        
+//        let secret = secretKey ?? ""
+//        //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
+//        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
+//
+//        let headerJSONData = try! JSONEncoder().encode(Header())
+//        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
+//
+//        let payloadJSONData = try! JSONEncoder().encode(payload)
+//        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
+//
+//        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
+//
+//        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
+//        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
+//
+//        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+//        return token
+//        
+//    }
     
     func checkOutUIClicked() {
         
@@ -358,6 +425,13 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         productDetailsViewController.checkout = checkout
         hideSwiftView()
         self.navigationController?.pushViewController(productDetailsViewController, animated: true)
+    }
+    
+    func checkoutV4UIClicked() {
+        let checkoutV4ViewController: CheckoutV4ViewController = ViewControllersFactory.viewController()
+        checkoutV4ViewController.selectedProductsDict = selectedProductsDict
+        hideSwiftView()
+        self.navigationController?.pushViewController(checkoutV4ViewController, animated: true)
     }
     
 }

@@ -60,6 +60,8 @@ extension ListOfPaymentMethodsTableViewCell {
         
         paymentMethodImageView.image = UIImage(named: imageString)
         titleLabel.text = methodObject.partialCardNumber
+        descriptionLabel.text = methodObject.expiryMonth + "/" + methodObject.expiryYear
+        descriptionLabel.textColor = UIColor.darkGray
         selectionImageView.image =  UIImage(named: isSelected ? "icon_selected" : "icon_deSelected")
     }
 }
