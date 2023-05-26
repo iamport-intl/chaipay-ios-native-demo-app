@@ -17,6 +17,11 @@ class UserDefaults {
     private static let THEME_COLOR = "ThemeColorCode"
     private static let APP_ENVIRONMENT = "SelectedEnvironment"
     private static let LAYOUT = "Layout"
+    private static let TRANSACTION_TYPE = "PreAuthType"
+    private static let ROUTE_REF = "RouteRef"
+    private static let CUSTOMER_ID = "CustomerId"
+    private static let TOKEN_ID = "TokenId"
+    private static let ROUTING_ENABLED = "RoutingEnabled"
     
     static func persist(token: String) {
         shared.set(token, forKey: AUTHORISATION_TOKEN)
@@ -54,6 +59,55 @@ class UserDefaults {
             return .english
         }
         return Language(rawValue: language) ?? .english
+    }
+    
+    
+    static func persistPreAuthType(preAuthType: TransactionType) {
+        shared.set(preAuthType.rawValue, forKey: TRANSACTION_TYPE)
+        shared.synchronize()
+    }
+    
+    static var getTransactionType: TransactionType {
+        guard let preAuthType = shared.string(forKey: TRANSACTION_TYPE) else {
+            return .purchase
+        }
+        return TransactionType(rawValue: preAuthType) ?? .purchase
+    }
+    
+    static func persistRouteRef(routeRef: String) {
+        shared.set(routeRef, forKey: ROUTE_REF)
+        shared.synchronize()
+    }
+    
+    static var getRouteRef: String? {
+        return shared.string(forKey: ROUTE_REF) ?? " "
+    }
+    
+    static func persistRoutingEnabled(routingEnabled: Bool) {
+        shared.set(routingEnabled, forKey: ROUTING_ENABLED)
+        shared.synchronize()
+    }
+    
+    static var getRoutingEnabled: Bool? {
+        return shared.bool(forKey: ROUTING_ENABLED)
+    }
+    
+    static func persistCustomerId(customerId: String) {
+        shared.set(customerId, forKey: CUSTOMER_ID)
+        shared.synchronize()
+    }
+    
+    static var getCustomerId: String? {
+        return shared.string(forKey: CUSTOMER_ID) ?? ""
+    }
+    
+    static func persistTokenId(customerId: String) {
+        shared.set(customerId, forKey: TOKEN_ID)
+        shared.synchronize()
+    }
+    
+    static var getTokenId: String? {
+        return shared.string(forKey: TOKEN_ID) ?? " "
     }
     
     static func persistAppCurrencyCode(language: Currency) {

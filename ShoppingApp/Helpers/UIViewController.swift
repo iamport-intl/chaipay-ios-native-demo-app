@@ -36,7 +36,7 @@ extension UIViewController {
             return Int(currentTimeStamp)
         }
         let payload = Payload(iss: "CHAIPAY", sub: UserDefaults.getChaipayKey! ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 1000000))
-        
+        print("UserDefaults.getChaipayKey",UserDefaults.getChaipayKey)
         let secret = UserDefaults.getSecretKey!
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
 
@@ -231,3 +231,12 @@ extension String {
     
   }
 
+extension Data {
+    func toBase64String() -> String {
+        return self.base64EncodedString()
+    }
+    
+    func fromBase64String() -> String? {
+        return String(data: self, encoding: .utf8)
+    }
+}

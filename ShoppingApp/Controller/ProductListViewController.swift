@@ -9,7 +9,9 @@ import UIKit
 import SwiftMessages
 import ChaiPayPaymentSDK
 import CryptoKit
-import React
+import Foundation
+
+//import React
 
 enum SortType {
     case ascending
@@ -26,10 +28,10 @@ struct Payload: Encodable {
 class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
-    var paymentMethodsView: RCTRootView? = nil
-    var setCartSummaryView: RCTRootView? = nil
-    var payButton: RCTRootView? = nil
-    var checkoutElement: RCTRootView? = nil
+//    var paymentMethodsView: RCTRootView? = nil
+//    var setCartSummaryView: RCTRootView? = nil
+//    var payButton: RCTRootView? = nil
+//    var checkoutElement: RCTRootView? = nil
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
@@ -123,8 +125,8 @@ class ProductListViewController: UIViewController {
     }
 
     @objc func showResponseInfo(_ notification: Notification) {
-        print("Entered")
-        if let webViewResponse = notification.object as? WebViewResponse {
+       
+        if let webViewResponse = notification.object as? TransactionResponse {
             
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess ?? false)
             
@@ -133,14 +135,14 @@ class ProductListViewController: UIViewController {
     }
     
     @objc func reloadData(_ notification: Notification) {
-        print("Entered")
+   
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
-    func showSwiftResponseMessagesView(isSuccess: Bool = false, webViewResponse: WebViewResponse) {
-        print("RESPONE 123", webViewResponse)
+    func showSwiftResponseMessagesView(isSuccess: Bool = false, webViewResponse: TransactionResponse) {
+    
         let sumOfOrders = self.selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
         let delivery = 0.0
         DispatchQueue.main.async {
@@ -233,29 +235,29 @@ class ProductListViewController: UIViewController {
     func setPaymentMethods() {
         
         
-        self.paymentMethodsView = CheckoutReactModule.sharedInstance.viewForModule("PaymentMethodsElement", initialProperties: nil)
-
-                   DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
-                       CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
-
-                   }
-        
-        
-        CheckoutManager.shared?.sendPaymentMethodsUIEvent()
-        //CheckoutManager.shared?.presentTheRNVC(parentView: self)
-        if let view = self.paymentMethodsView {
-            view.sizeFlexibility = .widthAndHeight
-            view.frame = CGRect(x: 0, y: 250, width: 150, height: 150)
-            
-            self.view.addSubview(view)
-        }
-        
-//        let someView:UIView = UIView(frame: CGRect(x: 15, y:  150 , width: Int(self.view.frame.width) - 30, height: 1))
+//        self.paymentMethodsView = CheckoutReactModule.sharedInstance.viewForModule("PaymentMethodsElement", initialProperties: nil)
 //
+//                   DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
+//                       CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
 //
-//
-//        someView.addSubview(self.paymentMethodsView!)
-//        self.view.addSubview(someView)
+//                   }
+//        
+//        
+//        CheckoutManager.shared?.sendPaymentMethodsUIEvent()
+//        //CheckoutManager.shared?.presentTheRNVC(parentView: self)
+//        if let view = self.paymentMethodsView {
+//            view.sizeFlexibility = .widthAndHeight
+//            view.frame = CGRect(x: 0, y: 250, width: 150, height: 150)
+//            
+//            self.view.addSubview(view)
+//        }
+//        
+////        let someView:UIView = UIView(frame: CGRect(x: 15, y:  150 , width: Int(self.view.frame.width) - 30, height: 1))
+////
+////
+////
+////        someView.addSubview(self.paymentMethodsView!)
+////        self.view.addSubview(someView)
         }
 }
 
@@ -336,6 +338,24 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
         return Int(sumOfOrders + delivery)
     }
+    func createWebHash(_ config: WebTransactionRequest) -> String {
+        var message = ""
+        message =
+        "amount=\(config.amount)" +
+        "&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+        
+        let secretString = secretKey
+        let key = SymmetricKey(data: secretString.data(using: .utf8)!)
+        
+        let signature = HMAC<SHA256>.authenticationCode(for: message.data(using: .utf8)!, using: key)
+        let base64 = Data(signature).toBase64String()
+        return base64
+    }
+    
     
     func prepareConfig() -> WebTransactionRequest {
         
@@ -345,7 +365,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
-        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: UserDefaults.getMobileNumber ?? "", billingAddress: billingAddress)
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: UserDefaults.getMobileNumber ?? "+660956425564", billingAddress: billingAddress)
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
         
@@ -357,9 +377,10 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             orderDetails.append(product)
         }
         
-        let transactionRequest = WebTransactionRequest(chaipayKey: chaipayKey ?? "", merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: UserDefaults.getCurrency.code, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        var transactionRequest = WebTransactionRequest(portOneKey: chaipayKey, merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: UserDefaults.getCurrency.code, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+        let signatureHash = createWebHash(transactionRequest)
+        transactionRequest.signatureHash = signatureHash
         
-        print("WebTransactionRequest", transactionRequest)
         return transactionRequest
     }
     

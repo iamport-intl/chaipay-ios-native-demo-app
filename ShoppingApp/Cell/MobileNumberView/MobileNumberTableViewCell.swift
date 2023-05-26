@@ -59,7 +59,6 @@ class MobileNumberTableViewCell: UITableViewCell {
     
     @IBAction func onClickVerifyButton(_ sender: UIButton) {
         if(viewType == .mobile) {
-            print("mobileTextField.text", mobileTextField.text)
             guard let num = mobileTextField.text else {
                  return
             }
@@ -69,7 +68,11 @@ class MobileNumberTableViewCell: UITableViewCell {
                 case .success(let data):
                     self.changeToOTPView()
                 case.failure(let error):
-                    print(error)
+                    print("error", error)
+                    DispatchQueue.main.async {
+                        self.mobileTextField.text = error.localizedDescription
+                    }
+                   
                     break
                 }
             })
@@ -144,7 +147,7 @@ extension MobileNumberTableViewCell {
 
 extension MobileNumberTableViewCell: OTPFieldViewDelegate {
     func hasEnteredAllOTP(hasEnteredAll hasEntered: Bool) -> Bool {
-        print("Has entered all OTP? \(hasEntered)")
+       
         return false
     }
     
@@ -154,6 +157,5 @@ extension MobileNumberTableViewCell: OTPFieldViewDelegate {
     
     func enteredOTP(otp otpString: String) {
         otpText = otpString
-        print("OTPString: \(otpString)")
     }
 }

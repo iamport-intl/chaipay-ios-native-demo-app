@@ -31,7 +31,7 @@ class OrderStatusViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     weak var delegate: OrderStatusDelegate?
-    var response: WebViewResponse?
+    var response: TransactionResponse?
     var selectedProducts: [ProductDetailsObject] = []
     var amount: Int = 0
     var delivery: Int = 0
@@ -60,10 +60,9 @@ class OrderStatusViewController: UIViewController {
     }
     
     func setLayout() {
-       
         responseTypeImage.image = UIImage(named: isSuccess ? "icon_success" : "icon_failed")
         headerTitle.text = isSuccess ? "Payment Successful" : "Payment failed"
-        descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : "Please try again"
+        descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : response?.message ?? "Please try again"
         buttonTitle.setTitle(isSuccess ? "Continue" : "Go Back", for: .normal)
         buttonTitle.backgroundColor =  UIColor(named: isSuccess ? "success_green_color" : "app_theme_color")
     }

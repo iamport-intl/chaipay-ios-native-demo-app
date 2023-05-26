@@ -83,7 +83,7 @@ class SavedCardsPaymentDataModel: DetailsSectionItem {
         return .savedCards
     }
 
-    let datasource: [SavedCard]
+    let datasource: [SavedCard]?
     let shouldShowOTPInputView: Bool
     let mobileNumberVerified: Bool
     let isExpand: Bool
@@ -91,7 +91,7 @@ class SavedCardsPaymentDataModel: DetailsSectionItem {
     var rowCount: Int {
         if isExpand {
             if mobileNumberVerified {
-                return datasource.count == 0 ? 1 : datasource.count
+                return datasource!.count == 0 ? 1 : 1
             } else {
                 return 1
             }

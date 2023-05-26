@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import ChaiPayPaymentSDK
 
 struct CurrencyObj {
     var name: String? = "Vietnamese"
@@ -27,11 +28,15 @@ static let Currencies = [
     CurrencyObj(name: "Singapore",
                 code: "en-SG    ",
                 languageCode: "en",
-                currency: "SGD"),
+                currency: "PHP"),
     CurrencyObj(name: "Indonesia",
                 code: "id-ID",
                 languageCode: "id",
                 currency: "IDR"),
+    CurrencyObj(name: "Phillipines",
+                code: "id-ID",
+                languageCode: "ph",
+                currency: "PHP"),
     
 ]
 }
@@ -47,6 +52,7 @@ enum Currency: String {
     case vietnam
     case singapore
     case indonesia
+    case philippines
     
     var code: String {
         switch self {
@@ -60,6 +66,8 @@ enum Currency: String {
             return "SGD"
         case .indonesia:
             return "IDR"
+        case .philippines:
+            return "PHP"
         }
     }
     
@@ -75,6 +83,8 @@ enum Currency: String {
             return "Indonesia"
         case .singapore:
             return "Singapore"
+        case .philippines:
+            return "Philipines"
             
         }
     }
@@ -82,6 +92,10 @@ enum Currency: String {
 
 class ChangeCurrencyViewController: UIViewController {
 
+    var checkout: Checkout? {
+        return AppDelegate.shared.checkout
+    }
+    
     @IBOutlet weak var subTitleLabel: UILabel! {
         didSet {
             subTitleLabel.text = "Change Currency"
@@ -195,6 +209,8 @@ class ChangeCurrencyViewController: UIViewController {
         case .singapore:
             setupThemeSingapore()
         case .indonesia:
+            setupThemeIndonesia()
+        case .philippines:
             setupThemeIndonesia()
         }
     }
@@ -319,6 +335,7 @@ class ChangeCurrencyViewController: UIViewController {
     func changeLanguage(_ language: Currency) {
         //Set default language as app language
         UserDefaults.persistAppCurrencyCode(language: language)
+        checkout?.changeCurrency(currency: language.code)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
             NotificationCenter.default.post(name: NSNotification.Name("ReloadData"), object: language)
         }

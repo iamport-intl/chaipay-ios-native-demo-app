@@ -90,7 +90,7 @@ class PaymentMethodTableViewCell: UITableViewCell {
     var paymentMethodObjects: [PaymentMethodObject] = []
     
     var savedCardObjects: [SavedCard] = []
-    var sCard = [SavedCard(token: "d70ecfc5061b40d3bc0f5f3097394dc4", partialCardNumber: "411111******1111", expiryMonth: "03", expiryYear: "2030", type: "visa"), SavedCard(token: "53dcd1496f114b19b433c002e27f019e", partialCardNumber: "5111 1******1118", expiryMonth: "05", expiryYear: "2021", type: "mastercard")]
+
     var fromSavedCard: Bool = false
     
     static let cellIdentifier = String(describing: PaymentMethodTableViewCell.self)
@@ -142,7 +142,7 @@ extension PaymentMethodTableViewCell {
         countLabel.isHidden = true
         
         switch datasource.type {
-        case .newCreditCard :
+        case .newCreditCard, .creditDebitCards :
             if !(datasource.paymentMethods.first?.tokenizationPossible ?? true) {
                 newCardView.isHidden = true
                 expandableImageView.image = UIImage(named: "")
@@ -378,8 +378,7 @@ extension PaymentMethodTableViewCell: UITableViewDelegate, UITableViewDataSource
         if fromSavedCard {
             
             if(indexPath.row < savedCardObjects.count) {
-                var savedCards = sCard
-                sCard = savedCardObjects
+                var sCard = savedCardObjects
                 let isSelected = sCard[indexPath.row].partialCardNumber == selectedSavedCard?.partialCardNumber && sCard[indexPath.row].expiryMonth == selectedSavedCard?.expiryMonth && sCard[indexPath.row].expiryYear == selectedSavedCard?.expiryYear
                 cell.layout(basedOn: sCard[indexPath.row], isSelected: isSelected)
             }
@@ -388,8 +387,8 @@ extension PaymentMethodTableViewCell: UITableViewDelegate, UITableViewDataSource
             guard paymentMethodObjects.count > indexPath.row else {
                 return cell
             }
-            print("paymentMethodObjects[indexPath.row]", paymentMethodObjects[indexPath.row])
-            let isSelected = paymentMethodObjects[indexPath.row].displayName == paymentMethodObject?.displayName
+            
+            let isSelected = paymentMethodObjects[indexPath.row].displayName == paymentMethodObject?.displayName && paymentMethodObjects[indexPath.row].paymentMethodKey == paymentMethodObject?.paymentMethodKey
             cell.layout(basedOn: paymentMethodObjects[indexPath.row], isSelected: isSelected)
         }
         return cell

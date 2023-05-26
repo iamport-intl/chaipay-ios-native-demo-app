@@ -62,10 +62,17 @@ class MoreViewController: UIViewController {
         }
     }
     
-    @IBOutlet var layoutPlaceholder: UIView! {
+    @IBOutlet var preAuthPlaceholderView: UIView! {
         didSet {
-            layoutPlaceholder.layer.cornerRadius = 8
-            layoutPlaceholder.applyShadow()
+            preAuthPlaceholderView.layer.cornerRadius = 8
+            preAuthPlaceholderView.applyShadow()
+        }
+    }
+    
+    @IBOutlet var merchantCardVaultPlaceHolder: UIView! {
+        didSet {
+            merchantCardVaultPlaceHolder.layer.cornerRadius = 8
+            merchantCardVaultPlaceHolder.applyShadow()
         }
     }
     
@@ -89,6 +96,17 @@ class MoreViewController: UIViewController {
         self.present(productListVC, animated: true, completion: nil)
     }
     
+    @objc func onClickPreAuth() {
+        let preAuthVC: PreAuthViewController = ViewControllersFactory.viewController()
+        self.present(preAuthVC, animated: true, completion: nil)
+    }
+    
+    @objc func onClickMerchantCardVault() {
+        let merchantCardVaultVC: MerchantCardVaultViewController = ViewControllersFactory.viewController()
+        self.present(merchantCardVaultVC, animated: true, completion: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "More"
@@ -110,6 +128,14 @@ class MoreViewController: UIViewController {
         let themeColorGesture = UITapGestureRecognizer(target: self, action: #selector(onClickThemeColor))
         themeColorGesture.numberOfTouchesRequired = 1
         themeColorPlaceHolder.addGestureRecognizer(themeColorGesture)
+        
+        let preAuthTapGesture = UITapGestureRecognizer(target: self, action: #selector(onClickPreAuth))
+        preAuthTapGesture.numberOfTouchesRequired = 1
+        preAuthPlaceholderView.addGestureRecognizer(preAuthTapGesture)
+        
+        let merchantCardVaultGesture = UITapGestureRecognizer(target: self, action: #selector(onClickMerchantCardVault))
+        merchantCardVaultGesture.numberOfTouchesRequired = 1
+        merchantCardVaultPlaceHolder.addGestureRecognizer(merchantCardVaultGesture)
         
        
     }

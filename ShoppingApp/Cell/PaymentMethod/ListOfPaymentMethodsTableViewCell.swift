@@ -39,6 +39,7 @@ class ListOfPaymentMethodsTableViewCell: UITableViewCell {
 
 extension ListOfPaymentMethodsTableViewCell {
     func layout(basedOn methodObject: PaymentMethodObject, isSelected: Bool = false) {
+       
         let url = URL(string: methodObject.logo)
         
         paymentMethodImageView.sd_setImage(with: url, placeholderImage: nil)

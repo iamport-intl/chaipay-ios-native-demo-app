@@ -115,7 +115,7 @@ class NewCardView: UIView {
         } else if cardNumberTextField == textField {
             if cardNumber.count > 15 {
                 let validator = CreditCardValidator(cardNumber)
-                print(validator)
+            
                 
                 if(validator.isValid) {
                     hideNumberInlineError()

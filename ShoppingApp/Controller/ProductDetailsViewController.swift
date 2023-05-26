@@ -9,7 +9,7 @@ import ChaiPayPaymentSDK
 import UIKit
 import SwiftMessages
 import CryptoKit
-import React
+
 
 class ProductDetailsViewController: UIViewController {
     // MARK: - Outlets
@@ -70,7 +70,7 @@ class ProductDetailsViewController: UIViewController {
     var paymentDataSource: [PaymentMethodDataSource] = []
     var paymentMethodResponse: PaymentMethodResponse?
     var cardDetails: CardDetails?
-    var savedCards: [SavedCard] = []
+    var savedCards: [SavedCard]? = []
     var selectedPaymentMethod: PaymentMethodObject? {
         didSet {
             print("selectedPaymentMethod", selectedPaymentMethod)
@@ -102,16 +102,15 @@ class ProductDetailsViewController: UIViewController {
         super.viewDidLoad()
         // setupThemedNavbar()
         print("Checkout", checkout)
-        checkout?.getAvailablePaymentGateways(completionHandler: { [weak self] result in
+        
+        checkout?.getAvailablePaymentGateways(portOneKey: UserDefaults.getChaipayKey!, currency: UserDefaults.getCurrency.code ,completionHandler: { [weak self] result in
             print("result", result)
             guard let self = self else { return }
             switch result {
             case .success(let response):
                 self.paymentMethodResponse = response
                 self.setupInitialData()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                self.reloadData()
             case .failure(let error):
                 print("error", error)
                 self.showSwiftMessagesView(isSuccess: false, selectedProducts: self.selectedProducts, message: "\(error)")
@@ -154,10 +153,8 @@ class ProductDetailsViewController: UIViewController {
         setupDataSource()
     }
     
-    func showSwiftMessagesView(isSuccess: Bool = false, selectedProducts: [ProductDetailsObject] = [],  webResponse : WebViewResponse?) {
-        print("RESPONE 123", webResponse)
+    func showSwiftMessagesView(isSuccess: Bool = false, selectedProducts: [ProductDetailsObject] = [],  webResponse : TransactionResponse?) {
         DispatchQueue.main.async {
-            print("RESPONE 110", webResponse)
             let orderStatusViewController: OrderStatusViewController = ViewControllersFactory.viewController()
             orderStatusViewController.delegate = self
             orderStatusViewController.selectedProducts = selectedProducts
@@ -205,18 +202,93 @@ class ProductDetailsViewController: UIViewController {
                 method.subType.contains("INT_CREDIT_CARD")
         }
         
-        print("Filtered credit cards", filterCreditCards)
+        let filterCreditDebitCards = paymentMethodResponse?.cardMethods.filter{
+            method in
+            method.isDefault &&
+                method.isEnabled &&
+                method.subType.contains("INT_CREDIT_DEBIT_CARD")
+        }
+        
+        let filteredBNPL = paymentMethodResponse?.bnpl.filter{
+            method in
+                method.isEnabled &&
+                method.subType.contains("BNPL")
+        }
+        
+        
         let filteredBankTransfer = paymentMethodResponse?.bankTransfer.filter{
             method in
-            
+            method.isDefault &&
                 method.isEnabled &&
                 method.subType.contains("MOBILE_BANK")
         }
         
+        let filteredQRCode = paymentMethodResponse?.QrCode.filter{
+            method in
+                method.isEnabled &&
+                method.subType.contains("QR_CODE")
+        }
+        
+        let filteredNetBanking = paymentMethodResponse?.netBanking.filter{
+            method in
+                method.isEnabled &&
+                method.subType.contains("NET_BANKING")
+        }
+        
+        let filteredCOD = paymentMethodResponse?.cod.filter{
+            method in
+                method.isEnabled &&
+                method.subType.contains("COD")
+        }
+        
+        let filteredCrypto = paymentMethodResponse?.crypto.filter{
+            method in
+            method.isDefault &&
+                method.isEnabled &&
+                method.subType.contains("CRYPTO")
+        }
+        
+        let filteredDirectBankTransfer = paymentMethodResponse?.directBankTransfer.filter{
+            method in
+                method.isEnabled &&
+                method.subType.contains("DIRECT_BANK_TRANSFER")
+        }
+        
+        let filteredInstallment = paymentMethodResponse?.instalment.filter{
+            (method) in
+            
+                if (method.paymentChannelKey == "GBPRIMEPAY") {
+                return (
+                    method.isEnabled &&
+                    method.subType.contains("INSTALLMENT")
+                )
+                } else {
+                    return (
+                        method.isDefault &&
+                        method.isEnabled &&
+                        method.subType.contains("INSTALLMENT")
+                    );
+                }
+            
+        }
+                
+                
+
+        
         let walletData = PaymentMethodDataSource(type: .wallet, paymentMethods: filteredWalletsData ?? [], isExpanded: false)
         let newCreditCard = PaymentMethodDataSource(type: .newCreditCard, paymentMethods: filterCreditCards ?? [], isExpanded: false)
+        let newCreditDebitCards = PaymentMethodDataSource(type: .creditDebitCards, paymentMethods: filterCreditDebitCards ?? [], isExpanded: false)
         let atmDataSource = PaymentMethodDataSource(type: .atm, paymentMethods: filterATMCards ?? [], isExpanded: false)
         let bankTransfer = PaymentMethodDataSource(type: .bankTransfer, paymentMethods: filteredBankTransfer ?? [], isExpanded: false)
+        let bnpl = PaymentMethodDataSource(type: .bnpl, paymentMethods: filteredBNPL ?? [], isExpanded: false)
+        
+        let netBanking = PaymentMethodDataSource(type: .netBanking, paymentMethods: filteredNetBanking ?? [], isExpanded: false)
+        let COD = PaymentMethodDataSource(type: .COD, paymentMethods: filteredCOD ?? [], isExpanded: false)
+        let crypto = PaymentMethodDataSource(type: .crypto, paymentMethods: filteredCrypto ?? [], isExpanded: false)
+        let qrCode = PaymentMethodDataSource(type: .QRCode, paymentMethods: filteredQRCode ?? [], isExpanded: false)
+        let directBanktransfer = PaymentMethodDataSource(type: .directBankTransfer, paymentMethods: filteredDirectBankTransfer ?? [], isExpanded: false)
+        let instalment = PaymentMethodDataSource(type: .instalment, paymentMethods: filteredInstallment ?? [], isExpanded: false)
+        
         
         if !(filteredWalletsData?.isEmpty ?? true) {
             paymentDataSource.append(walletData)
@@ -226,6 +298,9 @@ class ProductDetailsViewController: UIViewController {
             paymentDataSource.append(newCreditCard)
         }
        
+        if !(filterCreditDebitCards?.isEmpty ?? true) {
+            paymentDataSource.append(newCreditDebitCards)
+        }
         
         if !(filterATMCards?.isEmpty ?? true) {
             
@@ -233,10 +308,34 @@ class ProductDetailsViewController: UIViewController {
         }
         
         if !(filteredBankTransfer?.isEmpty ?? true) {
-            
-                print("atmDataSource", bankTransfer)
-                print("filterATMCards", filteredBankTransfer)
             paymentDataSource.append(bankTransfer)
+        }
+        
+        if !(filteredBNPL?.isEmpty ?? true) {
+            paymentDataSource.append(bnpl)
+        }
+        
+        if !(filteredQRCode?.isEmpty ?? true) {
+            paymentDataSource.append(qrCode)
+        }
+        
+        if !(filteredNetBanking?.isEmpty ?? true) {
+            paymentDataSource.append(netBanking)
+        }
+        
+        if !(filteredCOD?.isEmpty ?? true) {
+            paymentDataSource.append(COD)
+        }
+        
+        if !(filteredCrypto?.isEmpty ?? true) {
+            paymentDataSource.append(crypto)
+        }
+        
+        if !(filteredDirectBankTransfer?.isEmpty ?? true) {
+            paymentDataSource.append(directBanktransfer)
+        }
+        if !(filteredInstallment?.isEmpty ?? true) {
+            paymentDataSource.append(instalment)
         }
     }
     
@@ -246,7 +345,7 @@ class ProductDetailsViewController: UIViewController {
         let productDetailsDataModel = ProductDetailsDataModel(datasource: selectedProducts, isExpanded: myCartIsExpanded)
         detailsSectionItems.append(productDetailsDataModel)
         
-        let savedCardsDataSource = SavedCardsPaymentDataModel(datasource: savedCards, shouldShowOTPInputView: shouldShowOTPInputView, mobileNumberVerified: isMobileVerificationDone, isExpand: savedCardViewIsExpanded)
+        let savedCardsDataSource = SavedCardsPaymentDataModel(datasource: savedCards ?? [], shouldShowOTPInputView: shouldShowOTPInputView, mobileNumberVerified: isMobileVerificationDone, isExpand: savedCardViewIsExpanded)
         detailsSectionItems.append(savedCardsDataSource)
         
         let productPaymentDataModel = ProductPaymentDataModel(dataSource: paymentDataSource)
@@ -310,9 +409,27 @@ class ProductDetailsViewController: UIViewController {
         return BillingAddress(city: currency.code, countryCode: "TH", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
     }
     
+    func createHash(_ config: TransactionRequest) -> String {
+        var message = ""
+        message =
+        "amount=\(config.amount)" +
+        "&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+        
+        let secretString = secretKey
+        let key = SymmetricKey(data: secretString.data(using: .utf8)!)
+        
+        let signature = HMAC<SHA256>.authenticationCode(for: message.data(using: .utf8)!, using: key)
+        let base64 = Data(signature).toBase64String()
+        return base64
+    }
+
     func prepareConfig() -> TransactionRequest {
         let countryCode = UserDefaults.getCurrency.code
-        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: number ?? "", billingAddress: getBillingadress())
+        let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: number ?? "+66900002001", billingAddress: getBillingadress())
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "TH", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
         
@@ -326,14 +443,16 @@ class ProductDetailsViewController: UIViewController {
             totalAmount = totalAmount + (details.price ?? 0)
         }
         
-        print("totalAmount", totalAmount)
         let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaiport.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
-        
-        return TransactionRequest(chaipayKey: chaipayKey ?? "", key: chaipayKey ?? "", merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: countryCode, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "chaiport://checkout", countryCode: countryCode)
+        print("UserDefaults.getTransactionType.code",UserDefaults.getTransactionType.code)
+        var transactionRequest = TransactionRequest(portOneKey: chaipayKey , key: chaipayKey , merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: countryCode, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "chaiport://checkout", countryCode: countryCode, routingEnabled: false, routingParams: nil, transactionType: UserDefaults.getTransactionType.code)
+        let signatureHash = createHash(transactionRequest)
+        transactionRequest.signatureHash = signatureHash
+        return transactionRequest
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
-        checkout?.initiateWalletPayments(config) { result in
+        checkout?.initiatePayment(config) { result in
             switch result {
             case .success(let data):
                 print(data)
@@ -353,17 +472,22 @@ class ProductDetailsViewController: UIViewController {
     
     @IBAction func onClickPayNowButton(_ sender: UIButton) {
         if let cardDetails = cardDetails {
+            var card = cardDetails
+
             var config = prepareConfig()
-            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? "MASTERCARD_CARD"
-            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? "MASTERCARD"
+            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? ""
+            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? ""
+            config.routingEnabled = UserDefaults.getRoutingEnabled
+            config.routingParams =  RoutingParams(type: "failover", routeRef: UserDefaults.getRouteRef)
             self.showHUD()
-            print("Config", config)
+            print("Config", config.transactionType)
             print("CardDetails", cardDetails)
             let jwtToken = createJWTToken()
-            checkout?.initiateNewCardPayment(config, cardDetails: cardDetails, jwtToken: jwtToken, clientKey: UserDefaults.getChaipayKey!, onCompletionHandler: { (result) in
+            checkout?.initiateNewCardPayment(config: config, cardDetails: card, jwtToken: jwtToken, clientKey: UserDefaults.getChaipayKey!, onCompletionHandler: { (result) in
                 var isSuccess: Bool = false
                 self.hideHUD()
                 print("result", result)
+                self.totalAmount = 0
                 switch result {
                 case .success(let data):
                     isSuccess = true
@@ -395,15 +519,26 @@ class ProductDetailsViewController: UIViewController {
                     method.isEnabled &&
                     method.subType.contains("INT_CREDIT_CARD")
             }.first
-            selectedPaymentMethod = filterCreditCards ?? filterATMCards
-            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? "MASTERCARD_CARD"
+            
+            let filterCreditDebitCards = paymentMethodResponse?.cardMethods.filter{
+                method in
+                method.isDefault &&
+                    method.isEnabled &&
+                    method.subType.contains("INT_CREDIT_DEBIT_CARD")
+            }.first
+            selectedPaymentMethod = filterCreditCards ?? filterATMCards ?? filterCreditDebitCards
+            config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? ""
 
-            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? "MASTERCARD"
+            config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? ""
+            config.routingEnabled = UserDefaults.getRoutingEnabled
+            
+            config.routingParams =  RoutingParams(type: "failover", routeRef: UserDefaults.getRouteRef)
             self.showHUD()
             let cardDetails = CardDetails(token: savedCard.token, key: UserDefaults.getChaipayKey!, cardNumber: savedCard.partialCardNumber, expiryMonth: savedCard.expiryMonth, expiryYear: savedCard.expiryYear, cardHolderName: " ", type: savedCard.type, cvv: "100", savedCard: true)
-            checkout?.initiateSavedCardPayment(config, cardDetails: cardDetails, onCompletionHandler: { (result) in
+            checkout?.initiateSavedCardPayment(config: config, cardDetails: cardDetails, onCompletionHandler: { (result) in
                 var isSuccess: Bool = false
                 self.hideHUD()
+                self.totalAmount = 0
                 switch result {
                 case .success(let data):
                     print(data)
@@ -412,13 +547,15 @@ class ProductDetailsViewController: UIViewController {
                         isSuccess = false
                     }
                     self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, webResponse: data)
-                case .failure:
+                case .failure(let error):
+                    print(error)
                     isSuccess = false
-                    self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, webResponse: nil)
+                    self.showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, message: error.message)
                 }
                 
             })
         } else {
+            self.totalAmount = 0
             var config = prepareConfig()
             print("selectedPaymentMethod", selectedPaymentMethod)
             config.paymentMethod = selectedPaymentMethod?.paymentMethodKey ?? ""
@@ -429,7 +566,7 @@ class ProductDetailsViewController: UIViewController {
     }
     
     @objc func showResponseInfo(_ notification: Notification) {
-        if let webViewResponse = notification.object as? WebViewResponse {
+        if let webViewResponse = notification.object as? TransactionResponse {
             let isSuccess: Bool = (webViewResponse.status == "Success") || (webViewResponse.isSuccess ?? false)
             showSwiftMessagesView(isSuccess: isSuccess, selectedProducts: self.selectedProducts, webResponse: webViewResponse)
         }
@@ -483,7 +620,7 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
             } else {
                 print("self.savedCards.count", cards.count)
                 print("self.savedCards", savedCards)
-                if cards.count > 0 {
+                if cards.count > 0  {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: PaymentMethodTableViewCell.cellIdentifier) as? PaymentMethodTableViewCell else {
                         return UITableViewCell(frame: .zero)
                     }
@@ -586,7 +723,45 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
                         }
                     }
                 }
-            case .atm, .bankTransfer, .bnpl, .netBanking, .QRCode:
+                
+            case .creditDebitCards:
+                print("DataSource", dataSource)
+                if let creditCard = dataSource[indexPath.row].paymentMethods.first, creditCard.tokenizationPossible {
+                    print("credit card", creditCard)
+                    sh()
+                    selectedPaymentMethod = creditCard
+                } else {
+                    for (index, value) in dataSource.enumerated() {
+                        print("Index", index)
+                        print("value", value)
+                        if index == indexPath.row {
+                            var selectedData = value
+                            selectedData.isExpanded = false
+                            selectedData.isSelected = !selectedData.isSelected
+                            
+                            if selectedData.isSelected {
+                                selectedPaymentMethod = value.paymentMethods.first
+                            } else {
+                                selectedPaymentMethod = nil
+                            }
+                            
+                            if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                                paymentDataSource[selectedIndexPath] = selectedData
+                            }
+                        } else {
+                            var selectedData = value
+                            print("value", value)
+                            selectedData.isSelected = false
+                            selectedData.isExpanded = false
+                            
+                            if let selectedIndexPath = paymentDataSource.firstIndex(where: { $0.type == selectedData.type }) {
+                                print("Selected data", selectedData)
+                                paymentDataSource[selectedIndexPath] = selectedData
+                            }
+                        }
+                    }
+                }
+            case .atm, .bankTransfer, .netBanking:
                 if let atmCard = dataSource[indexPath.row].paymentMethods.first, atmCard.tokenizationPossible {
                     print("atmCard card", atmCard)
                     sh()
@@ -626,9 +801,7 @@ extension ProductDetailsViewController: UITableViewDataSource, UITableViewDelega
             }
             
             setupDataSource()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.reloadData()
             
         default:
             break
@@ -701,7 +874,7 @@ extension ProductDetailsViewController : PaymentMethodDelegate {
 
 extension ProductDetailsViewController : MobileNumberViewDelegate {
     func fetchSavedCards(_ mobileNumber: String, _ OTP: String) {
-        checkout?.fetchSavedCards(mobileNumber, otp: OTP, token: nil,  onCompletionHandler: { (result) in
+        checkout?.fetchSavedCards(portOneKey: UserDefaults.getChaipayKey!, mobileNumber, otp: OTP, token: nil,  onCompletionHandler: { (result) in
             switch result {
             case .success(let values):
                 DispatchQueue.main.async {
@@ -715,9 +888,7 @@ extension ProductDetailsViewController : MobileNumberViewDelegate {
                     }
                     self.shouldShowOTPInputView = false
                     self.setupInitialData()
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    self.reloadData()
                 }
             case .failure(let error):
                 print("error", error)
@@ -745,9 +916,7 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
         case .myCart:
             myCartIsExpanded = isExpanded
             self.setupDataSource()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.reloadData()
         case .savedCards:
             savedCardViewIsExpanded = isExpanded
             if savedCardViewIsExpanded {
@@ -755,21 +924,20 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
                     print("nium", num)
                     fetchSavedCards(mobileNumber: number ?? "", token: UserDefaults.getAuthorisationToken ?? "")
                 } else {
+                    if let num = number, isMobileVerificationDone {
                     sendOTP(isExpanded)
+                    }
                     
                     //                    UserDefaults.removeAuthorisationToken()
                     //                    print(UserDefaults.getAuthorisationToken)
                                         shouldShowOTPInputView = true
                                         self.setupDataSource()
-                                        DispatchQueue.main.async {
-                                            self.tableView.reloadData()
-                                        }
+                    self.reloadData()
+                    
                 }
             } else {
                 self.setupDataSource()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                self.reloadData()
             }
         }
     }
@@ -779,23 +947,16 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
         checkout?.getOTP(number ?? "", onCompletionHandler: { (result) in
             switch result {
             case .success:
-                //                DispatchQueue.main.async {
-                //                    let inputTextViewController: InputTextViewController = ViewControllersFactory.viewController()
-                //                    self.present(inputTextViewController, animated: true, completion: nil)
-                //                }
+                
                 
                 self.shouldShowOTPInputView = isExpanded
                 self.setupDataSource()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                self.reloadData()
             case.failure(let error):
                 print(error)
                 self.savedCardViewIsExpanded = false
                 self.setupDataSource()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                self.reloadData()
             }
         })
     }
@@ -805,7 +966,7 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
         print("token", token)
         let formattedNumber = mobileNumber.removeWhitespace()
         print("num", formattedNumber)
-        checkout?.fetchSavedCards(formattedNumber, otp: "", token: token, onCompletionHandler: {
+        checkout?.fetchSavedCards(portOneKey: UserDefaults.getChaipayKey!,formattedNumber, otp: "", token: token, onCompletionHandler: {
          result in
             switch result {
             case .success(let response):
@@ -814,9 +975,7 @@ extension ProductDetailsViewController: SavedCardHeaderFooterViewDelegate {
                     UserDefaults.persist(token: token)
                 }
                 self.setupDataSource()
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                self.reloadData()
             case .failure(let error):
                 print("Error", error)
                 if error.httpStatusCode == 401 {

@@ -67,7 +67,7 @@ class ChangeMerchantViewController: UIViewController {
            default:
                UserDefaults.persistDevEnv(envObj: DevEnvObject(index: 2, environmentTitle: "Prod", envType: "prod"))
            }
-        checkout?.changeDevEnvironment(envType: UserDefaults.getDevEnv!.envType)
+        checkout?.changeEnvironment(envType: UserDefaults.getDevEnv!.envType)
        }
     
     private var dataSource: [EnvironmentObject] = []
@@ -90,10 +90,9 @@ class ChangeMerchantViewController: UIViewController {
     
     @objc func onSave() {
         
-        checkout?.changeDevEnvironment(envType: UserDefaults.getDevEnv!.envType)
-        checkout?.changeEnvironment(envType: UserDefaults.getEnvironment!.envType)
-        checkout?.changeSecretKey(key: (UserDefaults.getSecretKey ?? chaipayKeyText.text) ?? "")
-        checkout?.changeChaipayKey(key: (UserDefaults.getChaipayKey ?? secretKeyText.text) ?? "")
+        checkout?.changeEnvironment(envType: UserDefaults.getDevEnv!.envType)
+        checkout?.changeEnvironmentMode(envType: UserDefaults.getEnvironment!.envType)
+        
         self.dismiss(animated: true)
     }
     

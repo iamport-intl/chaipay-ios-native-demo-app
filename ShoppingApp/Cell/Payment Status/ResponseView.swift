@@ -63,8 +63,7 @@ class ResponseView: UIView {
 }
 
 extension ResponseView {
-    func setLayout(isSuccess: Bool, amount: String, _ response: WebViewResponse?, selectedProducts: [ProductDetailsObject] = []) {
-        
+    func setLayout(isSuccess: Bool, amount: String, _ response: TransactionResponse?, selectedProducts: [ProductDetailsObject] = []) {
         responseTypeImage.image = UIImage(named: isSuccess ? "icon_success" : "icon_failed")
         headerTitle.text = isSuccess ? "Payment Successful" : "Payment failed"
         descriptionTitle.text =  isSuccess ? "Thank you for shopping with us." : "Please try again"

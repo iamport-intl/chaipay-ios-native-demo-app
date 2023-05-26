@@ -1,5 +1,5 @@
 //
-//  TransactionRequest.swift
+//  TransactionRequestModal.swift
 //  ShoppingApp
 //
 //  Created by Sireesha Neelapu on 27/07/22.
@@ -49,7 +49,7 @@ public struct CardDetailsModal: Codable {
     }
 }
 
-public struct CardRequestObject: Codable {
+public struct CardRequestModel: Codable {
     public var cardToken: String?
     public var cardNumber: String
     public var cardType: String
@@ -83,7 +83,7 @@ public struct CardRequestObject: Codable {
         self.expirationYear = expirationYear
     }
 }
-extension CardRequestObject {
+extension CardRequestModel {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         cardToken = try container.decode(String.self, forKey: .cardToken)
@@ -107,20 +107,20 @@ extension CardRequestObject {
 }
 
 public struct TokenRequestObject: Codable {
-    public var card: CardRequestObject
+    public var card: CardRequestModel
     
     public enum CodingKeys: String, CodingKey {
         case card = "card"
     }
     
-    public init(card: CardRequestObject) {
+    public init(card: CardRequestModel) {
         self.card = card
     }
 }
 extension TokenRequestObject {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        card = try container.decode(CardRequestObject.self, forKey: .card)
+        card = try container.decode(CardRequestModel.self, forKey: .card)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -132,7 +132,7 @@ extension TokenRequestObject {
 public struct TokenResponseObject: Codable {
     public var type : String
     public var id: String
-    public var attributes: CardRequestObject
+    public var attributes: CardRequestModel
     
     enum CodingKeys: String, CodingKey {
         case type = "type"
@@ -150,7 +150,7 @@ extension TokenResponseObject {
         let dataContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
         type = try dataContainer.decode(String.self, forKey: .type)
         id = try dataContainer.decode(String.self, forKey: .id)
-        attributes = try dataContainer.decode(CardRequestObject.self, forKey: .attributes)
+        attributes = try dataContainer.decode(CardRequestModel.self, forKey: .attributes)
     }
 }
     

@@ -18,6 +18,11 @@ enum PaymentMethodType {
     case bnpl
     case netBanking
     case QRCode
+    case creditDebitCards
+    case COD
+    case crypto
+    case directBankTransfer
+    case instalment
 
     var title: String {
         switch self {
@@ -37,12 +42,24 @@ enum PaymentMethodType {
             return "Net Banking"
         case .QRCode:
             return "QRCode"
+        case .creditDebitCards:
+            return "Credit and Debit Cards"
+        case .COD:
+            return "COD"
+        case .crypto:
+            return "Crypto"
+        case .directBankTransfer:
+            return "Direct bank Transfer"
+        case .instalment:
+            return "Instalment"
         }
     }
 
     var image: UIImage? {
         switch self {
         case .atm:
+            return UIImage(named: "wallet")
+        case .creditDebitCards:
             return UIImage(named: "wallet")
         case .savedCards:
             return UIImage(named: "wallet")
@@ -57,6 +74,8 @@ enum PaymentMethodType {
         case .netBanking:
             return UIImage(named: "wallet")
         case .QRCode:
+            return UIImage(named: "wallet")
+        default:
             return UIImage(named: "wallet")
         }
     }

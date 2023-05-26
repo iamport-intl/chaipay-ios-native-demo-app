@@ -1,5 +1,5 @@
 PODS:
-  - CreditCardValidator (0.5.1)
+  - CreditCardValidator (0.5.3)
   - MBProgressHUD (1.2.0)
   - PhoneNumberKit (3.3.3):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
@@ -7,19 +7,19 @@ PODS:
   - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
   - PhoneNumberKit/UIKit (3.3.3):
     - PhoneNumberKit/PhoneNumberKitCore
-  - SDWebImage (5.11.1):
-    - SDWebImage/Core (= 5.11.1)
-  - SDWebImage/Core (5.11.1)
-  - SwiftMessages (9.0.3):
-    - SwiftMessages/App (= 9.0.3)
-  - SwiftMessages/App (9.0.3)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
+  - SwiftMessages (5.0.1):
+    - SwiftMessages/App (= 5.0.1)
+  - SwiftMessages/App (5.0.1)
 
 DEPENDENCIES:
   - CreditCardValidator
   - MBProgressHUD (~> 1.2.0)
   - PhoneNumberKit (~> 3.3)
   - SDWebImage (~> 5.0)
-  - SwiftMessages
+  - SwiftMessages (~> 5.0)
 
 SPEC REPOS:
   trunk:
@@ -30,12 +30,12 @@ SPEC REPOS:
     - SwiftMessages
 
 SPEC CHECKSUMS:
-  CreditCardValidator: b312e6d6df827d5828eae3905da6812262715b32
+  CreditCardValidator: 8306e89b1092e03a146c1bd40943cff09e816772
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
-  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SwiftMessages: 077f19126c24033fe24042237ecc20261adb46e4
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
+  SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
 
-PODFILE CHECKSUM: cad5389e6217ed39166fc1e28406b65d71281812
+PODFILE CHECKSUM: 5ae8391b1e29bfc355c86755a76ff515cfe50f54
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3
