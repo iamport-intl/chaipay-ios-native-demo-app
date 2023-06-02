@@ -75,8 +75,11 @@
 		F0B30EEF26E664D00049374F /* PaymentMethodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */; };
 		F0B30EF026E664D00049374F /* PaymentMethodTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B30EEE26E664D00049374F /* PaymentMethodTableViewCell.xib */; };
 		F0B3808E272A41A000ED3A68 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3808D272A41A000ED3A68 /* MoreViewController.swift */; };
-		F0B8272C2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B8272B2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework */; };
-		F0B8272D2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0B8272B2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F0B8272F2A25CEB000BB8B1C /* FailoverRoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B8272E2A25CEB000BB8B1C /* FailoverRoutingViewController.swift */; };
+		F0B827342A28CC6400BB8B1C /* AddCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B827332A28CC6400BB8B1C /* AddCustomerViewController.swift */; };
+		F0B827362A29BCD200BB8B1C /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B827352A29BCD200BB8B1C /* ProgressHUD.swift */; };
+		F0B827382A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */; };
+		F0B827392A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0B9421A26E749540046944C /* NewCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421926E749540046944C /* NewCardView.swift */; };
 		F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */; };
 		F0B9422226E76F860046944C /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */; };
@@ -96,7 +99,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F0B8272D2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
+				F0B827392A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,7 +181,10 @@
 		F0B30EED26E664D00049374F /* PaymentMethodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodTableViewCell.swift; sourceTree = "<group>"; };
 		F0B30EEE26E664D00049374F /* PaymentMethodTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentMethodTableViewCell.xib; sourceTree = "<group>"; };
 		F0B3808D272A41A000ED3A68 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
-		F0B8272B2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = ../ChaiPayPaymentSDK/build/ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
+		F0B8272E2A25CEB000BB8B1C /* FailoverRoutingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailoverRoutingViewController.swift; sourceTree = "<group>"; };
+		F0B827332A28CC6400BB8B1C /* AddCustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomerViewController.swift; sourceTree = "<group>"; };
+		F0B827352A29BCD200BB8B1C /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
+		F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = ../ChaiPayPaymentSDK/build/ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
 		F0B9421926E749540046944C /* NewCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardView.swift; sourceTree = "<group>"; };
 		F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
 		F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
@@ -198,7 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */,
-				F0B8272C2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */,
+				F0B827382A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +285,8 @@
 				F05B0F322734D618001D8081 /* ChangeMerchantViewController.swift */,
 				F0025CEC2A091C2000A6B215 /* PreAuthViewController.swift */,
 				F02291E72A0A45CE002D086C /* MerchantCardVaultViewController.swift */,
+				F0B8272E2A25CEB000BB8B1C /* FailoverRoutingViewController.swift */,
+				F0B827332A28CC6400BB8B1C /* AddCustomerViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -330,6 +338,7 @@
 				ED2C2DC926B104DF00DA86B9 /* ProductDetailsDataSource.swift */,
 				ED2C2DBF26B0897C00DA86B9 /* UIViewController.swift */,
 				F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */,
+				F0B827352A29BCD200BB8B1C /* ProgressHUD.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -361,7 +370,7 @@
 		F06BA22726DE38CA00E0302E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F0B8272B2A1B8CFB00BB8B1C /* ChaiPayPaymentSDK.xcframework */,
+				F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */,
 				FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
@@ -593,14 +602,17 @@
 				F08DC04D29D3FFD50099D286 /* CheckoutManager.swift in Sources */,
 				ED2C2DAF26B04ECF00DA86B9 /* ProductListViewController.swift in Sources */,
 				F08DC0E229D40A4A0099D286 /* TransactionRequestModal.swift in Sources */,
+				F0B827342A28CC6400BB8B1C /* AddCustomerViewController.swift in Sources */,
 				F09C8E1D27271EEE005912E4 /* OrderStatusViewController.swift in Sources */,
 				F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */,
 				ED2C2DC226B0F71D00DA86B9 /* CenterFlowLayout.swift in Sources */,
 				F08DC04E29D3FFD50099D286 /* CheckoutReactModule.swift in Sources */,
 				F0B30EEB26E65D440049374F /* PaymentMethodDataSource.swift in Sources */,
 				F07D3C2C27223E13000743A3 /* SavedCardHeaderFooterView.swift in Sources */,
+				F0B827362A29BCD200BB8B1C /* ProgressHUD.swift in Sources */,
 				F095167A26E8FFE800B37A3A /* MobileNumberTableViewCell.swift in Sources */,
 				F0025CED2A091C2000A6B215 /* PreAuthViewController.swift in Sources */,
+				F0B8272F2A25CEB000BB8B1C /* FailoverRoutingViewController.swift in Sources */,
 				F02291E82A0A45CE002D086C /* MerchantCardVaultViewController.swift in Sources */,
 				F08DC0DE29D40A2C0099D286 /* CheckoutV4ViewController.swift in Sources */,
 				ED2C2DD026B1094D00DA86B9 /* ProductPaymentTableViewCell.swift in Sources */,
@@ -780,7 +792,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100037;
+				CURRENT_PROJECT_VERSION = 100039;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -811,7 +823,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100037;
+				CURRENT_PROJECT_VERSION = 100039;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

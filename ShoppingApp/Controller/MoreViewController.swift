@@ -76,6 +76,14 @@ class MoreViewController: UIViewController {
         }
     }
     
+    @IBOutlet var failoverPlaceHolder: UIView! {
+        didSet {
+            failoverPlaceHolder.layer.cornerRadius = 8
+            failoverPlaceHolder.applyShadow()
+        }
+    }
+    
+    
     @objc func onClickLanguage() {
         let productListVC: ChangeLanguageViewController = ViewControllersFactory.viewController()
         self.present(productListVC, animated: true, completion: nil)
@@ -103,9 +111,14 @@ class MoreViewController: UIViewController {
     
     @objc func onClickMerchantCardVault() {
         let merchantCardVaultVC: MerchantCardVaultViewController = ViewControllersFactory.viewController()
+        self.modalPresentationStyle = .fullScreen
         self.present(merchantCardVaultVC, animated: true, completion: nil)
     }
     
+    @objc func onClickFailoverRouting() {
+        let failoverRoutingVC: FailoverRoutingViewController = ViewControllersFactory.viewController()
+        self.present(failoverRoutingVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +149,11 @@ class MoreViewController: UIViewController {
         let merchantCardVaultGesture = UITapGestureRecognizer(target: self, action: #selector(onClickMerchantCardVault))
         merchantCardVaultGesture.numberOfTouchesRequired = 1
         merchantCardVaultPlaceHolder.addGestureRecognizer(merchantCardVaultGesture)
+        
+        
+        let failoverGesture = UITapGestureRecognizer(target: self, action: #selector(onClickFailoverRouting))
+        merchantCardVaultGesture.numberOfTouchesRequired = 1
+        failoverPlaceHolder.addGestureRecognizer(failoverGesture)
         
        
     }

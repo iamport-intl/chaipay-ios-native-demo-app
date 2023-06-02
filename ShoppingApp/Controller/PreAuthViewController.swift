@@ -105,6 +105,11 @@ class PreAuthViewController: UIViewController {
         transactionIdText.addTarget(self, action: #selector(onChangeTransactionIdTextTextFieldDidChange(_:)), for: .editingChanged)
 //        routeRefText.addTarget(self, action: #selector(routeRefTextFieldDidChange(_:)), for: .editingChanged)
        captureTransactionButton.addTarget(self, action: #selector(onCaptureTransaction), for: .touchUpInside)
+        self.transactionIdText.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+    }
+    
+    @objc func tapDone(sender: Any) {
+            self.view.endEditing(true)
     }
     
     @objc

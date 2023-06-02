@@ -58,19 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
     
-        
-        
-        UserDefaults.persistDevEnv(envObj: DevEnvObject(index: 0, environmentTitle: "Dev", envType: "dev"))
-        UserDefaults.persistEnv(environmentObject: EnvObject(index: 0, environmentTitle: "Sandbox", envType: "sandbox"))
+//        UserDefaults.persistEnv(environmentObject: EnvObject(index: 0, environmentTitle: "Sandbox", envType: "sandbox"))
         
         UserDefaults.persistChaipayKey(key: UserDefaults.getChaipayKey ?? "bCktzybHOqyfTjrp")
         UserDefaults.persistSecretKey(key: UserDefaults.getSecretKey ?? "17fd4b860101361129e5bc3d26b7c8ff80d47f7d514e8eba66e9c95f5321b123")
-        guard let selectedEnvironment = UserDefaults.getSelectedEnvironment else {
-            return
-        }
         
-        checkout = Checkout(delegate: self, environment: "sandbox")
-        checkout?.changeEnvironment(envType: "dev")
+        checkout = Checkout(delegate: self, environment:  UserDefaults.getEnvironment!.envType ??  "sandbox")
+        checkout?.changeEnvironment(envType: UserDefaults.getDevEnv!.envType)
         
         if let mobileNumber = UserDefaults.getMobileNumber {
             UserDefaults.removeMobileNumber()
