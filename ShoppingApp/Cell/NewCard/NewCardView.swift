@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 import CreditCardValidator
 
 protocol NewCardDataDelegate: AnyObject {
@@ -111,7 +111,7 @@ class NewCardView: UIView {
     func textFieldEditingChanged(_ textField: UITextField) {
         
         if cardHolderNameTextField == textField  {
-            delegate?.cardDetails(CardDetails(token: nil, key: UserDefaults.getChaipayKey!, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: UserDefaults.getChaipayKey!, expiryMonth: cardNumber, expiryYear: expiryMonth, cardHolderName: expiryYear, type: cardHolderName, cvv: cardType, savedCard: false , key: nil))
         } else if cardNumberTextField == textField {
             if cardNumber.count > 15 {
                 let validator = CreditCardValidator(cardNumber)
@@ -145,16 +145,16 @@ class NewCardView: UIView {
             if let targetPosition = textField.position(from: textField.beginningOfDocument, offset: targetCursorPosition) {
                 textField.selectedTextRange = textField.textRange(from: targetPosition, to: targetPosition)
             }
-            delegate?.cardDetails(CardDetails(token: nil, key: UserDefaults.getChaipayKey!, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv,  key: UserDefaults.getChaipayKey!))
             
         } else if expiryDateTextField == textField {
             if((textField.text ?? "").count > 8) {
                 expiryMonth = String(textField.text!.dropLast(7))
                 expiryYear = String(textField.text!.dropFirst(5))
             }
-            delegate?.cardDetails(CardDetails(token: nil, key: UserDefaults.getChaipayKey!, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil,  cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv, key: UserDefaults.getChaipayKey!))
         } else {
-            delegate?.cardDetails(CardDetails(token: nil, key: UserDefaults.getChaipayKey!, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv))
+            delegate?.cardDetails(CardDetails(token: nil, cardNumber: cardNumber, expiryMonth: expiryMonth, expiryYear: expiryYear, cardHolderName: cardHolderName, type: cardType, cvv: cvv, key: UserDefaults.getChaipayKey!))
         }
     }
     

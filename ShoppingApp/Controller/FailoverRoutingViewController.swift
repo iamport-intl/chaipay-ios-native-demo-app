@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 class FailoverRoutingViewController: UIViewController, UITextViewDelegate {
 
@@ -117,7 +117,7 @@ class FailoverRoutingViewController: UIViewController, UITextViewDelegate {
     @objc func onFetchRoutes(){
         let token = createJWTToken()
         if let clientKey = UserDefaults.getChaipayKey {
-            checkout?.fetchRoutes(clientKey: clientKey, jwtToken: token, onCompletionHandler: {(result) in
+            checkout?.fetchRoutes(clientKey: clientKey, jwtToken: token, subMerchantKey: nil, onCompletionHandler: {(result) in
                 switch result {
                 case .success(let data):
                     var values = data.content!.data!.filter{ paymentMethod in

@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 class AddCustomerViewController: UIViewController, UITextViewDelegate {
 
@@ -82,7 +82,8 @@ class AddCustomerViewController: UIViewController, UITextViewDelegate {
         } else {
             let token = createJWTToken()
             if let clientKey = UserDefaults.getChaipayKey {
-                checkout?.addCustomer(clientKey: clientKey, customerData: AddCustomerObject(name: name.text, phoneNumber: phoneNumber.text, emailAddress: email.text, customerRef: customerRef.text), jwtToken: token, onCompletionHandler: { result in
+                
+                checkout?.addCustomer(clientKey: clientKey, customerData: AddCustomerObject(name: name.text, phoneNumber: phoneNumber.text, emailAddress: email.text, customerRef: customerRef.text), jwtToken: token, subMerchantKey: nil, onCompletionHandler: { result in
                     switch result {
                     case .success(let response):
                         self.progressHUD?.show()
@@ -112,7 +113,7 @@ class AddCustomerViewController: UIViewController, UITextViewDelegate {
     @objc func onFetchCustomer(){
         let token = createJWTToken()
         if let clientKey = UserDefaults.getChaipayKey {
-            checkout?.getCustomerData(customerID: self.customerRef.text?.removeWhitespace(), customerData: nil, clientKey: clientKey, jwtToken: token, onCompletionHandler: { result in
+            checkout?.getCustomerData(customerID: self.customerRef.text?.removeWhitespace(),  clientKey: clientKey, jwtToken: token, onCompletionHandler: { result in
                 switch result {
                 case .success(let response):
                     self.progressHUD?.show()

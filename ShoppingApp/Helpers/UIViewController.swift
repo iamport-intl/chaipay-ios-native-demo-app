@@ -7,22 +7,21 @@
 
 import Foundation
 import UIKit
-import MBProgressHUD
 import CryptoKit
 
 extension UIViewController {
-    func showHUD() {
-        DispatchQueue.main.async {
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.bezelView.color = .black
-        }
-    }
-    
-    func hideHUD() {
-        DispatchQueue.main.async {
-            MBProgressHUD.hide(for: self.view, animated: true)
-        }
-    }
+//    func showHUD() {
+//        DispatchQueue.main.async {
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.bezelView.color = .black
+//        }
+//    }
+//
+//    func hideHUD() {
+//        DispatchQueue.main.async {
+//            MBProgressHUD.hide(for: self.view, animated: true)
+//        }
+//    }
     
     func createJWTToken() -> String {
         
@@ -35,7 +34,7 @@ extension UIViewController {
             let token = String(currentTimeStamp)
             return Int(currentTimeStamp)
         }
-        let payload = Payload(iss: "CHAIPAY", sub: UserDefaults.getChaipayKey! ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 1000000))
+        let payload = Payload(iss: "CHAIPAY", sub: UserDefaults.getChaipayKey! ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 10000000))
         print("UserDefaults.getChaipayKey",UserDefaults.getChaipayKey)
         let secret = UserDefaults.getSecretKey!
         let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
@@ -52,6 +51,7 @@ extension UIViewController {
         let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
 
         let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
+        print("token", token)
         return token
     }
     

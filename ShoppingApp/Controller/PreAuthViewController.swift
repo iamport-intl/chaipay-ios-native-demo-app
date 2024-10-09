@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 enum TransactionType: String {
     case purchase
@@ -121,7 +121,7 @@ class PreAuthViewController: UIViewController {
     @objc
     func onCaptureTransaction() {
         let jwtToken = createJWTToken()
-        checkout?.captureTransactionAPI(transactionOrderRef: self.transactionId ?? "", clientKey: UserDefaults.getChaipayKey!, jwtToken: jwtToken) { result in
+        checkout?.captureTransactionAPI(transactionOrderRef: self.transactionId ?? "", clientKey: UserDefaults.getChaipayKey!, jwtToken: jwtToken, subMerchantKey: nil) { result in
             switch result {
             case .success(let response):
                 self.showData(data: "\(response)")

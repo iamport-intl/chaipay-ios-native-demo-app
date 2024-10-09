@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 protocol ResponseViewDelegate: AnyObject {
     func goBack(fromSuccess: Bool)

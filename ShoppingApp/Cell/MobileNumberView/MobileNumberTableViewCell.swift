@@ -7,7 +7,7 @@
 
 import UIKit
 import Foundation
-import ChaiPayPaymentSDK
+import PortoneSDK
 import PhoneNumberKit
 
 enum MobileNumberViewType {

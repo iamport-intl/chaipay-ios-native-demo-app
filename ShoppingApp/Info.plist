@@ -71,7 +71,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>chaipay</string>
+		<string>line</string>
 		<string>itms-appss</string>
 		<string>momo</string>
 		<string>zalopay</string>

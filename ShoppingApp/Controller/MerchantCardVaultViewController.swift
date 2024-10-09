@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 class MerchantCardVaultViewController: UIViewController , UITextViewDelegate{
     @IBOutlet weak var customerIdText: UITextField!
@@ -202,7 +202,7 @@ class MerchantCardVaultViewController: UIViewController , UITextViewDelegate{
         
         let token = createJWTToken()
         if let customerId = UserDefaults.getCustomerId , self.cardDetails != nil {
-            checkout?.addCardForCustomerId(customerId: customerId, clientKey: UserDefaults.getChaipayKey ?? " ", cardData: self.cardDetails, jwtToken: token, onCompletionHandler: { (result) in
+            checkout?.addCardForCustomerId(customerId: customerId, clientKey: UserDefaults.getChaipayKey ?? " ", cardData: self.cardDetails, jwtToken: token, subMerchantKey: nil, onCompletionHandler: { (result) in
                 switch result {
                 case .success(let data):
                     self.showData(data: "\(data)")
@@ -226,7 +226,7 @@ class MerchantCardVaultViewController: UIViewController , UITextViewDelegate{
         
         if let customerId = UserDefaults.getCustomerId, let clientKey = UserDefaults.getChaipayKey, let token = UserDefaults.getTokenId {
             print("token", token)
-            checkout?.deleteCardForCustomerId(customerId: customerId, clientKey: clientKey, jwtToken: createJWTToken(), cardData: DeleteCardDataObject(token: token), onCompletionHandler: {(result) in
+            checkout?.deleteCardForCustomerId(customerId: customerId, clientKey: clientKey, jwtToken: createJWTToken(), cardData: DeleteCardDataObject(token: token), subMerchantKey: nil, onCompletionHandler: {(result) in
                 switch result {
                 case .success(let data):
                     self.showData(data: "\(data)")
@@ -246,7 +246,7 @@ class MerchantCardVaultViewController: UIViewController , UITextViewDelegate{
             print(clientKey)
             print(token)
             print(customerId)
-            checkout?.fetchCustomerCards(customerId: customerId, clientKey: clientKey, jwtToken: token, onCompletionHandler: {(result) in
+            checkout?.fetchCustomerCards(customerId: customerId, clientKey: clientKey, jwtToken: token, subMerchantKey: nil, onCompletionHandler: {(result) in
                 switch result {
                 case .success(let data):
                     self.showData(data: "\(data)")
@@ -290,6 +290,7 @@ class MerchantCardVaultViewController: UIViewController , UITextViewDelegate{
     
     func newCardDetails(cardDetails: CardDetails) {
         self.cardDetails = cardDetails
+        
     }
 }
 

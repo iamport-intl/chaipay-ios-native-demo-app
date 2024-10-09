@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import ChaiPayPaymentSDK
+import PortoneSDK
 import UIKit
 
 enum PaymentMethodType {

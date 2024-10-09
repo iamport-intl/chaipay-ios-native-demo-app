@@ -7,10 +7,9 @@
 
 import UIKit
 import SwiftMessages
-import ChaiPayPaymentSDK
+import PortoneSDK
 import CryptoKit
 import Foundation
-
 //import React
 
 enum SortType {
@@ -32,7 +31,7 @@ class ProductListViewController: UIViewController {
 //    var setCartSummaryView: RCTRootView? = nil
 //    var payButton: RCTRootView? = nil
 //    var checkoutElement: RCTRootView? = nil
-    
+//    var checkoutElement: RCTRootView?
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet weak var sortButton: UIButton! {
@@ -178,6 +177,7 @@ class ProductListViewController: UIViewController {
             config.presentationContext = .automatic
             config.duration = .forever
             config.dimMode = .gray(interactive: true)
+        
             SwiftMessages.show(config: config, view: view)
         }
     }
@@ -225,13 +225,35 @@ class ProductListViewController: UIViewController {
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
         AppDelegate.shared.selectedProducts = self.selectedProducts
-        customUIClicked()
-  //      checkoutV4UIClicked()
-      //  checkOutUIClicked()
-      //  showSwiftView()
+      customUIClicked()
+//    checkoutV4UIClicked()
+        
+      //checkOutUIv3Clicked()
+        //showSwiftView()
     }
     
-    
+    func openCheckoutElement() {
+        
+//            checkoutElement = CheckoutReactModule.sharedInstance.viewForModule("CheckoutElement", initialProperties: nil)
+//
+//            checkoutElement?.delegate = self
+//            checkoutElement?.sizeFlexibility = .height
+//            checkoutElement?.tag = 150
+//
+//            let view = UIView()
+//            view.frame = CGRect(x: 15, y: 150, width: 300, height: 0.5)
+//            view.addSubview(checkoutElement!)
+//            self.view.addSubview(view)
+//
+//
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
+//                CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
+//
+//
+//                CheckoutManager.shared?.sendCheckoutUIEvent()
+//            }
+        
+    }
     func setPaymentMethods() {
         
         
@@ -332,21 +354,24 @@ extension ProductListViewController: OrderStatusDelegate {
 }
 
 extension ProductListViewController: SwiftAlertViewDelegate {
+   
     
-    func getTotalAmount() -> Int {
+    
+    func getTotalAmount() -> Double {
         let delivery: Double = 0
         let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
-        return Int(sumOfOrders + delivery)
+        return sumOfOrders + delivery
     }
     func createWebHash(_ config: WebTransactionRequest) -> String {
         var message = ""
         message =
-        "amount=\(config.amount)" +
+        "amount=\(Int(config.amount))" +
         "&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
         "&currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
         "&failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
         "&merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
         "&success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+       
         
         let secretString = secretKey
         let key = SymmetricKey(data: secretString.data(using: .utf8)!)
@@ -359,12 +384,10 @@ extension ProductListViewController: SwiftAlertViewDelegate {
     
     func prepareConfig() -> WebTransactionRequest {
         
-        // THB
-//        let billingAddress = BillingAddress(city: "THB", countryCode: "TH", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
         let billingAddress = BillingAddress(city: "VND", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
         
-        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaipay.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaiport.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
         let billingDetails = BillingDetails(billingName: "Test mark", billingEmail: "markweins@gmail.com", billingPhone: UserDefaults.getMobileNumber ?? "+660956425564", billingAddress: billingAddress)
         
         let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
@@ -376,60 +399,20 @@ extension ProductListViewController: SwiftAlertViewDelegate {
             let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, imageUrl: details.imageName ?? "")
             orderDetails.append(product)
         }
-        
-        var transactionRequest = WebTransactionRequest(portOneKey: chaipayKey, merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: UserDefaults.getCurrency.code, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaipay.io/success.html", failureURL: "https://test-checkout.chaipay.io/failure.html", redirectURL: "chaipay://checkout", countryCode: "VN", expiryHours: 2, source: "api", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false )
+       // Genrating the payload request
+        var transactionRequest = WebTransactionRequest(portOneKey: chaipayKey, merchantDetails: merchantDetails, merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: getTotalAmount(), currency: UserDefaults.getCurrency.code, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "portone1://checkout", countryCode: "VN", expiryHours: 2, source: "mobile", description: "test dec", showShippingDetails: true, showBackButton: false, defaultGuestCheckout: false, isCheckoutEmbed: false, environment: .sandbox )
         let signatureHash = createWebHash(transactionRequest)
         transactionRequest.signatureHash = signatureHash
         
         return transactionRequest
     }
     
-//    func createJWTToken() -> String {
-//        
-//        struct Header: Encodable {
-//            let alg = "HS256"
-//            let typ = "JWT"
-//        }
-//        func generateCurrentTimeStamp (extraTime: Int = 0) -> Int {
-//            let currentTimeStamp = Date().timeIntervalSince1970 + TimeInterval(extraTime)
-//            let token = String(currentTimeStamp)
-//            return Int(currentTimeStamp)
-//        }
-//        let payload = Payload(iss: "CHAIPAY", sub: chaipayKey ?? "", iat: generateCurrentTimeStamp(), exp: generateCurrentTimeStamp(extraTime: 10000))
-//        
-//        let secret = secretKey ?? ""
-//        //let secret = "a3b8281f6f2d3101baf41b8fde56ae7f2558c28133c1e4d477f606537e328440"
-//        let privateKey = SymmetricKey(data: secret.data(using: .utf8)!)
-//
-//        let headerJSONData = try! JSONEncoder().encode(Header())
-//        let headerBase64String = headerJSONData.urlSafeBase64EncodedString()
-//
-//        let payloadJSONData = try! JSONEncoder().encode(payload)
-//        let payloadBase64String = payloadJSONData.urlSafeBase64EncodedString()
-//
-//        let toSign = (headerBase64String + "." + payloadBase64String).data(using: .utf8)!
-//
-//        let signature = HMAC<SHA256>.authenticationCode(for: toSign, using: privateKey)
-//        let signatureBase64String = Data(signature).urlSafeBase64EncodedString()
-//
-//        let token = [headerBase64String, payloadBase64String, signatureBase64String].joined(separator: ".")
-//        return token
-//        
-//    }
-    
-    func checkOutUIClicked() {
+    func checkOutUIv3Clicked() {
         
         let token = createJWTToken()
         let config = prepareConfig()
         hideSwiftView()
-        checkout?.checkOutUI(config: config, jwtToken: token, onCompletionHandler: { (result) in
-            switch result{
-            case .success(let data):
-                print("Data", data)
-            case .failure(let error):
-                print("error", error)
-            }
-        })
+        checkout?.checkOutUI(config: config, jwtToken: token, subMerchantKey: nil)
     }
     
     func hideSwiftView() {
@@ -449,12 +432,29 @@ extension ProductListViewController: SwiftAlertViewDelegate {
     }
     
     func checkoutV4UIClicked() {
-        let checkoutV4ViewController: CheckoutV4ViewController = ViewControllersFactory.viewController()
-        checkoutV4ViewController.selectedProductsDict = selectedProductsDict
-        hideSwiftView()
-        self.navigationController?.pushViewController(checkoutV4ViewController, animated: true)
+//        let checkoutV4ViewController: CheckoutV4ViewController = ViewControllersFactory.viewController()
+//        checkoutV4ViewController.selectedProductsDict = selectedProductsDict
+//        hideSwiftView()
+//        self.navigationController?.pushViewController(checkoutV4ViewController, animated: true)
     }
     
 }
 
 
+//extension ProductListViewController: RCTRootViewDelegate {
+//    
+//    func rootViewDidChangeIntrinsicSize(_ rootView: RCTRootView!) {
+//        var newFrame: CGRect = rootView.frame;
+//        newFrame.size = rootView.intrinsicContentSize;
+//        if(rootView.tag == 100) {
+//            print(rootView)
+//            print(newFrame.size)
+//            
+//        } else if (rootView.tag == 11) {
+//            
+//            
+//        }
+//       
+//         rootView.frame = newFrame;
+//    }
+//}

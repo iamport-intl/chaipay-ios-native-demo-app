@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 enum DetailsSectionType {
     case details

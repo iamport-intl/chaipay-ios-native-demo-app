@@ -5,7 +5,7 @@
 //  Created by Sireesha Neelapu on 06/09/21.
 //
 
-import ChaiPayPaymentSDK
+import PortoneSDK
 import UIKit
 import SDWebImage
 

@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 struct CurrencyObj {
     var name: String? = "Vietnamese"
@@ -28,7 +28,7 @@ static let Currencies = [
     CurrencyObj(name: "Singapore",
                 code: "en-SG    ",
                 languageCode: "en",
-                currency: "PHP"),
+                currency: "SGD"),
     CurrencyObj(name: "Indonesia",
                 code: "id-ID",
                 languageCode: "id",
@@ -57,7 +57,7 @@ enum Currency: String {
     var code: String {
         switch self {
         case .english:
-            return "THB"
+            return "TWD"
         case .thailand:
             return "THB"
         case .vietnam:

@@ -5,7 +5,7 @@
 //  Created by Sireesha Neelapu on 28/07/21.
 //
 
-import ChaiPayPaymentSDK
+import PortoneSDK
 import UIKit
 import SwiftMessages
 import CryptoKit
@@ -101,9 +101,9 @@ class ProductDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // setupThemedNavbar()
-        print("Checkout", checkout)
         
-        checkout?.getAvailablePaymentGateways(portOneKey: UserDefaults.getChaipayKey!, currency: UserDefaults.getCurrency.code ,completionHandler: { [weak self] result in
+        
+        checkout?.getAvailablePaymentGateways(portOneKey: UserDefaults.getChaipayKey!, currency: UserDefaults.getCurrency.code, subMerchantKey: nil ,completionHandler: { [weak self] result in
             print("result", result)
             guard let self = self else { return }
             switch result {
@@ -442,17 +442,19 @@ class ProductDetailsViewController: UIViewController {
             orderDetails.append(product)
             totalAmount = totalAmount + (details.price ?? 0)
         }
-        
-        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaiport.io/checkout.html", promoCode: "Downy350", promoDiscount: 35000, shippingCharges: 0.0)
+        let promoDiscount = 110.0
+        let charges = 100.0
+        self.totalAmount = totalAmount + charges - promoDiscount
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaiport.io/checkout.html", promoCode: "Downy350", promoDiscount: promoDiscount, shippingCharges: charges)
         print("UserDefaults.getTransactionType.code",UserDefaults.getTransactionType.code)
-        var transactionRequest = TransactionRequest(portOneKey: chaipayKey , key: chaipayKey , merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: Int(self.totalAmount), currency: countryCode, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "chaiport://checkout", countryCode: countryCode, routingEnabled: false, routingParams: nil, transactionType: UserDefaults.getTransactionType.code)
+        var transactionRequest = TransactionRequest(portOneKey: chaipayKey , key: chaipayKey , merchantDetails: merchantDetails, paymentChannel: selectedPaymentMethod?.paymentChannelKey ?? "", paymentMethod: selectedPaymentMethod?.paymentChannelKey == "VNPAY" ? "VNPAY_ALL" : selectedPaymentMethod?.paymentMethodKey ?? "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: self.totalAmount, currency: countryCode, signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "portone1://checkout", countryCode: countryCode, routingEnabled: false, routingParams: nil, transactionType: UserDefaults.getTransactionType.code, bankDetails: nil, directBankTransferDetails: nil)
         let signatureHash = createHash(transactionRequest)
         transactionRequest.signatureHash = signatureHash
         return transactionRequest
     }
     
     func showCheckoutVC(_ config: TransactionRequest) {
-        checkout?.initiatePayment(config) { result in
+        checkout?.initiatePayment(config, subMerchantKey: nil) { result in
             switch result {
             case .success(let data):
                 print(data)
@@ -479,13 +481,18 @@ class ProductDetailsViewController: UIViewController {
             config.paymentChannel = selectedPaymentMethod?.paymentChannelKey ?? ""
             config.routingEnabled = UserDefaults.getRoutingEnabled
             config.routingParams =  RoutingParams(type: "failover", routeRef: UserDefaults.getRouteRef)
-            self.showHUD()
+//            self.showHUD()
             print("Config", config.transactionType)
             print("CardDetails", cardDetails)
+            
             let jwtToken = createJWTToken()
-            checkout?.initiateNewCardPayment(config: config, cardDetails: card, jwtToken: jwtToken, clientKey: UserDefaults.getChaipayKey!, onCompletionHandler: { (result) in
+            print("jwtToken", jwtToken)
+            
+        
+            
+            checkout?.initiateNewCardPayment(config: config, cardDetails: card, jwtToken: jwtToken, clientKey: UserDefaults.getChaipayKey!,subMerchantKey: nil, customerUUID: nil, onCompletionHandler: { (result) in
                 var isSuccess: Bool = false
-                self.hideHUD()
+//                self.hideHUD()
                 print("result", result)
                 self.totalAmount = 0
                 switch result {
@@ -533,11 +540,12 @@ class ProductDetailsViewController: UIViewController {
             config.routingEnabled = UserDefaults.getRoutingEnabled
             
             config.routingParams =  RoutingParams(type: "failover", routeRef: UserDefaults.getRouteRef)
-            self.showHUD()
-            let cardDetails = CardDetails(token: savedCard.token, key: UserDefaults.getChaipayKey!, cardNumber: savedCard.partialCardNumber, expiryMonth: savedCard.expiryMonth, expiryYear: savedCard.expiryYear, cardHolderName: " ", type: savedCard.type, cvv: "100", savedCard: true)
+//            self.showHUD()
+           
+            let cardDetails = CardDetails(token: savedCard.token, cardNumber: savedCard.partialCardNumber, expiryMonth: savedCard.expiryMonth, expiryYear: savedCard.expiryYear, cardHolderName: " ", type: savedCard.type, cvv: "100", savedCard: true,key: UserDefaults.getChaipayKey!)
             checkout?.initiateSavedCardPayment(config: config, cardDetails: cardDetails, onCompletionHandler: { (result) in
                 var isSuccess: Bool = false
-                self.hideHUD()
+//                self.hideHUD()
                 self.totalAmount = 0
                 switch result {
                 case .success(let data):

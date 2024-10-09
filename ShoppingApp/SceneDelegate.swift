@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -50,8 +50,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         // todo: test this flow by removing this
-        if let url = URLContexts.first?.url, url.absoluteString.hasPrefix("chaiport:") {
-            AppDelegate.shared.checkout?.handleUrl(url: url)
+        print("Scene delegate url", URLContexts.first?.url)
+        if let url = URLContexts.first?.url {
+            //AppDelegate.shared.checkout?.handleUrl(url: url)
         }
         if let url = URLContexts.first?.url {
         //RCTLinkingManager.application(UIApplication.shared, open: url)

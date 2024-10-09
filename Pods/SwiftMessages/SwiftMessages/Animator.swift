@@ -10,7 +10,7 @@ import UIKit
 
 public typealias AnimationCompletion = (_ completed: Bool) -> Void
 
-public protocol AnimationDelegate: AnyObject {
+public protocol AnimationDelegate: class {
     func hide(animator: Animator)
     func panStarted(animator: Animator)
     func panEnded(animator: Animator)
@@ -18,7 +18,7 @@ public protocol AnimationDelegate: AnyObject {
 
 /**
  An option set representing the known types of safe area conflicts
- that could require margin adjustments on the message view in order to
+ that could require margin adustments on the message view in order to
  get the layouts to look right.
  */
 public struct SafeZoneConflicts: OptionSet {
@@ -58,21 +58,25 @@ public class AnimationContext {
     }
 }
 
-public protocol Animator: AnyObject {
+public protocol Animator: class {
 
-    /// Adopting classes should declare as `weak`.
     var delegate: AnimationDelegate? { get set }
 
     func show(context: AnimationContext, completion: @escaping AnimationCompletion)
 
     func hide(context: AnimationContext, completion: @escaping AnimationCompletion)
 
-    /// The show animation duration. If the animation duration is unknown, such as if using `UIDynamicAnimator`,
-    /// then provide an estimate. This value is used by `SwiftMessagesSegue`.
-    var showDuration: TimeInterval { get }
+    /// The show animation duration. Return `nil` (the default) if animation has undefined duration,
+    /// such as if using `UIDynamicAnimator`. This value is utilized by `SwiftMessagesSegue`.
+    var showDuration: TimeInterval? { get }
 
-    /// The hide animation duration. If the animation duration is unknown, such as if using `UIDynamicAnimator`,
-    /// then provide an estimate. This value is used by `SwiftMessagesSegue`.
-    var hideDuration: TimeInterval { get }
+    /// The hide animation duration. Return `nil` (the default) if animation has undefined duration,
+    /// such as if using `UIDynamicAnimator`. This value is utilized by `SwiftMessagesSegue`.
+    var hideDuration: TimeInterval? { get }
+}
+
+public extension Animator {
+    var showDuration: TimeInterval? { return nil }
+    var hideDuration: TimeInterval? { return nil }
 }
 

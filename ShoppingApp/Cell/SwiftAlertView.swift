@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SwiftAlertViewDelegate {
-    func checkOutUIClicked()
+    func checkOutUIv3Clicked()
     func customUIClicked()
 }
 class SwiftAlertView: UIView {
@@ -45,7 +45,7 @@ class SwiftAlertView: UIView {
     }
     
     @IBAction func onClickCheckOutUI(_ sender: UIButton) {
-        delegate?.checkOutUIClicked()
+        delegate?.checkOutUIv3Clicked()
     }
     
     @IBAction func onClickCustomUI(_ sender: UIButton) {

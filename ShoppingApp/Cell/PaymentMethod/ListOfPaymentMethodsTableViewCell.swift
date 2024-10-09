@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 
 class ListOfPaymentMethodsTableViewCell: UITableViewCell {
 

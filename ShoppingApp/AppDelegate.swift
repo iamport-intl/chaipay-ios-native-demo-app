@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ChaiPayPaymentSDK
+import PortoneSDK
 //import React
 
 
@@ -14,7 +14,7 @@ import ChaiPayPaymentSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var checkout: Checkout?
-    //var addRatingView: RCTRootView?
+//    var addRatingView: RCTRootView?
     var selectedProducts: [ProductDetailsObject] = []
     static var shared: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -63,7 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.persistChaipayKey(key: UserDefaults.getChaipayKey ?? "bCktzybHOqyfTjrp")
         UserDefaults.persistSecretKey(key: UserDefaults.getSecretKey ?? "17fd4b860101361129e5bc3d26b7c8ff80d47f7d514e8eba66e9c95f5321b123")
         
-        checkout = Checkout(delegate: self, environment:  UserDefaults.getEnvironment!.envType ??  "sandbox")
+        
+        checkout = Checkout(delegate: self, environment:  UserDefaults.getEnvironment!.envType, redirectURL: "portone1://checkout", appIdentifier: "com.flutter.portone")
         checkout?.changeEnvironment(envType: UserDefaults.getDevEnv!.envType)
         
         if let mobileNumber = UserDefaults.getMobileNumber {
@@ -112,6 +113,7 @@ extension AppDelegate: CheckoutDelegate {
     }
     
     var viewController: UIViewController? {
+        print(AppDelegate.shared.window?.rootViewController)
         return AppDelegate.shared.window?.rootViewController
     }
     

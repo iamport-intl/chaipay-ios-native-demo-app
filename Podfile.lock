@@ -1,6 +1,5 @@
 PODS:
   - CreditCardValidator (0.5.3)
-  - MBProgressHUD (1.2.0)
   - PhoneNumberKit (3.3.3):
     - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
     - PhoneNumberKit/UIKit (= 3.3.3)
@@ -16,7 +15,6 @@ PODS:
 
 DEPENDENCIES:
   - CreditCardValidator
-  - MBProgressHUD (~> 1.2.0)
   - PhoneNumberKit (~> 3.3)
   - SDWebImage (~> 5.0)
   - SwiftMessages (~> 5.0)
@@ -24,18 +22,16 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - CreditCardValidator
-    - MBProgressHUD
     - PhoneNumberKit
     - SDWebImage
     - SwiftMessages
 
 SPEC CHECKSUMS:
   CreditCardValidator: 8306e89b1092e03a146c1bd40943cff09e816772
-  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
 
-PODFILE CHECKSUM: 5ae8391b1e29bfc355c86755a76ff515cfe50f54
+PODFILE CHECKSUM: 85704521e4a3824e95a235f6cab979ce51b64582
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2

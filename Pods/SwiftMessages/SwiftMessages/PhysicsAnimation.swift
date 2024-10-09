@@ -16,13 +16,7 @@ public class PhysicsAnimation: NSObject, Animator {
         case bottom
     }
 
-    open var placement: Placement = .center
-
-    open var showDuration: TimeInterval = 0.5
-
-    open var hideDuration: TimeInterval = 0.15
-
-    public var panHandler = PhysicsPanHandler()
+    public var placement: Placement = .center
 
     public weak var delegate: AnimationDelegate?
     weak var messageView: UIView?
@@ -36,16 +30,16 @@ public class PhysicsAnimation: NSObject, Animator {
     }
 
     public func show(context: AnimationContext, completion: @escaping AnimationCompletion) {
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustMargins), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustMargins), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
         install(context: context)
         showAnimation(context: context, completion: completion)
     }
 
     public func hide(context: AnimationContext, completion: @escaping AnimationCompletion) {
         NotificationCenter.default.removeObserver(self)
-        if panHandler.isOffScreen {
+        if panHandler?.isOffScreen ?? false {
             context.messageView.alpha = 0
-            panHandler.state?.stop()
+            panHandler?.state?.stop()
         }
         let view = context.messageView
         self.context = context
@@ -55,14 +49,18 @@ public class PhysicsAnimation: NSObject, Animator {
             view.transform = CGAffineTransform.identity
             completion(true)
         }
-        UIView.animate(withDuration: hideDuration, delay: 0, options: [.beginFromCurrentState, .curveEaseIn, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: hideDuration!, delay: 0, options: [.beginFromCurrentState, .curveEaseIn, .allowUserInteraction], animations: {
             view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }, completion: nil)
-        UIView.animate(withDuration: hideDuration, delay: 0, options: [.beginFromCurrentState, .curveEaseIn, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: hideDuration!, delay: 0, options: [.beginFromCurrentState, .curveEaseIn, .allowUserInteraction], animations: {
             view.alpha = 0
         }, completion: nil)
         CATransaction.commit()
     }
+
+    public var showDuration: TimeInterval? { return 0.5  }
+
+    public var hideDuration: TimeInterval? { return 0.15  }
 
     func install(context: AnimationContext) {
         let view = context.messageView
@@ -74,11 +72,11 @@ public class PhysicsAnimation: NSObject, Animator {
         container.addSubview(view)
         switch placement {
         case .center:
-            view.centerYAnchor.constraint(equalTo: container.centerYAnchor).with(priority: UILayoutPriority(200)).isActive = true
+            NSLayoutConstraint(item: view, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
         case .top:
-            view.topAnchor.constraint(equalTo: container.topAnchor).with(priority: UILayoutPriority(200)).isActive = true
+            NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
         case .bottom:
-            view.bottomAnchor.constraint(equalTo: container.bottomAnchor).with(priority: UILayoutPriority(200)).isActive = true
+            NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         }
         NSLayoutConstraint(item: view, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: view, attribute: .trailing, relatedBy: .equal, toItem: container, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
@@ -107,18 +105,20 @@ public class PhysicsAnimation: NSObject, Animator {
         CATransaction.setCompletionBlock {
             completion(true)
         }
-        UIView.animate(withDuration: showDuration, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.beginFromCurrentState, .curveLinear, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: showDuration!, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.beginFromCurrentState, .curveLinear, .allowUserInteraction], animations: {
             view.transform = CGAffineTransform.identity
         }, completion: nil)
-        UIView.animate(withDuration: 0.3 * showDuration, delay: 0, options: [.beginFromCurrentState, .curveLinear, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.3 * showDuration!, delay: 0, options: [.beginFromCurrentState, .curveLinear, .allowUserInteraction], animations: {
             view.alpha = 1
         }, completion: nil)
         CATransaction.commit()
     }
 
+    var panHandler: PhysicsPanHandler?
+
     func installInteractive(context: AnimationContext) {
         guard context.interactiveHide else { return }
-        panHandler.configure(context: context, animator: self)
+        panHandler = PhysicsPanHandler(context: context, animator: self)
     }
 }
 

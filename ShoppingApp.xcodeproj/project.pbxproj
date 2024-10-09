@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */; };
+		10C11EB146E855FD3398D1DF /* Pods_ShoppingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C700459EBE6CF1F0878125C8 /* Pods_ShoppingApp.framework */; };
 		ED2C2D9126B04CA800DA86B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9026B04CA800DA86B9 /* AppDelegate.swift */; };
 		ED2C2D9326B04CA800DA86B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9226B04CA800DA86B9 /* SceneDelegate.swift */; };
 		ED2C2D9526B04CA800DA86B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9426B04CA800DA86B9 /* ViewController.swift */; };
@@ -78,8 +78,6 @@
 		F0B8272F2A25CEB000BB8B1C /* FailoverRoutingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B8272E2A25CEB000BB8B1C /* FailoverRoutingViewController.swift */; };
 		F0B827342A28CC6400BB8B1C /* AddCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B827332A28CC6400BB8B1C /* AddCustomerViewController.swift */; };
 		F0B827362A29BCD200BB8B1C /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B827352A29BCD200BB8B1C /* ProgressHUD.swift */; };
-		F0B827382A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */; };
-		F0B827392A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F0B9421A26E749540046944C /* NewCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421926E749540046944C /* NewCardView.swift */; };
 		F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */; };
 		F0B9422226E76F860046944C /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */; };
@@ -90,6 +88,9 @@
 		F0D480BA273A6E82005D0791 /* OTPFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D48097273A6E11005D0791 /* OTPFieldView.swift */; };
 		F0D480BB273A6E82005D0791 /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D48098273A6E11005D0791 /* OTPTextField.swift */; };
 		F0D480D5273A8B95005D0791 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D480D4273A8B95005D0791 /* LocaleManager.swift */; };
+		F0DA0DAD2CABB63F004DCEAA /* PortoneSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */; };
+		F0DA0DAE2CABB63F004DCEAA /* PortoneSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F0DBFD712B32BC0F0054D667 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F0DBFD702B32BC0F0054D667 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,7 +100,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F0B827392A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Embed Frameworks */,
+				F0DA0DAE2CABB63F004DCEAA /* PortoneSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,8 +108,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1827F9BE548FC2DAC69230F5 /* Pods-ShoppingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingApp.release.xcconfig"; path = "Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp.release.xcconfig"; sourceTree = "<group>"; };
-		57A71FAF65AD0F7D32DE0F12 /* Pods-ShoppingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingApp.debug.xcconfig"; path = "Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp.debug.xcconfig"; sourceTree = "<group>"; };
+		021C39924CC8F76E3A37B6E8 /* Pods-ShoppingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingApp.debug.xcconfig"; path = "Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp.debug.xcconfig"; sourceTree = "<group>"; };
+		225870D7751F978F27BC93A3 /* Pods-ShoppingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingApp.release.xcconfig"; path = "Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp.release.xcconfig"; sourceTree = "<group>"; };
+		C700459EBE6CF1F0878125C8 /* Pods_ShoppingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2C2D8D26B04CA800DA86B9 /* ShoppingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2C2D9026B04CA800DA86B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED2C2D9226B04CA800DA86B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -184,7 +186,6 @@
 		F0B8272E2A25CEB000BB8B1C /* FailoverRoutingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailoverRoutingViewController.swift; sourceTree = "<group>"; };
 		F0B827332A28CC6400BB8B1C /* AddCustomerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCustomerViewController.swift; sourceTree = "<group>"; };
 		F0B827352A29BCD200BB8B1C /* ProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
-		F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ChaiPayPaymentSDK.xcframework; path = ../ChaiPayPaymentSDK/build/ChaiPayPaymentSDK.xcframework; sourceTree = "<group>"; };
 		F0B9421926E749540046944C /* NewCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCardView.swift; sourceTree = "<group>"; };
 		F0B9421D26E76DB50046944C /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
 		F0B9422126E76F860046944C /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
@@ -195,7 +196,8 @@
 		F0D48097273A6E11005D0791 /* OTPFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPFieldView.swift; sourceTree = "<group>"; };
 		F0D48098273A6E11005D0791 /* OTPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
 		F0D480D4273A8B95005D0791 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
-		FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PortoneSDK.xcframework; path = ../../PortonePaymentSDK_iOS/build/PortoneSDK.xcframework; sourceTree = "<group>"; };
+		F0DBFD702B32BC0F0054D667 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../RN/main.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,8 +205,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A89A3CD22C4490872222BD0D /* Pods_ShoppingApp.framework in Frameworks */,
-				F0B827382A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework in Frameworks */,
+				F0DA0DAD2CABB63F004DCEAA /* PortoneSDK.xcframework in Frameworks */,
+				10C11EB146E855FD3398D1DF /* Pods_ShoppingApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,8 +216,8 @@
 		D74DFA455168CA6F4A16280B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				57A71FAF65AD0F7D32DE0F12 /* Pods-ShoppingApp.debug.xcconfig */,
-				1827F9BE548FC2DAC69230F5 /* Pods-ShoppingApp.release.xcconfig */,
+				021C39924CC8F76E3A37B6E8 /* Pods-ShoppingApp.debug.xcconfig */,
+				225870D7751F978F27BC93A3 /* Pods-ShoppingApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -223,6 +225,7 @@
 		ED2C2D8426B04CA800DA86B9 = {
 			isa = PBXGroup;
 			children = (
+				F0DBFD702B32BC0F0054D667 /* main.jsbundle */,
 				ED2C2D8F26B04CA800DA86B9 /* ShoppingApp */,
 				ED2C2D8E26B04CA800DA86B9 /* Products */,
 				F06BA22726DE38CA00E0302E /* Frameworks */,
@@ -370,8 +373,8 @@
 		F06BA22726DE38CA00E0302E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F0B827372A29C5FF00BB8B1C /* ChaiPayPaymentSDK.xcframework */,
-				FC8153332FFC3D47367E226C /* Pods_ShoppingApp.framework */,
+				F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */,
+				C700459EBE6CF1F0878125C8 /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -439,20 +442,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED2C2DA126B04CAA00DA86B9 /* Build configuration list for PBXNativeTarget "ShoppingApp" */;
 			buildPhases = (
-				AEEFBFC5138271B21AD76381 /* [CP] Check Pods Manifest.lock */,
+				ECEABF746900E2D512D6E521 /* [CP] Check Pods Manifest.lock */,
 				ED2C2D8926B04CA800DA86B9 /* Sources */,
 				ED2C2D8A26B04CA800DA86B9 /* Frameworks */,
 				ED2C2D8B26B04CA800DA86B9 /* Resources */,
-				CCF7C4EE8A7CBCD112A8A9A8 /* [CP] Embed Pods Frameworks */,
 				F05B0F40273516BC001D8081 /* Embed Frameworks */,
+				8970D4AFD5E14E638BC22BCB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = ShoppingApp;
-			packageProductDependencies = (
-			);
 			productName = ShoppingApp;
 			productReference = ED2C2D8D26B04CA800DA86B9 /* ShoppingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -511,6 +512,7 @@
 				F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */,
 				ED2C2DC826B0FCF200DA86B9 /* ProductTableViewCell.xib in Resources */,
 				F095167B26E8FFE800B37A3A /* MobileNumberTableViewCell.xib in Resources */,
+				F0DBFD712B32BC0F0054D667 /* main.jsbundle in Resources */,
 				ED2C2D9A26B04CAA00DA86B9 /* Assets.xcassets in Resources */,
 				F07D3C2A27223DCA000743A3 /* SavedCardHeaderFooterView.xib in Resources */,
 				F09C8E21272722BE005912E4 /* ResponseView.xib in Resources */,
@@ -525,7 +527,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AEEFBFC5138271B21AD76381 /* [CP] Check Pods Manifest.lock */ = {
+		8970D4AFD5E14E638BC22BCB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECEABF746900E2D512D6E521 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -545,23 +564,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CCF7C4EE8A7CBCD112A8A9A8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingApp/Pods-ShoppingApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -786,13 +788,13 @@
 		};
 		ED2C2DA226B04CAA00DA86B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57A71FAF65AD0F7D32DE0F12 /* Pods-ShoppingApp.debug.xcconfig */;
+			baseConfigurationReference = 021C39924CC8F76E3A37B6E8 /* Pods-ShoppingApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100039;
+				CURRENT_PROJECT_VERSION = 100044;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -801,7 +803,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ShoppingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -817,13 +819,13 @@
 		};
 		ED2C2DA326B04CAA00DA86B9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1827F9BE548FC2DAC69230F5 /* Pods-ShoppingApp.release.xcconfig */;
+			baseConfigurationReference = 225870D7751F978F27BC93A3 /* Pods-ShoppingApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100039;
+				CURRENT_PROJECT_VERSION = 100044;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -832,7 +834,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ShoppingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
