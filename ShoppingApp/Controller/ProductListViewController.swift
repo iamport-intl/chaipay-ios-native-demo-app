@@ -10,7 +10,6 @@ import SwiftMessages
 import PortoneSDK
 import CryptoKit
 import Foundation
-//import React
 
 enum SortType {
     case ascending
@@ -27,11 +26,6 @@ struct Payload: Encodable {
 class ProductListViewController: UIViewController {
     // MARK: - Outlets
 
-//    var paymentMethodsView: RCTRootView? = nil
-//    var setCartSummaryView: RCTRootView? = nil
-//    var payButton: RCTRootView? = nil
-//    var checkoutElement: RCTRootView? = nil
-//    var checkoutElement: RCTRootView?
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var infoLabel: UILabel!
     @IBOutlet weak var sortButton: UIButton! {
@@ -70,9 +64,6 @@ class ProductListViewController: UIViewController {
         }
     }
     
-//    var selectedEnvironment: EnvironmentObject? {
-//        return UserDefaults.getSelectedEnvironment
-//    }
     var chaipayKey: String {
         return UserDefaults.getChaipayKey!
     }
@@ -154,18 +145,6 @@ class ProductListViewController: UIViewController {
             orderStatusViewController.delivery = Int(delivery)
             self.present(orderStatusViewController, animated: true, completion: nil)
         }
-        
-//        DispatchQueue.main.async {
-//            guard let view = Bundle.main.loadNibNamed("ResponseView", owner: nil, options: nil)?.first as? ResponseView  else { return }
-//            view.delegate = self
-//            view.setLayout(isSuccess: isSuccess, amount: self.formattedSummaryText, webViewResponse)
-//            var config = SwiftMessages.defaultConfig
-//            config.presentationStyle = .center
-//            config.presentationContext = .window(windowLevel: .normal)
-//            config.duration = .forever
-//            config.dimMode = .gray(interactive: true)
-//            SwiftMessages.show(config: config, view: view)
-//        }
     }
     
     func showSwiftMessagesView(isSuccess: Bool = false) {
@@ -225,62 +204,12 @@ class ProductListViewController: UIViewController {
     @IBAction func onClickBuyNowButton(_ sender: UIBarButtonItem) {
         
         AppDelegate.shared.selectedProducts = self.selectedProducts
-      customUIClicked()
+        connectUIClicked()
 //    checkoutV4UIClicked()
         
       //checkOutUIv3Clicked()
         //showSwiftView()
     }
-    
-    func openCheckoutElement() {
-        
-//            checkoutElement = CheckoutReactModule.sharedInstance.viewForModule("CheckoutElement", initialProperties: nil)
-//
-//            checkoutElement?.delegate = self
-//            checkoutElement?.sizeFlexibility = .height
-//            checkoutElement?.tag = 150
-//
-//            let view = UIView()
-//            view.frame = CGRect(x: 15, y: 150, width: 300, height: 0.5)
-//            view.addSubview(checkoutElement!)
-//            self.view.addSubview(view)
-//
-//
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
-//                CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
-//
-//
-//                CheckoutManager.shared?.sendCheckoutUIEvent()
-//            }
-        
-    }
-    func setPaymentMethods() {
-        
-        
-//        self.paymentMethodsView = CheckoutReactModule.sharedInstance.viewForModule("PaymentMethodsElement", initialProperties: nil)
-//
-//                   DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.75) {
-//                       CheckoutManager.shared?.setInitialData(chaipayKey: "ItjQocRdyfaAFflr", env: "prod", environment: "sandbox", secretKey: "08531c197630fb6882235a569aecd8dbe0a62e3ebc17857e70f13fe1e11a87c1", redirectURL: "chaiport://checkout", currency: "VND")
-//
-//                   }
-//        
-//        
-//        CheckoutManager.shared?.sendPaymentMethodsUIEvent()
-//        //CheckoutManager.shared?.presentTheRNVC(parentView: self)
-//        if let view = self.paymentMethodsView {
-//            view.sizeFlexibility = .widthAndHeight
-//            view.frame = CGRect(x: 0, y: 250, width: 150, height: 150)
-//            
-//            self.view.addSubview(view)
-//        }
-//        
-////        let someView:UIView = UIView(frame: CGRect(x: 15, y:  150 , width: Int(self.view.frame.width) - 30, height: 1))
-////
-////
-////
-////        someView.addSubview(self.paymentMethodsView!)
-////        self.view.addSubview(someView)
-        }
 }
 
 
@@ -355,8 +284,6 @@ extension ProductListViewController: OrderStatusDelegate {
 
 extension ProductListViewController: SwiftAlertViewDelegate {
    
-    
-    
     func getTotalAmount() -> Double {
         let delivery: Double = 0
         let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
@@ -423,7 +350,7 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         showSwiftMessagesView()
     }
     
-    func customUIClicked() {
+    func connectUIClicked() {
         let productDetailsViewController: ProductDetailsViewController = ViewControllersFactory.viewController()
         productDetailsViewController.selectedProductsDict = selectedProductsDict
         productDetailsViewController.checkout = checkout
@@ -431,30 +358,4 @@ extension ProductListViewController: SwiftAlertViewDelegate {
         self.navigationController?.pushViewController(productDetailsViewController, animated: true)
     }
     
-    func checkoutV4UIClicked() {
-//        let checkoutV4ViewController: CheckoutV4ViewController = ViewControllersFactory.viewController()
-//        checkoutV4ViewController.selectedProductsDict = selectedProductsDict
-//        hideSwiftView()
-//        self.navigationController?.pushViewController(checkoutV4ViewController, animated: true)
-    }
-    
 }
-
-
-//extension ProductListViewController: RCTRootViewDelegate {
-//    
-//    func rootViewDidChangeIntrinsicSize(_ rootView: RCTRootView!) {
-//        var newFrame: CGRect = rootView.frame;
-//        newFrame.size = rootView.intrinsicContentSize;
-//        if(rootView.tag == 100) {
-//            print(rootView)
-//            print(newFrame.size)
-//            
-//        } else if (rootView.tag == 11) {
-//            
-//            
-//        }
-//       
-//         rootView.frame = newFrame;
-//    }
-//}

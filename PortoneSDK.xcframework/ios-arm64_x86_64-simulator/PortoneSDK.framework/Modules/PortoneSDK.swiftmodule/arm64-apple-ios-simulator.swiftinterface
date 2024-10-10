@@ -1,0 +1,1274 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PortoneSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CryptoKit
+import Foundation
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+public struct AdditionalDatatResponse : Swift.Codable {
+  public var amount: Swift.String
+  public var bankCode: Swift.String
+  public var buyerEmail: Swift.String
+  public var callBackUrl: Swift.String
+  public var domain: Swift.String
+  public var invoiceNo: Swift.String
+  public var merId: Swift.String
+  public var merTrxId: Swift.String
+  public var merchantToken: Swift.String
+  public var notiUrl: Swift.String
+  public var payType: Swift.String
+  public var receiverPhone: Swift.String
+  public var timeStamp: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TransactionResponse : Swift.Codable {
+  public var statusCode: Swift.String?
+  public var redirectUrl: Swift.String?
+  public var channelOrderRef: Swift.String?
+  public var status: Swift.String?
+  public var merchantOrderRef: Swift.String?
+  public var statusReason: Swift.String?
+  public var chaipayOrderRef: Swift.String?
+  public var isSuccess: Swift.Bool?
+  public var orderRef: Swift.String?
+  public var deepLink: Swift.String?
+  public var amount: Swift.String?
+  public var linkOrderRef: Swift.String?
+  public var tokenizationPossible: Swift.String?
+  public var message: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct AddCardObject : Swift.Codable {
+  public var content: PortoneSDK.SavedCard
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public var message: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.AddCardObject {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct DeleteCardObject : Swift.Codable {
+  public var message: Swift.String
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.DeleteCardObject {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MerchantDetails : Swift.Codable {
+  public var name: Swift.String
+  public var logo: Swift.String
+  public var backUrl: Swift.String
+  public var promoCode: Swift.String
+  public var promoDiscount: Swift.Int
+  public var shippingCharges: Swift.Double
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case name
+    case logo
+    case backUrl
+    case promoCode
+    case promoDiscount
+    case shippingCharges
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(name: Swift.String, logo: Swift.String, backUrl: Swift.String, promoCode: Swift.String, promoDiscount: Swift.Int, shippingCharges: Swift.Double)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PaymentLinkResponse : Swift.Codable {
+  public var paymentLinkRef: Swift.String
+  public var paymentLink: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case paymentLinkRef
+    case paymentLink
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(paymentLinkRef: Swift.String, paymentLink: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WebTransactionRequest : Swift.Codable {
+  public var portOneKey: Swift.String
+  public var merchantDetails: PortoneSDK.MerchantDetails?
+  public var merchantOrderId: Swift.String
+  public var amount: Swift.Int
+  public var currency: Swift.String?
+  public var signatureHash: Swift.String
+  public var billingAddress: PortoneSDK.BillingDetails?
+  public var shippingAddress: PortoneSDK.ShippingDetails?
+  public var orderDetails: [PortoneSDK.OrderDetails]?
+  public var successURL: Swift.String?
+  public var failureURL: Swift.String?
+  public var redirectURL: Swift.String?
+  public var tokenParams: PortoneSDK.CardDetails?
+  public var countryCode: Swift.String?
+  public var expiryHours: Swift.Int?
+  public var source: Swift.String?
+  public var description: Swift.String?
+  public var showShippingDetails: Swift.Bool?
+  public var showBackButton: Swift.Bool?
+  public var defaultGuestCheckout: Swift.Bool?
+  public var isCheckoutEmbed: Swift.Bool?
+  public var environment: PortoneSDK.Env.RawValue?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case portOneKey
+    case merchantDetails
+    case merchantOrderId
+    case amount
+    case currency
+    case successURL
+    case failureURL
+    case redirectURL
+    case signatureHash
+    case billingAddress
+    case shippingAddress
+    case orderDetails
+    case tokenParams
+    case countryCode
+    case expiryHours
+    case source
+    case description
+    case showShippingDetails
+    case showBackButton
+    case defaultGuestCheckout
+    case isCheckoutEmbed
+    case environment
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(portOneKey: Swift.String, merchantDetails: PortoneSDK.MerchantDetails, merchantOrderId: Swift.String, amount: Swift.Int, currency: Swift.String, signatureHash: Swift.String, billingAddress: PortoneSDK.BillingDetails, shippingAddress: PortoneSDK.ShippingDetails, orderDetails: [PortoneSDK.OrderDetails], successURL: Swift.String, failureURL: Swift.String, redirectURL: Swift.String, countryCode: Swift.String, expiryHours: Swift.Int?, source: Swift.String?, description: Swift.String?, showShippingDetails: Swift.Bool?, showBackButton: Swift.Bool?, defaultGuestCheckout: Swift.Bool?, isCheckoutEmbed: Swift.Bool?, environment: PortoneSDK.Env)
+}
+extension PortoneSDK.WebTransactionRequest {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class TransactionReqObject : PortoneSDK.TransactionRequest {
+  public var source: Swift.String
+  public var environment: Swift.String
+  public var responseType: Swift.String
+  public init(portOneKey: Swift.String, key: Swift.String, merchantDetails: PortoneSDK.MerchantDetails, paymentChannel: Swift.String, paymentMethod: Swift.String, merchantOrderId: Swift.String, amount: Swift.Int, currency: Swift.String, signatureHash: Swift.String, billingAddress: PortoneSDK.BillingDetails, shippingAddress: PortoneSDK.ShippingDetails, orderDetails: [PortoneSDK.OrderDetails], successURL: Swift.String, failureURL: Swift.String, redirectURL: Swift.String, countryCode: Swift.String, source: Swift.String, environment: Swift.String, routingEnabled: Swift.Bool?, routingParams: PortoneSDK.RoutingParams?, transactionType: Swift.String?)
+  override public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public class TransactionRequest : Swift.Codable {
+  public var portOneKey: Swift.String
+  public var merchantDetails: PortoneSDK.MerchantDetails
+  public var key: Swift.String
+  public var paymentChannel: Swift.String
+  public var paymentMethod: Swift.String
+  public var merchantOrderId: Swift.String
+  public var amount: Swift.Int
+  public var currency: Swift.String?
+  public var signatureHash: Swift.String
+  public var billingAddress: PortoneSDK.BillingDetails
+  public var shippingAddress: PortoneSDK.ShippingDetails
+  public var orderDetails: [PortoneSDK.OrderDetails]
+  public var successURL: Swift.String?
+  public var failureURL: Swift.String?
+  public var redirectURL: Swift.String?
+  public var tokenParams: PortoneSDK.CardDetails?
+  public var countryCode: Swift.String
+  public var routingEnabled: Swift.Bool?
+  public var routingParams: PortoneSDK.RoutingParams?
+  public var transactionType: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case portOneKey
+    case merchantDetails
+    case key
+    case paymentChannel
+    case paymentMethod
+    case merchantOrderId
+    case amount
+    case currency
+    case successURL
+    case failureURL
+    case redirectURL
+    case signatureHash
+    case billingAddress
+    case shippingAddress
+    case orderDetails
+    case tokenParams
+    case countryCode
+    case routingEnabled
+    case routingParams
+    case transactionType
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(portOneKey: Swift.String, key: Swift.String, merchantDetails: PortoneSDK.MerchantDetails, paymentChannel: Swift.String, paymentMethod: Swift.String, merchantOrderId: Swift.String, amount: Swift.Int, currency: Swift.String, signatureHash: Swift.String, billingAddress: PortoneSDK.BillingDetails, shippingAddress: PortoneSDK.ShippingDetails, orderDetails: [PortoneSDK.OrderDetails], successURL: Swift.String, failureURL: Swift.String, redirectURL: Swift.String, countryCode: Swift.String, routingEnabled: Swift.Bool?, routingParams: PortoneSDK.RoutingParams?, transactionType: Swift.String? = "PURCHASE")
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public struct BillingDetails : Swift.Codable {
+  public var billingName: Swift.String?
+  public var billingEmail: Swift.String?
+  public var billingPhone: Swift.String?
+  public var billingAddress: PortoneSDK.BillingAddress?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case billingName
+    case billingEmail
+    case billingPhone
+    case billingAddress
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(billingName: Swift.String, billingEmail: Swift.String, billingPhone: Swift.String, billingAddress: PortoneSDK.BillingAddress)
+}
+extension PortoneSDK.BillingDetails {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct BillingAddress : Swift.Codable {
+  public var city: Swift.String?
+  public var countryCode: Swift.String?
+  public var locale: Swift.String?
+  public var line1: Swift.String?
+  public var line2: Swift.String?
+  public var postalCode: Swift.String?
+  public var state: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case city
+    case countryCode
+    case locale
+    case line1
+    case line2
+    case postalCode
+    case state
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(city: Swift.String, countryCode: Swift.String, locale: Swift.String, line1: Swift.String, line2: Swift.String, postalCode: Swift.String, state: Swift.String)
+}
+extension PortoneSDK.BillingAddress {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct ShippingDetails : Swift.Codable {
+  public var shippingName: Swift.String?
+  public var shippingEmail: Swift.String?
+  public var shippingPhone: Swift.String?
+  public var shippingAddress: PortoneSDK.ShippingAddress?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case shippingName
+    case shippingEmail
+    case shippingPhone
+    case shippingAddress
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(shippingName: Swift.String, shippingEmail: Swift.String, shippingPhone: Swift.String, shippingAddress: PortoneSDK.ShippingAddress)
+}
+extension PortoneSDK.ShippingDetails {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct ShippingAddress : Swift.Codable {
+  public var city: Swift.String?
+  public var countryCode: Swift.String?
+  public var locale: Swift.String?
+  public var line1: Swift.String?
+  public var line2: Swift.String?
+  public var postalCode: Swift.String?
+  public var state: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case city
+    case countryCode
+    case locale
+    case line1
+    case line2
+    case postalCode
+    case state
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(city: Swift.String, countryCode: Swift.String, locale: Swift.String, line1: Swift.String, line2: Swift.String, postalCode: Swift.String, state: Swift.String)
+}
+extension PortoneSDK.ShippingAddress {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct OrderDetails : Swift.Codable {
+  public var id: Swift.String?
+  public var name: Swift.String?
+  public var price: Swift.Double?
+  public var quantity: Swift.Int?
+  public var imageUrl: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case id
+    case name
+    case price
+    case quantity
+    case imageUrl
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(id: Swift.String, name: Swift.String, price: Swift.Double, quantity: Swift.Int, imageUrl: Swift.String)
+}
+extension PortoneSDK.OrderDetails {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public enum PaymentMethod {
+  case ZaloPay
+  case MomoPay
+  case VNPay
+  case NewCreditCard
+  case SavedCard
+  case None
+  public var paymentChannel: Swift.String {
+    get
+  }
+  public var paymentMethod: Swift.String {
+    get
+  }
+  public static func == (a: PortoneSDK.PaymentMethod, b: PortoneSDK.PaymentMethod) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol CheckoutDelegate : AnyObject {
+  var viewController: UIKit.UIViewController? { get }
+  func transactionResponse(response: PortoneSDK.TransactionResponse?)
+  func transactionErrorResponse(error: (any Swift.Error)?)
+}
+public enum EnvironmentType : Swift.String {
+  case prod
+  case dev
+  case staging
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum Env : Swift.String {
+  case sandbox
+  case live
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class Checkout {
+  public init(delegate: (any PortoneSDK.CheckoutDelegate)?, environment: Swift.String, redirectURL: Swift.String)
+  public func changeEnvironment(envType: Swift.String)
+  public func changeCurrency(currency: Swift.String)
+  public func changeEnvironmentMode(envType: Swift.String)
+  public func getAvailablePaymentGateways(portOneKey: Swift.String, currency: Swift.String, completionHandler: @escaping (Swift.Result<PortoneSDK.PaymentMethodResponse, any Swift.Error>) -> Swift.Void)
+  public func checkOutUI(config: PortoneSDK.WebTransactionRequest, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<Any, any Swift.Error>) -> Swift.Void)
+  public func getOTP(_ mobileNumber: Swift.String, onCompletionHandler: @escaping (Swift.Result<Any, any Swift.Error>) -> Swift.Void)
+  public func fetchSavedCards(portOneKey: Swift.String, _ mobileNumber: Swift.String, otp: Swift.String, token: Swift.String?, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.FetchSavedCardResponse, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func initiatePayment(_ config: PortoneSDK.TransactionRequest, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.TransactionResponse, any Swift.Error>) -> Swift.Void)
+  public func initiateNewCardPayment(config: PortoneSDK.TransactionRequest, cardDetails: PortoneSDK.CardDetails, jwtToken: Swift.String, clientKey: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.TransactionResponse, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func initiateSavedCardPayment(config: PortoneSDK.TransactionRequest, cardDetails: PortoneSDK.CardDetails, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.TransactionResponse, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func captureTransactionAPI(transactionOrderRef: Swift.String, clientKey: Swift.String, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.TransactionResponse, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func addCustomer(clientKey: Swift.String, customerData: PortoneSDK.AddCustomerObject?, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.CustomerResponseObject, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func getCustomerData(customerID: Swift.String?, customerData: PortoneSDK.AddCustomerObject?, clientKey: Swift.String, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.CustomerResponseObject, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func addCardForCustomerId(customerId: Swift.String, clientKey: Swift.String, cardData: PortoneSDK.CardDetails?, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.AddCardObject, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func deleteCardForCustomerId(customerId: Swift.String, clientKey: Swift.String, jwtToken: Swift.String, cardData: PortoneSDK.DeleteCardDataObject?, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.DeleteCardObject, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func fetchCustomerCards(customerId: Swift.String, clientKey: Swift.String, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.FetchCustomerCardsResponse, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func fetchRoutes(clientKey: Swift.String, jwtToken: Swift.String, onCompletionHandler: @escaping (Swift.Result<PortoneSDK.RoutingResponseObject, PortoneSDK.NetworkError>) -> Swift.Void)
+  public func handleTheUrl(_ url: Foundation.URL)
+  @objc deinit
+}
+extension PortoneSDK.Checkout : PortoneSDK.CheckoutViewControllerDelegate {
+  public func transactionResponse(response: [Swift.String : Any])
+  public func chaiPayRedirect(dataToBeSaved: Swift.String, url: Swift.String)
+  public var viewController: UIKit.UIViewController? {
+    get
+  }
+  public func handleUrl(url: Foundation.URL)
+}
+public protocol CheckoutViewControllerDelegate : AnyObject {
+  func chaiPayRedirect(dataToBeSaved: Swift.String, url: Swift.String)
+  var viewController: UIKit.UIViewController? { get }
+  func transactionResponse(response: [Swift.String : Any])
+  func handleUrl(url: Foundation.URL)
+}
+@objc @_Concurrency.MainActor(unsafe) public class CheckoutViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) public init(redirectUrl: Swift.String, delegate: any PortoneSDK.CheckoutViewControllerDelegate)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidLoad()
+  @objc deinit
+}
+extension PortoneSDK.CheckoutViewController : WebKit.WKNavigationDelegate, WebKit.WKUIDelegate, WebKit.WKDownloadDelegate {
+  @available(iOS 14.5, *)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, navigationAction: WebKit.WKNavigationAction, didBecome download: WebKit.WKDownload)
+  @available(iOS 14.5, *)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, navigationResponse: WebKit.WKNavigationResponse, didBecome download: WebKit.WKDownload)
+  @available(iOS 14.5, *)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func download(_ download: WebKit.WKDownload, decideDestinationUsing response: Foundation.URLResponse, suggestedFilename: Swift.String, completionHandler: @escaping (Foundation.URL?) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction, preferences: WebKit.WKWebpagePreferences, decisionHandler: @escaping (WebKit.WKNavigationActionPolicy, WebKit.WKWebpagePreferences) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, decidePolicyFor navigationResponse: WebKit.WKNavigationResponse, decisionHandler: @escaping (WebKit.WKNavigationResponsePolicy) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func webView(_ webView: WebKit.WKWebView, didFail navigation: WebKit.WKNavigation!, withError error: any Swift.Error)
+}
+public struct PaymentMethodResponse : Swift.Codable {
+  public var allMethods: [PortoneSDK.PaymentMethodObject]
+  public var walletMethods: [PortoneSDK.PaymentMethodObject]
+  public var cardMethods: [PortoneSDK.PaymentMethodObject]
+  public var bankTransfer: [PortoneSDK.PaymentMethodObject]
+  public var bnpl: [PortoneSDK.PaymentMethodObject]
+  public var cod: [PortoneSDK.PaymentMethodObject]
+  public var crypto: [PortoneSDK.PaymentMethodObject]
+  public var directBankTransfer: [PortoneSDK.PaymentMethodObject]
+  public var directDebit: [PortoneSDK.PaymentMethodObject]
+  public var instalment: [PortoneSDK.PaymentMethodObject]
+  public var netBanking: [PortoneSDK.PaymentMethodObject]
+  public var OTC: [PortoneSDK.PaymentMethodObject]
+  public var QrCode: [PortoneSDK.PaymentMethodObject]
+  public var vaBankTransfer: [PortoneSDK.PaymentMethodObject]
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case allMethods
+    case cardMethods
+    case walletMethods
+    case bankTransfer
+    case bnpl
+    case cod
+    case crypto
+    case directBankTransfer
+    case directDebit
+    case instalment
+    case netBanking
+    case OTC
+    case QrCode
+    case vaBankTransfer
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.PaymentMethodResponse {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PaymentMethodObject : Swift.Codable {
+  public var paymentChannelKey: Swift.String
+  public var paymentMethodKey: Swift.String
+  public var subType: Swift.String
+  public var logo: Swift.String
+  public var displayName: Swift.String
+  public var isDefault: Swift.Bool
+  public var isEnabled: Swift.Bool
+  public var tokenizationPossible: Swift.Bool
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case paymentChannelKey
+    case paymentMethodKey
+    case subType
+    case logo
+    case displayName
+    case isDefault
+    case isEnabled
+    case tokenizationPossible
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.PaymentMethodObject {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SavedCard : Swift.Codable {
+  public var token: Swift.String
+  public var partialCardNumber: Swift.String
+  public var expiryMonth: Swift.String
+  public var expiryYear: Swift.String
+  public var type: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case token
+    case partialCardNumber
+    case expiryMonth
+    case expiryYear
+    case type
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(token: Swift.String, partialCardNumber: Swift.String, expiryMonth: Swift.String, expiryYear: Swift.String, type: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CardDetails : Swift.Codable {
+  public var token: Swift.String?
+  public var cardNumber: Swift.String
+  public var expiryMonth: Swift.String
+  public var expiryYear: Swift.String
+  public var type: Swift.String
+  public var cardHolderName: Swift.String
+  public var cvv: Swift.String
+  public var savedCard: Swift.Bool
+  public var key: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case token
+    case cardNumber
+    case expiryMonth
+    case expiryYear
+    case type
+    case cardHolderName
+    case cvv
+    case savedCard
+    case key
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(token: Swift.String?, key: Swift.String?, cardNumber: Swift.String, expiryMonth: Swift.String, expiryYear: Swift.String, cardHolderName: Swift.String, type: Swift.String, cvv: Swift.String, savedCard: Swift.Bool = false)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CardObject : Swift.Codable {
+  public var cardToken: Swift.String?
+  public var cardNumber: Swift.String
+  public var cardType: Swift.String
+  public var cardholderName: Swift.String
+  public var serviceCode: Swift.String
+  public var expirationMonth: Swift.String
+  public var expirationYear: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case cardToken
+    case cardNumber
+    case cardType
+    case cardholderName
+    case serviceCode
+    case expirationMonth
+    case expirationYear
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(cardNumber: Swift.String, cardType: Swift.String, cardholderName: Swift.String, serviceCode: Swift.String, expirationMonth: Swift.String, expirationYear: Swift.String)
+}
+extension PortoneSDK.CardObject {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct CardRequestObject : Swift.Codable {
+  public var cardToken: Swift.String?
+  public var cardNumber: Swift.String
+  public var cardType: Swift.String
+  public var cardholderName: Swift.String
+  public var serviceCode: Swift.String
+  public var expirationMonth: Swift.String
+  public var expirationYear: Swift.String
+  public var key: Swift.String?
+  public var environment: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case cardToken
+    case cardNumber
+    case cardType
+    case cardholderName
+    case serviceCode
+    case expirationMonth
+    case expirationYear
+    case key
+    case environment
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(cardNumber: Swift.String, cardType: Swift.String, cardholderName: Swift.String, serviceCode: Swift.String, expirationMonth: Swift.String, expirationYear: Swift.String, key: Swift.String?, environment: Swift.String?)
+}
+extension PortoneSDK.CardRequestObject {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct TokeRequestObject : Swift.Codable {
+  public var card: PortoneSDK.CardRequestObject
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case card
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(card: PortoneSDK.CardRequestObject)
+}
+extension PortoneSDK.TokeRequestObject {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct TokeResponseObject : Swift.Codable {
+  public var type: Swift.String
+  public var id: Swift.String
+  public var attributes: PortoneSDK.CardRequestObject
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.TokeResponseObject {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TokenisationResponseObject : Swift.Codable {
+  public var content: PortoneSDK.CardObject
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension PortoneSDK.TokenisationResponseObject {
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct DeleteCardDataObject : Swift.Codable {
+  public var token: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case token
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(token: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TokenisationPublicKeyContent : Swift.Codable {
+  public var publicKey: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case publicKey
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(publicKey: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TokenisationPublicKeyObject : Swift.Decodable {
+  public var content: PortoneSDK.TokenisationPublicKeyContent
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public var message: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case statusCode
+    case statusReason
+    case content, message
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(content: PortoneSDK.TokenisationPublicKeyContent, statusCode: Swift.String, statusReason: Swift.String, message: Swift.String)
+  public init(from decoder: any Swift.Decoder) throws
+}
+public class AddCustomerObject : Swift.Codable {
+  public var name: Swift.String?
+  public var phoneNumber: Swift.String?
+  public var emailAddress: Swift.String?
+  public var customerRef: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case name
+    case phoneNumber
+    case emailAddress
+    case customerRef
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(name: Swift.String?, phoneNumber: Swift.String?, emailAddress: Swift.String?, customerRef: Swift.String?)
+  required public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  @objc deinit
+}
+public struct CustomerResponseObject : Swift.Codable {
+  public let content: PortoneSDK.Content
+  public let message: Swift.String, statusCode: Swift.String, statusReason: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case content, message
+    case statusCode
+    case statusReason
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Content : Swift.Codable {
+  public let name: Swift.String, phoneNumber: Swift.String, email: Swift.String, customerRef: Swift.String
+  public let customerUUID: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case name
+    case phoneNumber
+    case email
+    case customerRef
+    case customerUUID
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RoutingParams : Swift.Codable {
+  public var type: Swift.String?
+  public var routeRef: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case type
+    case routeRef
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(type: Swift.String?, routeRef: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RoutingData : Swift.Codable {
+  public var isDeleted: Swift.Bool?
+  public var isNoCodeDefault: Swift.Bool?
+  public var routingDetails: PortoneSDK.RoutingDetails?
+  public var routingName: Swift.String?
+  public var routingRef: Swift.String?
+  public var routingType: Swift.String?
+  public var updatedAt: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case isDeleted
+    case isNoCodeDefault
+    case routingDetails
+    case routingName
+    case routingRef
+    case routingType
+    case updatedAt
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(isDeleted: Swift.Bool?, isNoCodeDefault: Swift.Bool?, routingDetails: PortoneSDK.RoutingDetails?, routingName: Swift.String?, routingRef: Swift.String?, routingType: Swift.String?, updatedAt: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RoutingDetails : Swift.Codable {
+  public var methodType: Swift.String?
+  public var primary: Swift.String?
+  public var secondary: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case methodType
+    case primary
+    case secondary
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(methodType: Swift.String?, primary: Swift.String?, secondary: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RoutingContent : Swift.Codable {
+  public var data: [PortoneSDK.RoutingData]?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case data
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(data: [PortoneSDK.RoutingData]?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RoutingResponseObject : Swift.Codable {
+  public var message: Swift.String?
+  public var statusCode: Swift.String?
+  public var statusReason: Swift.String?
+  public var content: PortoneSDK.RoutingContent?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case message, content
+    case statusCode
+    case statusReason
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(message: Swift.String?, statusCode: Swift.String?, statusReason: Swift.String?, content: PortoneSDK.RoutingContent?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension Foundation.URLRequest {
+  public func cURL(pretty: Swift.Bool = false) -> Swift.String
+}
+public enum NetworkServiceError : Swift.Error {
+  case noInternet
+  case unauthenticated
+  case notFound
+  case serviceUnavailable
+  case serverUnderMaintenance
+  case responseError(_: PortoneSDK.NetworkError)
+  case parseError(_: any Swift.Error)
+  case mapError(_: Swift.String)
+}
+extension PortoneSDK.NetworkServiceError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct NetworkError : Swift.Error {
+  public let httpStatusCode: Swift.Int
+  public let code: Swift.String?
+  public let message: Swift.String?
+  public let statusReason: Swift.String?
+  public let isSuccess: Swift.Bool?
+  public init(from dataDict: [Swift.String : Any], httpStatusCode: Swift.Int)
+  public init(from error: any Swift.Error)
+  public init(statusCode: Swift.Int?, code: Swift.String?, message: Swift.String?)
+}
+public struct FetchSavedCardResponse : Swift.Codable {
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public var content: [PortoneSDK.SavedCard]?
+  public var token: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case statusCode
+    case statusReason
+    case content
+    case token
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(statusCode: Swift.String, statusReason: Swift.String, content: [PortoneSDK.SavedCard]?, token: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct FetchCustomerCardsResponse : Swift.Codable {
+  public var statusCode: Swift.String
+  public var statusReason: Swift.String
+  public var content: PortoneSDK.CardsData?
+  public var message: Swift.String?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case statusCode
+    case statusReason
+    case content
+    case message
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(statusCode: Swift.String, statusReason: Swift.String, content: PortoneSDK.CardsData?, message: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CardsData : Swift.Codable {
+  public var data: [PortoneSDK.SavedCard]?
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case data
+    public init?(rawValue: Swift.String)
+    public init?(stringValue: Swift.String)
+    public init?(intValue: Swift.Int)
+    public typealias RawValue = Swift.String
+    public var intValue: Swift.Int? {
+      get
+    }
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+  }
+  public init(data: [PortoneSDK.SavedCard]?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension PortoneSDK.MerchantDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.MerchantDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.MerchantDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.PaymentLinkResponse.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.PaymentLinkResponse.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.PaymentLinkResponse.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.WebTransactionRequest.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.WebTransactionRequest.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.WebTransactionRequest.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.TransactionRequest.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.TransactionRequest.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.TransactionRequest.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.BillingDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.BillingDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.BillingDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.BillingAddress.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.BillingAddress.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.BillingAddress.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.ShippingDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.ShippingDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.ShippingDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.ShippingAddress.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.ShippingAddress.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.ShippingAddress.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.OrderDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.OrderDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.OrderDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.PaymentMethod : Swift.Equatable {}
+extension PortoneSDK.PaymentMethod : Swift.Hashable {}
+extension PortoneSDK.EnvironmentType : Swift.Equatable {}
+extension PortoneSDK.EnvironmentType : Swift.Hashable {}
+extension PortoneSDK.EnvironmentType : Swift.RawRepresentable {}
+extension PortoneSDK.Env : Swift.Equatable {}
+extension PortoneSDK.Env : Swift.Hashable {}
+extension PortoneSDK.Env : Swift.RawRepresentable {}
+extension PortoneSDK.PaymentMethodResponse.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.PaymentMethodResponse.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.PaymentMethodResponse.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.PaymentMethodObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.PaymentMethodObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.PaymentMethodObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.SavedCard.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.SavedCard.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.SavedCard.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.CardDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.CardDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.CardDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.CardObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.CardObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.CardObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.CardRequestObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.CardRequestObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.CardRequestObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.TokeRequestObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.TokeRequestObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.TokeRequestObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.DeleteCardDataObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.DeleteCardDataObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.DeleteCardDataObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.TokenisationPublicKeyContent.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.TokenisationPublicKeyContent.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.TokenisationPublicKeyContent.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.TokenisationPublicKeyObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.TokenisationPublicKeyObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.TokenisationPublicKeyObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.AddCustomerObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.AddCustomerObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.AddCustomerObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.CustomerResponseObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.CustomerResponseObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.CustomerResponseObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.Content.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.Content.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.Content.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.RoutingParams.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.RoutingParams.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.RoutingParams.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.RoutingData.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.RoutingData.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.RoutingData.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.RoutingDetails.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.RoutingDetails.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.RoutingDetails.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.RoutingContent.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.RoutingContent.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.RoutingContent.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.RoutingResponseObject.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.RoutingResponseObject.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.RoutingResponseObject.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.FetchSavedCardResponse.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.FetchSavedCardResponse.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.FetchSavedCardResponse.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.FetchCustomerCardsResponse.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.FetchCustomerCardsResponse.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.FetchCustomerCardsResponse.CodingKeys : Swift.RawRepresentable {}
+extension PortoneSDK.CardsData.CodingKeys : Swift.Equatable {}
+extension PortoneSDK.CardsData.CodingKeys : Swift.Hashable {}
+extension PortoneSDK.CardsData.CodingKeys : Swift.RawRepresentable {}

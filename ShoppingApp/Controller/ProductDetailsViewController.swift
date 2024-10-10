@@ -17,11 +17,7 @@ class ProductDetailsViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var stackView: UIStackView!
-    @IBOutlet var stackOuterView: UIView! {
-        didSet {
-            //stackOuterView.applyShadow()
-        }
-    }
+    @IBOutlet var stackOuterView: UIView!
     @IBOutlet var summaryView: SummaryView! {
         didSet {
             summaryView.isHidden = true
@@ -80,9 +76,6 @@ class ProductDetailsViewController: UIViewController {
     private var shouldShowOTPInputView: Bool = false
     private var savedCardViewIsExpanded: Bool = false
     private var myCartIsExpanded: Bool = true
-//    var selectedEnvironment: EnvironmentObject? {
-//        return UserDefaults.getSelectedEnvironment
-//    }
     
     var chaipayKey: String {
         return UserDefaults.getChaipayKey!
@@ -104,7 +97,7 @@ class ProductDetailsViewController: UIViewController {
         
         
         checkout?.getAvailablePaymentGateways(portOneKey: UserDefaults.getChaipayKey!, currency: UserDefaults.getCurrency.code, subMerchantKey: nil ,completionHandler: { [weak self] result in
-            print("result", result)
+            
             guard let self = self else { return }
             switch result {
             case .success(let response):
@@ -185,7 +178,7 @@ class ProductDetailsViewController: UIViewController {
     func preparePaymentMethodDataSource() {
         paymentDataSource = []
         let filteredWalletsData = paymentMethodResponse?.walletMethods.filter{ paymentMethod in
-            return paymentMethod.paymentChannelKey != "VNPAY" &&  paymentMethod.isEnabled
+            return paymentMethod.isEnabled
         }
         
         let filterATMCards = paymentMethodResponse?.cardMethods.filter{

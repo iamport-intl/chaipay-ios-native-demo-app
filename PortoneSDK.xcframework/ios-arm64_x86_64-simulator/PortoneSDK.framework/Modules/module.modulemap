@@ -1,0 +1,4 @@
+framework module PortoneSDK {
+  header "PortoneSDK-Swift.h"
+  requires objc
+}

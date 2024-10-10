@@ -10,7 +10,6 @@
 		10C11EB146E855FD3398D1DF /* Pods_ShoppingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C700459EBE6CF1F0878125C8 /* Pods_ShoppingApp.framework */; };
 		ED2C2D9126B04CA800DA86B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9026B04CA800DA86B9 /* AppDelegate.swift */; };
 		ED2C2D9326B04CA800DA86B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9226B04CA800DA86B9 /* SceneDelegate.swift */; };
-		ED2C2D9526B04CA800DA86B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C2D9426B04CA800DA86B9 /* ViewController.swift */; };
 		ED2C2D9826B04CA800DA86B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED2C2D9626B04CA800DA86B9 /* Main.storyboard */; };
 		ED2C2D9A26B04CAA00DA86B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED2C2D9926B04CAA00DA86B9 /* Assets.xcassets */; };
 		ED2C2D9D26B04CAA00DA86B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED2C2D9B26B04CAA00DA86B9 /* LaunchScreen.storyboard */; };
@@ -53,12 +52,8 @@
 		F05B0F392734E18F001D8081 /* EnvironmentDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F05B0F382734E18F001D8081 /* EnvironmentDataManager.swift */; };
 		F07D3C2A27223DCA000743A3 /* SavedCardHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F07D3C2927223DCA000743A3 /* SavedCardHeaderFooterView.xib */; };
 		F07D3C2C27223E13000743A3 /* SavedCardHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F07D3C2B27223E13000743A3 /* SavedCardHeaderFooterView.swift */; };
-		F08DC04C29D3FFD50099D286 /* AddRatingManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F08DC04829D3FFD50099D286 /* AddRatingManagerBridge.m */; };
-		F08DC04D29D3FFD50099D286 /* CheckoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC04929D3FFD50099D286 /* CheckoutManager.swift */; };
-		F08DC04E29D3FFD50099D286 /* CheckoutReactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC04B29D3FFD50099D286 /* CheckoutReactModule.swift */; };
 		F08DC0DA29D409CC0099D286 /* ChangeCurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC0D929D409CC0099D286 /* ChangeCurrencyViewController.swift */; };
 		F08DC0DC29D409D50099D286 /* ChangeThemeColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC0DB29D409D40099D286 /* ChangeThemeColorViewController.swift */; };
-		F08DC0DE29D40A2C0099D286 /* CheckoutV4ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC0DD29D40A2C0099D286 /* CheckoutV4ViewController.swift */; };
 		F08DC0E029D40A430099D286 /* StylesObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC0DF29D40A430099D286 /* StylesObject.swift */; };
 		F08DC0E229D40A4A0099D286 /* TransactionRequestModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08DC0E129D40A4A0099D286 /* TransactionRequestModal.swift */; };
 		F095167426E8D19D00B37A3A /* CreditCardFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */; };
@@ -90,7 +85,6 @@
 		F0D480D5273A8B95005D0791 /* LocaleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D480D4273A8B95005D0791 /* LocaleManager.swift */; };
 		F0DA0DAD2CABB63F004DCEAA /* PortoneSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */; };
 		F0DA0DAE2CABB63F004DCEAA /* PortoneSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F0DBFD712B32BC0F0054D667 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = F0DBFD702B32BC0F0054D667 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -114,7 +108,6 @@
 		ED2C2D8D26B04CA800DA86B9 /* ShoppingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2C2D9026B04CA800DA86B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED2C2D9226B04CA800DA86B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		ED2C2D9426B04CA800DA86B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED2C2D9726B04CA800DA86B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED2C2D9926B04CAA00DA86B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED2C2D9C26B04CAA00DA86B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -160,13 +153,8 @@
 		F05B0F382734E18F001D8081 /* EnvironmentDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentDataManager.swift; sourceTree = "<group>"; };
 		F07D3C2927223DCA000743A3 /* SavedCardHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedCardHeaderFooterView.xib; sourceTree = "<group>"; };
 		F07D3C2B27223E13000743A3 /* SavedCardHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCardHeaderFooterView.swift; sourceTree = "<group>"; };
-		F08DC04829D3FFD50099D286 /* AddRatingManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddRatingManagerBridge.m; sourceTree = "<group>"; };
-		F08DC04929D3FFD50099D286 /* CheckoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutManager.swift; sourceTree = "<group>"; };
-		F08DC04A29D3FFD50099D286 /* PackageShield-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PackageShield-Bridging-Header.h"; sourceTree = "<group>"; };
-		F08DC04B29D3FFD50099D286 /* CheckoutReactModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutReactModule.swift; sourceTree = "<group>"; };
 		F08DC0D929D409CC0099D286 /* ChangeCurrencyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCurrencyViewController.swift; sourceTree = "<group>"; };
 		F08DC0DB29D409D40099D286 /* ChangeThemeColorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeThemeColorViewController.swift; sourceTree = "<group>"; };
-		F08DC0DD29D40A2C0099D286 /* CheckoutV4ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckoutV4ViewController.swift; sourceTree = "<group>"; };
 		F08DC0DF29D40A430099D286 /* StylesObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StylesObject.swift; sourceTree = "<group>"; };
 		F08DC0E129D40A4A0099D286 /* TransactionRequestModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRequestModal.swift; sourceTree = "<group>"; };
 		F095167326E8D19D00B37A3A /* CreditCardFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardFormatter.swift; sourceTree = "<group>"; };
@@ -197,7 +185,6 @@
 		F0D48098273A6E11005D0791 /* OTPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
 		F0D480D4273A8B95005D0791 /* LocaleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleManager.swift; sourceTree = "<group>"; };
 		F0DA0DAC2CABB63F004DCEAA /* PortoneSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PortoneSDK.xcframework; path = ../../PortonePaymentSDK_iOS/build/PortoneSDK.xcframework; sourceTree = "<group>"; };
-		F0DBFD702B32BC0F0054D667 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = ../RN/main.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +212,6 @@
 		ED2C2D8426B04CA800DA86B9 = {
 			isa = PBXGroup;
 			children = (
-				F0DBFD702B32BC0F0054D667 /* main.jsbundle */,
 				ED2C2D8F26B04CA800DA86B9 /* ShoppingApp */,
 				ED2C2D8E26B04CA800DA86B9 /* Products */,
 				F06BA22726DE38CA00E0302E /* Frameworks */,
@@ -244,7 +230,6 @@
 		ED2C2D8F26B04CA800DA86B9 /* ShoppingApp */ = {
 			isa = PBXGroup;
 			children = (
-				F08DC04729D3FFD50099D286 /* RNHelper */,
 				F05B0E5A27312C6E001D8081 /* Localisation */,
 				ED2C2DAB26B04ECF00DA86B9 /* Cell */,
 				ED2C2DA526B04ECF00DA86B9 /* Layout */,
@@ -274,15 +259,13 @@
 		ED2C2DA926B04ECF00DA86B9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				ED2C2D9426B04CA800DA86B9 /* ViewController.swift */,
+				ED2C2DAA26B04ECF00DA86B9 /* ProductListViewController.swift */,
+				ED2C2DC326B0F82800DA86B9 /* ProductDetailsViewController.swift */,
+				F09C8E1C27271EEE005912E4 /* OrderStatusViewController.swift */,
 				F0535A7327207D490079E850 /* SNTabBarViewController.swift */,
 				F05B0F262732482E001D8081 /* ChangeLanguageViewController.swift */,
-				F09C8E1C27271EEE005912E4 /* OrderStatusViewController.swift */,
-				ED2C2DAA26B04ECF00DA86B9 /* ProductListViewController.swift */,
 				F08DC0D929D409CC0099D286 /* ChangeCurrencyViewController.swift */,
 				F08DC0DB29D409D40099D286 /* ChangeThemeColorViewController.swift */,
-				F08DC0DD29D40A2C0099D286 /* CheckoutV4ViewController.swift */,
-				ED2C2DC326B0F82800DA86B9 /* ProductDetailsViewController.swift */,
 				F09E0DEE2729BF910025B8D3 /* ProfileViewController.swift */,
 				F0B3808D272A41A000ED3A68 /* MoreViewController.swift */,
 				F05B0F322734D618001D8081 /* ChangeMerchantViewController.swift */,
@@ -377,17 +360,6 @@
 				C700459EBE6CF1F0878125C8 /* Pods_ShoppingApp.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F08DC04729D3FFD50099D286 /* RNHelper */ = {
-			isa = PBXGroup;
-			children = (
-				F08DC04829D3FFD50099D286 /* AddRatingManagerBridge.m */,
-				F08DC04929D3FFD50099D286 /* CheckoutManager.swift */,
-				F08DC04A29D3FFD50099D286 /* PackageShield-Bridging-Header.h */,
-				F08DC04B29D3FFD50099D286 /* CheckoutReactModule.swift */,
-			);
-			path = RNHelper;
 			sourceTree = "<group>";
 		};
 		F095167726E8FFB100B37A3A /* MobileNumberView */ = {
@@ -512,7 +484,6 @@
 				F01D59C126F4830F008C82BB /* SwiftAlertView.xib in Resources */,
 				ED2C2DC826B0FCF200DA86B9 /* ProductTableViewCell.xib in Resources */,
 				F095167B26E8FFE800B37A3A /* MobileNumberTableViewCell.xib in Resources */,
-				F0DBFD712B32BC0F0054D667 /* main.jsbundle in Resources */,
 				ED2C2D9A26B04CAA00DA86B9 /* Assets.xcassets in Resources */,
 				F07D3C2A27223DCA000743A3 /* SavedCardHeaderFooterView.xib in Resources */,
 				F09C8E21272722BE005912E4 /* ResponseView.xib in Resources */,
@@ -597,18 +568,15 @@
 				ED2C2DB026B04ECF00DA86B9 /* ProductCollectionViewCell.swift in Sources */,
 				F0CDFDED27270FFC000D8ECF /* OrderDetailsTableViewCell.swift in Sources */,
 				ED2C2DC726B0FCF200DA86B9 /* ProductTableViewCell.swift in Sources */,
-				ED2C2D9526B04CA800DA86B9 /* ViewController.swift in Sources */,
 				ED2C2DD626B1100100DA86B9 /* CardCollectionViewCell.swift in Sources */,
 				ED444AC226B1D70500DC8985 /* CardsDataManager.swift in Sources */,
 				F08DC0DA29D409CC0099D286 /* ChangeCurrencyViewController.swift in Sources */,
-				F08DC04D29D3FFD50099D286 /* CheckoutManager.swift in Sources */,
 				ED2C2DAF26B04ECF00DA86B9 /* ProductListViewController.swift in Sources */,
 				F08DC0E229D40A4A0099D286 /* TransactionRequestModal.swift in Sources */,
 				F0B827342A28CC6400BB8B1C /* AddCustomerViewController.swift in Sources */,
 				F09C8E1D27271EEE005912E4 /* OrderStatusViewController.swift in Sources */,
 				F0B9421E26E76DB50046944C /* TitleHeaderFooterView.swift in Sources */,
 				ED2C2DC226B0F71D00DA86B9 /* CenterFlowLayout.swift in Sources */,
-				F08DC04E29D3FFD50099D286 /* CheckoutReactModule.swift in Sources */,
 				F0B30EEB26E65D440049374F /* PaymentMethodDataSource.swift in Sources */,
 				F07D3C2C27223E13000743A3 /* SavedCardHeaderFooterView.swift in Sources */,
 				F0B827362A29BCD200BB8B1C /* ProgressHUD.swift in Sources */,
@@ -616,7 +584,6 @@
 				F0025CED2A091C2000A6B215 /* PreAuthViewController.swift in Sources */,
 				F0B8272F2A25CEB000BB8B1C /* FailoverRoutingViewController.swift in Sources */,
 				F02291E82A0A45CE002D086C /* MerchantCardVaultViewController.swift in Sources */,
-				F08DC0DE29D40A2C0099D286 /* CheckoutV4ViewController.swift in Sources */,
 				ED2C2DD026B1094D00DA86B9 /* ProductPaymentTableViewCell.swift in Sources */,
 				ED2C2DCA26B104DF00DA86B9 /* ProductDetailsDataSource.swift in Sources */,
 				F0B30EEF26E664D00049374F /* PaymentMethodTableViewCell.swift in Sources */,
@@ -625,7 +592,6 @@
 				F048B05B2728762500430C65 /* UserDefaults.swift in Sources */,
 				ED2C2DD326B10F6200DA86B9 /* CardData.swift in Sources */,
 				F05B0F272732482E001D8081 /* ChangeLanguageViewController.swift in Sources */,
-				F08DC04C29D3FFD50099D286 /* AddRatingManagerBridge.m in Sources */,
 				ED2C2D9326B04CA800DA86B9 /* SceneDelegate.swift in Sources */,
 				ED2C2DB226B0515900DA86B9 /* ProductDetailsObject.swift in Sources */,
 				F09E0DEF2729BF910025B8D3 /* ProfileViewController.swift in Sources */,
@@ -794,7 +760,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100044;
+				CURRENT_PROJECT_VERSION = 100045;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -809,6 +775,7 @@
 					"@executable_path/Frameworks",
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",
 				);
+				MARKETING_VERSION = 2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.chaipay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -825,7 +792,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100044;
+				CURRENT_PROJECT_VERSION = 100045;
 				DEVELOPMENT_TEAM = 24H3Q69HGF;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -840,6 +807,7 @@
 					"@executable_path/Frameworks",
 					"$(BUILD_PRODUCTS_DIR)/PaymentSDK",
 				);
+				MARKETING_VERSION = 2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.chaipay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
