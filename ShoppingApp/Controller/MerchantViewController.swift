@@ -41,6 +41,7 @@ class MerchantViewController: UIViewController {
                             redirectURL: "portone://checkout",
                             appIdentifier: "com.flutter.portone")
         checkout?.changeEnvironment(envType: "dev")
+
     }
 
     // Set up UI components
@@ -69,8 +70,41 @@ class MerchantViewController: UIViewController {
             return
         }
 
+        let webconfig = prepareWebConfig()
+        // ****** Embed flow ********
+        checkout.checkOutUI(config: webconfig, jwtToken: jwtToken, subMerchantKey: nil)
+        
+        // *****    Non Tokeniasation flow    *****
         let config = prepareConfig()
-        checkout.checkOutUI(config: config, jwtToken: jwtToken, subMerchantKey: nil)
+        // Add your required methods
+        config.paymentMethod = "OMISE"
+        config.paymentChannel = "OMISE_ALL"
+        checkout.initiatePayment(config, subMerchantKey: nil) { resukt in
+            switch resukt {
+            case .success( _): break
+            case .failure( _): break
+            }
+        }
+       
+        // ***** Saved Card ******
+        let cardDetails = CardDetails(token: nil, cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cardHolderName: "Sam", type: "visa", cvv: "123", key: nil)
+        checkout.initiateSavedCardPayment(config: config, cardDetails: cardDetails) { result in
+            switch result {
+            case .success(_): break
+            case .failure(_): break
+            }
+        }
+        
+        
+        // ****** New CardFlow     ****
+        let NewcardDetails = CardDetails(token: nil, cardNumber: "4242424242424242", expiryMonth: "09", expiryYear: "29", cardHolderName: "Sam", type: "visa", cvv: "123", key: nil)
+        checkout.initiateNewCardPayment(config: config, cardDetails: cardDetails, jwtToken: jwtToken, clientKey: portoneKy, subMerchantKey: nil, customerUUID: nil) { result in
+            switch result {
+            case .success(_): break
+            case .failure(_): break
+            }
+        }
+    
     }
 
     // Method to generate HMAC signature for Portone request
@@ -92,9 +126,57 @@ class MerchantViewController: UIViewController {
         let base64 = Data(signature).base64EncodedString()
         return base64
     }
+    
+    func createHash(_ config: TransactionRequest) -> String {
+        var message = ""
+        message =
+        "amount=\(Int(config.amount))" +
+        "&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+       
+        
+        let secretString = secretKey
+        let key = SymmetricKey(data: secretString.data(using: .utf8)!)
+        
+        let signature = HMAC<SHA256>.authenticationCode(for: message.data(using: .utf8)!, using: key)
+        let base64 = Data(signature).base64EncodedString()
+        return base64
+    }
 
     // Prepare transaction configuration
-    private func prepareConfig() -> WebTransactionRequest {
+    private func prepareConfig() -> TransactionRequest {
+        let earRings = ProductDetailsObject(id: MerchantViewController.randomString(), title: "Sririri Toes", description: "Special Design", price: 1, currency: "VND", imageName: "https://demo.portone.cloud/images/bella-toes.jpg")
+        let scarf = ProductDetailsObject(id: MerchantViewController.randomString(), title: "Chikku Loafers", description: "Special Design", price: 15000, currency: "VND", imageName: "https://demo.portone.cloud/images/chikku-loafers.jpg")
+
+        let selectedProducts = [earRings, scarf]
+        let billingAddress = BillingAddress(city: "City", countryCode: "VN", locale: "en", line1: "address1", line2: "address2", postalCode: "400202", state: "Mah")
+
+        let merchantDetails = MerchantDetails(name: "Downy", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", backUrl: "https://demo.chaiport.io/checkout.html", promoCode: "Downy350", promoDiscount: 0, shippingCharges: 0.0)
+        let billingDetails = BillingDetails(billingName: "Test User", billingEmail: "testuser@gmail.com", billingPhone: "+660956425564", billingAddress: billingAddress)
+
+        let shippingAddress = ShippingAddress(city: "abc", countryCode: "VN", locale: "en", line1: "address_1", line2: "address_2", postalCode: "400202", state: "Mah")
+        let shippingDetails = ShippingDetails(shippingName: "xyz", shippingEmail: "xyz@gmail.com", shippingPhone: "1234567890", shippingAddress: shippingAddress)
+
+        var orderDetails: [OrderDetails] = []
+        for details in selectedProducts {
+            let product = OrderDetails(id: details.id ?? "", name: details.title ?? "", price: details.price ?? 0, quantity: 1, imageUrl: details.imageName ?? "")
+            orderDetails.append(product)
+        }
+
+        let delivery: Double = 0
+        let sumOfOrders = selectedProducts.map { $0.price ?? 0.0 }.reduce(0.0, +)
+        let totalAmount = sumOfOrders + delivery
+
+        let transactionRequest = TransactionRequest(portOneKey: portoneKy, key: portoneKy, merchantDetails: merchantDetails, paymentChannel: "", paymentMethod: "", merchantOrderId: "MERCHANT\(Int(Date().timeIntervalSince1970 * 1000))", amount: totalAmount, currency: "VND", signatureHash: "123", billingAddress: billingDetails, shippingAddress: shippingDetails, orderDetails: orderDetails, successURL: "https://test-checkout.chaiport.io/success.html", failureURL: "https://test-checkout.chaiport.io/failure.html", redirectURL: "portone://checkout", countryCode: "VN", routingEnabled: nil, routingParams: nil, bankDetails: nil, directBankTransferDetails: nil)
+
+        transactionRequest.signatureHash = createHash(transactionRequest)
+        return transactionRequest
+    }
+    
+    private func prepareWebConfig() -> WebTransactionRequest {
         let earRings = ProductDetailsObject(id: MerchantViewController.randomString(), title: "Sririri Toes", description: "Special Design", price: 1, currency: "VND", imageName: "https://demo.portone.cloud/images/bella-toes.jpg")
         let scarf = ProductDetailsObject(id: MerchantViewController.randomString(), title: "Chikku Loafers", description: "Special Design", price: 15000, currency: "VND", imageName: "https://demo.portone.cloud/images/chikku-loafers.jpg")
 
