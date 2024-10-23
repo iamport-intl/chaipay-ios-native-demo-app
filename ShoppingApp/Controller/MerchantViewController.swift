@@ -75,18 +75,22 @@ class MerchantViewController: UIViewController {
 
     // Method to generate HMAC signature for Portone request
     func createWebHash(_ config: WebTransactionRequest) -> String {
-        var message = """
-        amount=\(Int(config.amount))&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-        &currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-        &failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-        &merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-        &success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
-        """
-
+        var message = ""
+        message =
+        "amount=\(Int(config.amount))" +
+        "&client_key=\(config.portOneKey.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&currency=\(config.currency!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&failure_url=\(config.failureURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&merchant_order_id=\(config.merchantOrderId.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")" +
+        "&success_url=\(config.successURL!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+       
+        
         let secretString = secretKey
         let key = SymmetricKey(data: secretString.data(using: .utf8)!)
+        
         let signature = HMAC<SHA256>.authenticationCode(for: message.data(using: .utf8)!, using: key)
-        let x = Data(signature).tob()
+        let base64 = Data(signature).base64EncodedString()
+        return base64
     }
 
     // Prepare transaction configuration
